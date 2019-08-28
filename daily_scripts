@@ -1,3 +1,34 @@
+# ratio measurement, W+jets in OS and SS DY->tautau
+
+selection_stage_dy
+
+taumu tauh:
+105+104 = OS
+103+102 = SS
+
+tauel tauh:
+115+114 = OS
+113+112 = SS
+
+python sumup_ttree_draw.py "event_taus[0].pt()" --custom-range 20,30,35,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "(selection_stage_dy == 104 || selection_stage_dy == 105)" --output test_dy_taumutauh_wjets_os.root --histo-name dy_taumutauh_wjets_os_tau_pt  lstore_outdirs/94v1/processing2/MC2017legacy_Fall17_WJets_madgraph_*/*root &
+python sumup_ttree_draw.py "event_taus[0].pt()" --custom-range 20,30,35,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "(selection_stage_dy == 102 || selection_stage_dy == 103)" --output test_dy_taumutauh_wjets_ss.root --histo-name dy_taumutauh_wjets_ss_tau_pt  lstore_outdirs/94v1/processing2/MC2017legacy_Fall17_WJets_madgraph_*/*root &
+
+
+python sumup_ttree_draw.py "event_taus_sv_sign[0]" --histo-range 21,-1,20   --ttree ttree_out --cond-com "(selection_stage_dy == 104 || selection_stage_dy == 105)" --output test_dy_taumutauh_wjets_os_tau_sv_sign.root --histo-name dy_taumutauh_wjets_os_tau_sv_sign  lstore_outdirs/94v1/processing2/MC2017legacy_Fall17_WJets_madgraph_*/*root &
+python sumup_ttree_draw.py "event_taus_sv_sign[0]" --histo-range 21,-1,20   --ttree ttree_out --cond-com "(selection_stage_dy == 102 || selection_stage_dy == 103)" --output test_dy_taumutauh_wjets_ss_tau_sv_sign.root --histo-name dy_taumutauh_wjets_ss_tau_sv_sign  lstore_outdirs/94v1/processing2/MC2017legacy_Fall17_WJets_madgraph_*/*root &
+
+hadd -f test_dy_taumutauh_wjets_charge_symmetry.root test_dy_taumutauh_wjets_os.root test_dy_taumutauh_wjets_ss.root test_dy_taumutauh_wjets_os_tau_sv_sign.root test_dy_taumutauh_wjets_ss_tau_sv_sign.root
+
+root -l test_dy_taumutauh_wjets_charge_symmetry.root
+
+dy_taumutauh_wjets_ss_tau_pt->SetLineColor(kRed)
+
+dy_taumutauh_wjets_os_tau_pt->Draw()
+dy_taumutauh_wjets_ss_tau_pt->Draw("same")
+
+
+
+
 # [[Sijin Qian][https://cds.cern.ch/record/2686265?ln=en]]
 
  In general
