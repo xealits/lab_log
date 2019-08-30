@@ -1,3 +1,24 @@
+# tau pT without and with TOPPT Up demonstration
+
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "NOMINAL"      --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
+
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "top p_{T} Up" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --systematic TOPPTUp
+
+
+no sys uncertainties:
+
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "NOMINAL"      --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29.  --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "top p_{T} Up" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29.  --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --systematic TOPPTUp
+
+png:
+
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type png -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "NOMINAL"      --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29.  --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type png -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "top p_{T} Up" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29.  --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --systematic TOPPTUp
+
+
+
+
+
 # ratio measurement, W+jets in OS and SS DY->tautau
 
 selection_stage_dy
@@ -618,6 +639,55 @@ combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp.r
 combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp.root   --plots --saveShapes --saveWithUncertainties --name Shapes_v37_test172BIN1_mu_test2_expMu2_Thorsten1   --freezeParameters lumi_13TeV  &
 combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp.root --plots --saveShapes --saveWithUncertainties --name Shapes_v37_test172BIN1_both_test2_expMu2_Thorsten1 --freezeParameters lumi_13TeV  &
 
+freeze most of parameters:
+
+make workspace datacard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_noMC
+make workspace datacard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_noMC
+make workspace datacard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_noMC
+
+combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_noMC.root          --plots --saveShapes --saveWithUncertainties --name Shapes_v37_test172BIN1_el_exp_noMC_Thorsten1          --freezeParameters lumi_13TeV  --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag
+mv covariance_fit_s.png covariance_fit_s_Shapes_v37_test172BIN1_el_exp_noMC_Thorsten1.png
+combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_noMC.root   --plots --saveShapes --saveWithUncertainties --name Shapes_v37_test172BIN1_mu_exp_expMu2_noMC_Thorsten1   --freezeParameters lumi_13TeV  --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag
+mv covariance_fit_s.png covariance_fit_s_Shapes_v37_test172BIN1_mu_exp_expMu2_noMC_Thorsten1.png
+combine -M FitDiagnostics ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_noMC.root --plots --saveShapes --saveWithUncertainties --name Shapes_v37_test172BIN1_both_exp_expMu2_noMC_Thorsten1 --freezeParameters lumi_13TeV  --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag
+mv covariance_fit_s.png covariance_fit_s_Shapes_v37_test172BIN1_both_exp_expMu2_noMC_Thorsten1.png
+
+
+
+make impacts  workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_noMC.root          nn=Shapes_v37_test172BIN1_el_exp_noMC_Thorsten1          freeze="--freezeParameters lumi_13TeV --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag" points=100 min=0.5 max=1.5  &
+make impacts  workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_noMC.root   nn=Shapes_v37_test172BIN1_mu_exp_expMu2_noMC_Thorsten1   freeze="--freezeParameters lumi_13TeV --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag" points=100 min=0.5 max=1.5  &
+make impacts  workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_noMC.root nn=Shapes_v37_test172BIN1_both_exp_expMu2_noMC_Thorsten1 freeze="--freezeParameters lumi_13TeV --freezeNuisanceGroup tt_th_pdf,tt_updowns,tt_th_frag" points=100 min=0.5 max=1.5  &
+
+python new_impact_table.py --merge-pdf latest_impacts_Shapes_v37_test172BIN1_el_exp_noMC_Thorsten1.json  latest_impacts_Shapes_v37_test172BIN1_mu_exp_expMu2_noMC_Thorsten1.json  latest_impacts_Shapes_v37_test172BIN1_both_exp_expMu2_noMC_Thorsten1.json
+
+$\tauh$ jet identification  &  4.6 &  4.3 &  4.2 \\
+  pileup (PU) uncertainty  &  2.3 &  2.2 &  2.1 \\
+       muon ID efficiency  &  1.2 &  1.1 \\
+            DY background  &  0.5 &  0.7 &  0.8 \\
+ \cPqb tagging efficiency  &  1.1 &  1.1 &  0.7 \\
+     $\tauh$ energy scale  &  0.4 &  0.7 &  0.6 \\
+electron trigger efficiency  &  2.3 &  0.6 \\
+         jet energy scale  &  0.2 &  0.6 &  0.6 \\
+            tW background  &  0.6 &  0.6 &  0.5 \\
+   electron ID efficiency  &  1.7 &  0.4 \\
+        W+jets background  &  0.2 &  0.5 &  0.4 \\
+  muon trigger efficiency  &  0.5 &  0.4 \\
+      multijet background  &  0.2 &  0.5 &  0.3 \\
+        \ttbar background  &  0.3 &  0.2 &  0.2 \\
+    jet energy resolution  &  0.6 &  0.2 &  0.0 \\
+      dibosons background  &  0.0 &  0.0 &  0.0 \\
+top quark $p_{T}$ modeling  &  2.4 &  2.0 &  1.8 \\
+          \ttbar ME scale  &  0.0 &  0.0 &  0.0 \\
+          b fragmentation  &  0.0 &  0.0 &  0.0 \\
+         \ttbar ISR scale  &  0.0 &  0.0 &  0.0 \\
+         \ttbar FSR scale  &  0.0 &  0.0 &  0.0 \\
+           ME-PS matching  &  0.0 &  0.0 &  0.0 \\
+               lumi_13TeV  &  0.0 &  0.0 &  0.0 \\
+         underlying event  &  0.0 &  0.0 &  0.0 \\
+semi-leptonic b-hadron branching fraction  &  0.0 &  0.0 &  0.0 \\
+                      PDF  &  0.0 &  0.0 &  0.0 \\
+            MC statistics  &  0.0 &  0.0 &  0.0 \\
+
 
 
 
@@ -1135,6 +1205,8 @@ substitute Opposite Sign (OS) by Opposite Charge (OC)
 and Same Sign (SS) to Same Charge (SC)
 
 branching fractions instead of branching ratios
+
+hadronic \tau's -- check apostrophe
 
 
 ## Questionable corrections
