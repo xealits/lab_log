@@ -1,3 +1,209 @@
+# systematics in the yields table
+
+python numbers_for_datacard.py histosels/v37_test13_bunch1_yields1_dy_tautau//dy_tautau_yields_data-qcd.root -y -d yield -c dy_eltau,dy_eltau_3j,dy_mutau,dy_mutau_3j --latex
+
+distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root
+distrs/v37_test172_bunchCONTROLS1/SingleMuon.root
+
+hadd test_sys_uncs.root distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root
+
+
+python numbers_for_datacard.py test_sys_uncs.root -y -d tau_pt -c mu_sel --latex --no-sums --scale 35860
+python numbers_for_datacard.py test_sys_uncs.root -y -d tau_pt -c mu_sel --latex --no-sums --scale 35860 --uncertainty-systematic TauID,TauMisID
+
+does not crash, but numbers are wrong
+
+root -l test_sys_uncs.root
+
+root [7] mu_sel->Get("tt_mutau/TauMisIDUp/mu_sel_tt_mutau_TauMisIDUp_tau_pt")->Print()
+TH1.Print Name  = mu_sel_tt_mutau_TauMisIDUp_tau_pt, Entries= 51528, Total sum= 0.362989
+
+root [8] mu_sel->Get("tt_mutau/TauMisIDDown/mu_sel_tt_mutau_TauMisIDDown_tau_pt")->Print()
+TH1.Print Name  = mu_sel_tt_mutau_TauMisIDDown_tau_pt, Entries= 51528, Total sum= 0.362989
+
+root [9] mu_sel->Get("tt_mutau/NOMINAL/mu_sel_tt_mutau_NOMINAL_tau_pt")->Print()
+TH1.Print Name  = mu_sel_tt_mutau_NOMINAL_tau_pt, Entries= 40066, Total sum= 0.362989
+
+
+
+histosels/v37_test13_bunch1_yields1_dy_tautau//dy_tautau_yields_data-qcd.root
+
+
+
+remake the distrs with yields
+
+python loop_selections.py --options " --wjets-nup-cut " --nt v37 --proc test172 --distrs bunchFULLFIT1BIN1yield --chan-groups fit_tt_leptau_lj,fit_tt_leptau_ljout,fit_tt_leptau_Vloose_lj,fit_tt_leptau_Vloose_ljout --distributions yield
+
+
+hadding...
+histosel
+
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleMuon.root     options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=mu_sel_lj    systematics="NOMINAL `cat syst-test.syst-list.experimental | tr '\n' ' '`" qcd_opt="--qcd 1.05"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleElectron.root options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=el_sel_lj    systematics="NOMINAL `cat syst-test.syst-list.experimental | tr '\n' ' '`" qcd_opt="--qcd 1.05"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleMuon.root     options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=mu_sel_ljout systematics="NOMINAL `cat syst-test.syst-list.experimental | tr '\n' ' '`" qcd_opt="--qcd 1.05"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleElectron.root options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=el_sel_ljout systematics="NOMINAL `cat syst-test.syst-list.experimental | tr '\n' ' '`" qcd_opt="--qcd 1.05"  &
+
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleMuon.root     options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=mu_sel_lj    systematics="`cat syst-test.syst-list.parton_showers syst-test.syst-list.pdfs | tr '\n' ' '`"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleElectron.root options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=el_sel_lj    systematics="`cat syst-test.syst-list.parton_showers syst-test.syst-list.pdfs | tr '\n' ' '`"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleMuon.root     options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=mu_sel_ljout systematics="`cat syst-test.syst-list.parton_showers syst-test.syst-list.pdfs | tr '\n' ' '`"  & \
+make run_histos mc=distrs/distrs_v37_test172_bunchFULLFIT1BIN1yield_mc1.root data=distrs/v37_test172_bunchFULLFIT1BIN1yield/SingleElectron.root options= lumi=35800 distr=yield out=histosels/v37_test172_bunchFULLFIT1BIN1yield/ wjets_norm=1.4 chan=el_sel_ljout systematics="`cat syst-test.syst-list.parton_showers syst-test.syst-list.pdfs | tr '\n' ' '`"  &
+
+tau ID and misID
+
+hadd histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/v37_test172_bunchFULLFIT1BIN1yield/distr*root
+
+foreach tausys ( "--rename-sys TauMisIDDown --factor-rate-systematic tt_lj,tt_taulj,tt_other,s_top_lj:0.5" "--rename-sys TauMisIDUp   --factor-rate-systematic tt_lj,tt_taulj,tt_other,s_top_lj:1.5" "--rename-sys TauIDDown --factor-rate-systematic tt_eltau,tt_eltau,tt_taultauh,s_top_eltau,s_top_eltau,s_top_other,dy_tautau,dibosons_other:0.95" "--rename-sys TauIDUp   --factor-rate-systematic tt_eltau,tt_eltau,tt_taultauh,s_top_eltau,s_top_eltau,s_top_other,dy_tautau,dibosons_other:1.05")
+python stack_plot.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root  --do-not-reweight   -o histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/ --data-nick data_other --lumi 35800 -c mu_sel_lj    -d yield   $tausys
+python stack_plot.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root  --do-not-reweight   -o histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/ --data-nick data_other --lumi 35800 -c el_sel_lj    -d yield   $tausys
+python stack_plot.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root  --do-not-reweight   -o histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/ --data-nick data_other --lumi 35800 -c mu_sel_ljout -d yield   $tausys
+python stack_plot.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root  --do-not-reweight   -o histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/ --data-nick data_other --lumi 35800 -c el_sel_ljout -d yield   $tausys
+end
+
+python stack_plot.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root  --do-not-reweight   -o histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/ --data-nick data_other --lumi 35800 -c mu_sel_lj    -d yield   --rename-sys TauMisIDDown --factor-rate-systematic tt_lj,tt_taulj,tt_other,s_top_lj:0.5
+
+hadd histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield.root histosels/v37_test172_bunchFULLFIT1BIN1yield/tausys/*
+
+
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c mu_sel_lj --latex --no-sums
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c mu_sel_lj --latex --no-sums --uncertainty-systematic TauID,TauMisID
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c mu_sel_lj --latex --no-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID
+
+                                                     process & mu_sel_lj \\
+     $\text{DY}\rightarrow{\tau_{\ell}\tau_{h}}+ {\rm jets}$ & $   191 \pm     18 \pm +   6-   7, +   2-   2, +   0-  11, +  -2-   2, +   6-   4, +   0-   0, +   2-   2, +   0-   0, +  10-  10 $ \\
+                           $\text{DY}\rightarrow{\rm other}$ & $     9 \pm      8 \pm +  -1-  -1, +  -0-  -1, +   0-   0, +   0-   1, +   3-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0 $ \\
+                                                $\text{QCD}$ & $   176 \pm     56 \pm + -30- -31, + -32- -39, +  -3- -25, +   5-  -4, + -53- -52, +  -5-  -5, + -16- -16, +   0-   0, +   0-   0 $ \\
+           $\text{single top}\rightarrow{{\rm \ell} \tau}+X$ & $   228 \pm      6 \pm +   3-   3, +   3-   3, +   0-   8, +  -3-   2, +   4-   4, +   1-   1, +   2-   2, +   0-   0, +   0-   0 $ \\
+                    $\text{single top}\rightarrow{\ell j}+X$ & $   226 \pm      6 \pm +   3-   3, +   2-   3, +   0-   7, +  -2-   1, +   9-   9, +   1-   1, +   2-   2, + 113- 113, +   0-   0 $ \\
+                   $\text{single top}\rightarrow{\rm other}$ & $    35 \pm      3 \pm +   0-   0, +   0-   1, +   0-   1, +  -0-   0, +   1-   1, +   0-   0, +   0-   0, +   0-   0, +   2-   2 $ \\
+ $\ttbar\rightarrow{\ell\tau}\nu\nu b\bar{b}$ ($\ell=e,\mu$) & $  5020 \pm     42 \pm +  37-  39, +  39-  56, +   1-  90, + -22-  18, +  89-  96, +  14-  14, +  44-  44, +   0-   0, +   0-   0 $ \\
+                    $\ttbar\rightarrow{\ell\nu jj b\bar{b}}$ & $  3610 \pm     36 \pm +  41-  42, +  46-  61, +   2-  40, +  -5-   3, + 106- 107, +   9-   9, +  32-  32, +1805-1805, +   0-   0 $ \\
+   $\ttbar\rightarrow{\tau_{\ell}\tau_{h} \nu\nu b\bar{b} }$ & $   272 \pm     10 \pm +   2-   2, +   2-   3, +   0-   4, +  -1-   1, +   4-   5, +   1-   1, +   3-   3, +   0-   0, +  14-  14 $ \\
+             $\ttbar\rightarrow{\tau_{\ell}\nu jj b\bar{b}}$ & $   205 \pm      9 \pm +   2-   2, +   4-   5, +   0-   2, +  -0-   0, +   4-   6, +   0-   0, +   2-   2, + 102- 102, +   0-   0 $ \\
+                              $\ttbar\rightarrow{\rm other}$ & $    85 \pm      6 \pm +   1-   1, +   1-   2, +   0-   2, +  -2-   0, +   2-   2, +   0-   0, +   1-   1, +  43-  43, +   0-   0 $ \\
+      $\text{W+jets} \rightarrow\tau_{\ell}\nu + {\rm jets}$ & $    15 \pm      4 \pm +   1-   1, +   0-   0, +   0-   1, +  -1-   1, +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0 $ \\
+         $\text{W+jets} \rightarrow\tau_{h}\nu + {\rm jets}$ & $     0 \pm      0 \pm +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0, +   0-   0 $ \\
+              $\text{W+jets} \rightarrow\ell\nu+ {\rm jets}$ & $   229 \pm     20 \pm +  11-  11, +   1-   1, +   0-  10, +  -3-   3, +   8-   4, +   1-   1, +   2-   2, +   0-   0, +   0-   0 $ \\
+                                           $\text{dibosons}$ & $    23 \pm      3 \pm +   1-   1, +   0-   0, +   0-   3, +  -0-   1, +   1-   1, +   0-   0, +   0-   0, +   0-   0, +   1-   1 $ \\
+aaa!
+                                                    mc_resum & 10323.784 \\
+                                                        data & $  9932 \pm    100 $ \\
+
+
+-- signal really is 5137 and tt_lj is 3674
+   2.2% difference
+   can scale it, but probably no need
+
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c el_sel_lj,el_sel_ljout,mu_sel_lj,mu_sel_ljout --latex --no-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID
+
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c el_sel_lj,el_sel_ljout --latex --no-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c mu_sel_lj,mu_sel_ljout --latex --no-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID
+
+     $\text{DY}\rightarrow{\tau_{\ell}\tau_{h}}+ {\rm jets}$ & $   118 \pm     15 \pm     10 $ & $   229 \pm     19 \pm     20 $ \\
+                           $\text{DY}\rightarrow{\rm other}$ & $    30 \pm      7 \pm      2 $ & $    82 \pm     12 \pm      7 $ \\
+                                                $\text{QCD}$ & $   107 \pm     45 \pm     65 $ & $   341 \pm     49 \pm     73 $ \\
+           $\text{single top}\rightarrow{{\rm \ell} \tau}+X$ & $   174 \pm      5 \pm     12 $ & $   324 \pm      7 \pm     23 $ \\
+                    $\text{single top}\rightarrow{\ell j}+X$ & $   168 \pm      6 \pm     84 $ & $   187 \pm      6 \pm     94 $ \\
+                   $\text{single top}\rightarrow{\rm other}$ & $    24 \pm      2 \pm      2 $ & $    34 \pm      2 \pm      2 $ \\
+ $\ttbar\rightarrow{\ell\tau}\nu\nu b\bar{b}$ ($\ell=e,\mu$) & $  3356 \pm     35 \pm    213 $ & $  5403 \pm     44 \pm    363 $ \\
+                    $\ttbar\rightarrow{\ell\nu jj b\bar{b}}$ & $  2404 \pm     30 \pm   1208 $ & $  1654 \pm     25 \pm    831 $ \\
+   $\ttbar\rightarrow{\tau_{\ell}\tau_{h} \nu\nu b\bar{b} }$ & $   186 \pm      8 \pm     12 $ & $   315 \pm     11 \pm     21 $ \\
+             $\ttbar\rightarrow{\tau_{\ell}\nu jj b\bar{b}}$ & $   129 \pm      7 \pm     65 $ & $    87 \pm      6 \pm     44 $ \\
+                              $\ttbar\rightarrow{\rm other}$ & $    65 \pm      5 \pm     32 $ & $   117 \pm      7 \pm     59 $ \\
+      $\text{W+jets} \rightarrow\tau_{\ell}\nu + {\rm jets}$ & $    14 \pm      5 \pm      2 $ & $    13 \pm      3 \pm      1 $ \\
+         $\text{W+jets} \rightarrow\tau_{h}\nu + {\rm jets}$ & $     1 \pm      1 \pm      0 $ & $     2 \pm      1 \pm      0 $ \\
+              $\text{W+jets} \rightarrow\ell\nu+ {\rm jets}$ & $   176 \pm     31 \pm     14 $ & $   224 \pm     14 \pm     19 $ \\
+                                           $\text{dibosons}$ & $    16 \pm      2 \pm      1 $ & $    37 \pm      3 \pm      3 $ \\
+aaa!
+                                                    mc_resum & 6968.245 & 9047.053 \\
+                                                        data & $  6787 \pm     82 $ & $  8633 \pm     93 $ \\
+
+                                                     process & mu_sel_lj & mu_sel_ljout \\
+     $\text{DY}\rightarrow{\tau_{\ell}\tau_{h}}+ {\rm jets}$ & $   191 \pm     18 \pm     14 $ & $   390 \pm     27 \pm     35 $ \\
+                           $\text{DY}\rightarrow{\rm other}$ & $     9 \pm      8 \pm      2 $ & $    23 \pm     11 \pm      4 $ \\
+                                                $\text{QCD}$ & $   176 \pm     56 \pm     73 $ & $   178 \pm     57 \pm     92 $ \\
+           $\text{single top}\rightarrow{{\rm \ell} \tau}+X$ & $   228 \pm      6 \pm      7 $ & $   462 \pm      9 \pm     18 $ \\
+                    $\text{single top}\rightarrow{\ell j}+X$ & $   226 \pm      6 \pm    114 $ & $   290 \pm      7 \pm    146 $ \\
+                   $\text{single top}\rightarrow{\rm other}$ & $    35 \pm      3 \pm      2 $ & $    53 \pm      3 \pm      4 $ \\
+ $\ttbar\rightarrow{\ell\tau}\nu\nu b\bar{b}$ ($\ell=e,\mu$) & $  5020 \pm     42 \pm    128 $ & $  8009 \pm     53 \pm    276 $ \\
+                    $\ttbar\rightarrow{\ell\nu jj b\bar{b}}$ & $  3610 \pm     36 \pm   1810 $ & $  2507 \pm     30 \pm   1258 $ \\
+   $\ttbar\rightarrow{\tau_{\ell}\tau_{h} \nu\nu b\bar{b} }$ & $   272 \pm     10 \pm     15 $ & $   459 \pm     13 \pm     28 $ \\
+             $\ttbar\rightarrow{\tau_{\ell}\nu jj b\bar{b}}$ & $   205 \pm      9 \pm    103 $ & $   143 \pm      7 \pm     72 $ \\
+                              $\ttbar\rightarrow{\rm other}$ & $    85 \pm      6 \pm     43 $ & $   173 \pm      8 \pm     87 $ \\
+      $\text{W+jets} \rightarrow\tau_{\ell}\nu + {\rm jets}$ & $    15 \pm      4 \pm      1 $ & $    30 \pm      5 \pm      2 $ \\
+         $\text{W+jets} \rightarrow\tau_{h}\nu + {\rm jets}$ & $     0 \pm      0 \pm      0 $ & $     0 \pm      0 \pm      0 $ \\
+              $\text{W+jets} \rightarrow\ell\nu+ {\rm jets}$ & $   229 \pm     20 \pm     14 $ & $   365 \pm     19 \pm     35 $ \\
+                                           $\text{dibosons}$ & $    23 \pm      3 \pm      3 $ & $    56 \pm      4 \pm      5 $ \\
+aaa!
+                                                    mc_resum & 10323.784 & 13139.730 \\
+                                                        data & $  9932 \pm    100 $ & $ 13094 \pm    114 $ \\
+
+
+
+
+
+# mtop up down event yields
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 32 || gen_proc_id == 31)" --per-weight --try-xsec --output test_tt_mu_mtopDown_yields_tt_mutau.root    --histo-name tt_mtopDown_yields_tt_mutau  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id > 20 && gen_proc_id < 30)"   --per-weight --try-xsec --output test_tt_mu_mtopDown_yields_tt_lj.root       --histo-name tt_mtopDown_yields_tt_lj  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root        &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 12)"                      --per-weight --try-xsec --output test_tt_mu_mtopDown_yields_tt_taultauh.root --histo-name tt_mtopDown_yields_tt_taultauh  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root  &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 11)"                      --per-weight --try-xsec --output test_tt_mu_mtopDown_yields_tt_taulj.root    --histo-name tt_mtopDown_yields_tt_taulj  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id < 10 || gen_proc_id > 40)"   --per-weight --try-xsec --output test_tt_mu_mtopDown_yields_tt_other.root    --histo-name tt_mtopDown_yields_tt_other  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 42 || gen_proc_id == 41)" --per-weight --try-xsec --output test_tt_el_mtopDown_yields_tt_eltau.root    --histo-name tt_mtopDown_yields_tt_eltau  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id > 20 && gen_proc_id < 30)"   --per-weight --try-xsec --output test_tt_el_mtopDown_yields_tt_lj.root       --histo-name tt_mtopDown_yields_tt_lj  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root        &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 12)"                      --per-weight --try-xsec --output test_tt_el_mtopDown_yields_tt_taultauh.root --histo-name tt_mtopDown_yields_tt_taultauh  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root  &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 11)"                      --per-weight --try-xsec --output test_tt_el_mtopDown_yields_tt_taulj.root    --histo-name tt_mtopDown_yields_tt_taulj  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id < 10 || (gen_proc_id > 30 && gen_proc_id < 40))"   --per-weight --try-xsec --output test_tt_el_mtopDown_yields_tt_other.root    --histo-name tt_mtopDown_yields_tt_other  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1715*/*root     &
+
+
+
+
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 32 || gen_proc_id == 31)" --per-weight --try-xsec --output test_tt_mu_mtopUp_yields_tt_mutau.root    --histo-name tt_mtopUp_yields_tt_mutau    lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id > 20 && gen_proc_id < 30)"   --per-weight --try-xsec --output test_tt_mu_mtopUp_yields_tt_lj.root       --histo-name tt_mtopUp_yields_tt_lj       lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root        &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 12)"                      --per-weight --try-xsec --output test_tt_mu_mtopUp_yields_tt_taultauh.root --histo-name tt_mtopUp_yields_tt_taultau  h  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root  &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id == 11)"                      --per-weight --try-xsec --output test_tt_mu_mtopUp_yields_tt_taulj.root    --histo-name tt_mtopUp_yields_tt_taulj    lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && (gen_proc_id < 10 || gen_proc_id > 40)"   --per-weight --try-xsec --output test_tt_mu_mtopUp_yields_tt_other.root    --histo-name tt_mtopUp_yields_tt_other    lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 42 || gen_proc_id == 41)" --per-weight --try-xsec --output test_tt_el_mtopUp_yields_tt_eltau.root    --histo-name tt_mtopUp_yields_tt_eltau    lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id > 20 && gen_proc_id < 30)"   --per-weight --try-xsec --output test_tt_el_mtopUp_yields_tt_lj.root       --histo-name tt_mtopUp_yields_tt_lj       lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root        &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 12)"                      --per-weight --try-xsec --output test_tt_el_mtopUp_yields_tt_taultauh.root --histo-name tt_mtopUp_yields_tt_taultau  h  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root  &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id == 11)"                      --per-weight --try-xsec --output test_tt_el_mtopUp_yields_tt_taulj.root    --histo-name tt_mtopUp_yields_tt_taulj    lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==  19 || selection_stage ==  17) && (gen_proc_id < 10 || (gen_proc_id > 30 && gen_proc_id < 40))"   --per-weight --try-xsec --output test_tt_el_mtopUp_yields_tt_other.root    --histo-name tt_mtopUp_yields_tt_other  lstore_outdirs/v37p2/p1mtop/MC2016_Summer16_TTJets_powheg_mtop1735*/*root     &
+
+hadd -f test_all_tt_mtop.root test_tt_*root
+
+root -l test_all_tt_mtop.root
+
+tt_mtopDown_yields_tt_eltau->Integral() * 35860
+tt_mtopUp_yields_tt_eltau->Integral()   * 35860
+
+9951.72
+10240.5
+
+>>> 2* (10240.5 - 9951.72) / (10240.5 + 9951.72)
+0.028603095647729733
+
+
+## mtop effect on acceptance
+
+time python signal_acceptance.py --alternative-genjets --only-signal temp/acceptance_with_mtop1715_alt/ gstore_outdirs/v37p3/TT_TuneCUETP8M2T4_mtop1715_13TeV-powheg-pythia8/*/*/*/*root  &
+time python signal_acceptance.py --alternative-genjets --only-signal temp/acceptance_with_mtop1735_alt/ gstore_outdirs/v37p3/TT_TuneCUETP8M2T4_mtop1735_13TeV-powheg-pythia8/*/*/*/*root  &
+time python signal_acceptance.py --alternative-genjets --only-signal temp/acceptance_with_mtop_nominal_alt/ gstore_outdirs/v34/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/Ntupler_v34_MC2016_Summer16_TTJets_powheg/180717_001103/0000/MC2016_Summer16_TTJets_powheg_*.root &
+
+root -l temp/acceptance_with_mtop_nominal_alt/MC2016_Summer16_TTJets_powheg.root
+
+accept_nom   = cut_ev_mutau->GetBinContent(1+0)       / all_ev_mutau->GetBinContent(1+0)
+accept_toppt = cut_toppt_ev_mutau->GetBinContent(1+1) / all_toppt_ev_mutau->GetBinContent(1+1)
+
+(accept_toppt - accept_nom) / accept_nom
+
+
+
+
+
 # tau pT without and with TOPPT Up demonstration
 
 python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "NOMINAL"      --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
