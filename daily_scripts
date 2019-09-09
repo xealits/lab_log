@@ -101,41 +101,64 @@ python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1y
      $\text{DY}\rightarrow{\tau_{\ell}\tau_{h}}+ {\rm jets}$ & $   118 \pm     15 \pm     10 $ & $   229 \pm     19 \pm     20 $ \\
                            $\text{DY}\rightarrow{\rm other}$ & $    30 \pm      7 \pm      2 $ & $    82 \pm     12 \pm      7 $ \\
                                                 $\text{QCD}$ & $   107 \pm     45 \pm     65 $ & $   341 \pm     49 \pm     73 $ \\
+
            $\text{single top}\rightarrow{{\rm \ell} \tau}+X$ & $   174 \pm      5 \pm     12 $ & $   324 \pm      7 \pm     23 $ \\
                     $\text{single top}\rightarrow{\ell j}+X$ & $   168 \pm      6 \pm     84 $ & $   187 \pm      6 \pm     94 $ \\
                    $\text{single top}\rightarrow{\rm other}$ & $    24 \pm      2 \pm      2 $ & $    34 \pm      2 \pm      2 $ \\
+
  $\ttbar\rightarrow{\ell\tau}\nu\nu b\bar{b}$ ($\ell=e,\mu$) & $  3356 \pm     35 \pm    213 $ & $  5403 \pm     44 \pm    363 $ \\
                     $\ttbar\rightarrow{\ell\nu jj b\bar{b}}$ & $  2404 \pm     30 \pm   1208 $ & $  1654 \pm     25 \pm    831 $ \\
    $\ttbar\rightarrow{\tau_{\ell}\tau_{h} \nu\nu b\bar{b} }$ & $   186 \pm      8 \pm     12 $ & $   315 \pm     11 \pm     21 $ \\
              $\ttbar\rightarrow{\tau_{\ell}\nu jj b\bar{b}}$ & $   129 \pm      7 \pm     65 $ & $    87 \pm      6 \pm     44 $ \\
                               $\ttbar\rightarrow{\rm other}$ & $    65 \pm      5 \pm     32 $ & $   117 \pm      7 \pm     59 $ \\
+
       $\text{W+jets} \rightarrow\tau_{\ell}\nu + {\rm jets}$ & $    14 \pm      5 \pm      2 $ & $    13 \pm      3 \pm      1 $ \\
          $\text{W+jets} \rightarrow\tau_{h}\nu + {\rm jets}$ & $     1 \pm      1 \pm      0 $ & $     2 \pm      1 \pm      0 $ \\
               $\text{W+jets} \rightarrow\ell\nu+ {\rm jets}$ & $   176 \pm     31 \pm     14 $ & $   224 \pm     14 \pm     19 $ \\
+
                                            $\text{dibosons}$ & $    16 \pm      2 \pm      1 $ & $    37 \pm      3 \pm      3 $ \\
 aaa!
                                                     mc_resum & 6968.245 & 9047.053 \\
                                                         data & $  6787 \pm     82 $ & $  8633 \pm     93 $ \\
 
+
+
+
                                                      process & mu_sel_lj & mu_sel_ljout \\
      $\text{DY}\rightarrow{\tau_{\ell}\tau_{h}}+ {\rm jets}$ & $   191 \pm     18 \pm     14 $ & $   390 \pm     27 \pm     35 $ \\
                            $\text{DY}\rightarrow{\rm other}$ & $     9 \pm      8 \pm      2 $ & $    23 \pm     11 \pm      4 $ \\
+
                                                 $\text{QCD}$ & $   176 \pm     56 \pm     73 $ & $   178 \pm     57 \pm     92 $ \\
+
            $\text{single top}\rightarrow{{\rm \ell} \tau}+X$ & $   228 \pm      6 \pm      7 $ & $   462 \pm      9 \pm     18 $ \\
                     $\text{single top}\rightarrow{\ell j}+X$ & $   226 \pm      6 \pm    114 $ & $   290 \pm      7 \pm    146 $ \\
                    $\text{single top}\rightarrow{\rm other}$ & $    35 \pm      3 \pm      2 $ & $    53 \pm      3 \pm      4 $ \\
+
  $\ttbar\rightarrow{\ell\tau}\nu\nu b\bar{b}$ ($\ell=e,\mu$) & $  5020 \pm     42 \pm    128 $ & $  8009 \pm     53 \pm    276 $ \\
                     $\ttbar\rightarrow{\ell\nu jj b\bar{b}}$ & $  3610 \pm     36 \pm   1810 $ & $  2507 \pm     30 \pm   1258 $ \\
    $\ttbar\rightarrow{\tau_{\ell}\tau_{h} \nu\nu b\bar{b} }$ & $   272 \pm     10 \pm     15 $ & $   459 \pm     13 \pm     28 $ \\
              $\ttbar\rightarrow{\tau_{\ell}\nu jj b\bar{b}}$ & $   205 \pm      9 \pm    103 $ & $   143 \pm      7 \pm     72 $ \\
                               $\ttbar\rightarrow{\rm other}$ & $    85 \pm      6 \pm     43 $ & $   173 \pm      8 \pm     87 $ \\
+
       $\text{W+jets} \rightarrow\tau_{\ell}\nu + {\rm jets}$ & $    15 \pm      4 \pm      1 $ & $    30 \pm      5 \pm      2 $ \\
          $\text{W+jets} \rightarrow\tau_{h}\nu + {\rm jets}$ & $     0 \pm      0 \pm      0 $ & $     0 \pm      0 \pm      0 $ \\
               $\text{W+jets} \rightarrow\ell\nu+ {\rm jets}$ & $   229 \pm     20 \pm     14 $ & $   365 \pm     19 \pm     35 $ \\
+
                                            $\text{dibosons}$ & $    23 \pm      3 \pm      3 $ & $    56 \pm      4 \pm      5 $ \\
+
 aaa!
                                                     mc_resum & 10323.784 & 13139.730 \\
                                                         data & $  9932 \pm    100 $ & $ 13094 \pm    114 $ \\
+
+
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c el_sel_lj,el_sel_ljout --latex --no-sums --re-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID
+python numbers_for_datacard.py histosels/HISTOSEL_v37_test172_bunchFULLFIT1BIN1yield_with_tausys.root -y -d yield -c mu_sel_lj,mu_sel_ljout --latex --no-sums --re-sums --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID
+
+                                                       total & $  6968 \pm     75 \pm   1233 $ & $  9047 \pm     77 \pm    919 $ \\
+                                                       total & $ 10324 \pm     85 \pm   1823 $ & $ 13140 \pm     92 \pm   1306 $ \\
+
+
+-- multijet has experimental systematics propagated
 
 
 
@@ -187,6 +210,7 @@ tt_mtopUp_yields_tt_eltau->Integral()   * 35860
 0.028603095647729733
 
 
+
 ## mtop effect on acceptance
 
 time python signal_acceptance.py --alternative-genjets --only-signal temp/acceptance_with_mtop1715_alt/ gstore_outdirs/v37p3/TT_TuneCUETP8M2T4_mtop1715_13TeV-powheg-pythia8/*/*/*/*root  &
@@ -199,6 +223,92 @@ accept_nom   = cut_ev_mutau->GetBinContent(1+0)       / all_ev_mutau->GetBinCont
 accept_toppt = cut_toppt_ev_mutau->GetBinContent(1+1) / all_toppt_ev_mutau->GetBinContent(1+1)
 
 (accept_toppt - accept_nom) / accept_nom
+
+
+
+# interence tt-tW, ST_tW_top_5f_DS_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1
+
+inclusive yield
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7)" --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield.root         --histo-name tW_tt_mutau_selection_yield         lstore_outdirs/v37/test172/MC2016_Summer16_SingleT_tW_5FS_powheg*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7)" --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield_Interf.root  --histo-name tW_tt_mutau_selection_yield_Interf  lstore_outdirs/v37p3/p1interference/MC2016_Summer16_SingleT_tW_5FS_powheg_DS/*root     &
+
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && event_jets_lj_var <= 60." --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield_lj.root         --histo-name tW_tt_mutau_selection_yield_lj         lstore_outdirs/v37/test172/MC2016_Summer16_SingleT_tW_5FS_powheg*/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && event_jets_lj_var >  60." --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield_ljout.root      --histo-name tW_tt_mutau_selection_yield_ljout      lstore_outdirs/v37/test172/MC2016_Summer16_SingleT_tW_5FS_powheg*/*root     &
+
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && event_jets_lj_var <= 60." --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield_Interf_lj.root     --histo-name tW_tt_mutau_selection_yield_Interf_lj     lstore_outdirs/v37p3/p1interference/MC2016_Summer16_SingleT_tW_5FS_powheg_DS/*root     &
+python sumup_ttree_draw.py "1" --histo-range 5,0,5   --ttree ttree_out --cond-com "(selection_stage ==   9 || selection_stage ==   7) && event_jets_lj_var >  60." --per-weight --try-xsec --output test_tW_tt_mutau_selection_yield_Interf_ljout.root  --histo-name tW_tt_mutau_selection_yield_Interf_ljout  lstore_outdirs/v37p3/p1interference/MC2016_Summer16_SingleT_tW_5FS_powheg_DS/*root     &
+
+
+hadd -f test_tW_tt_all.root test_tW_tt_mutau_*.root
+
+root -l test_tW_tt_all.root
+
+tW_tt_mutau_selection_yield->Print()
+tW_tt_mutau_selection_yield_Interf->Print()
+
+TH1.Print Name  = tW_tt_mutau_selection_yield, Entries= 3520, Total sum= 0.0176996
+TH1.Print Name  = tW_tt_mutau_selection_yield_Interf, Entries= 422, Total sum= 0.0147423
+
+(tW_tt_mutau_selection_yield->GetBinContent(1+1) - tW_tt_mutau_selection_yield_Interf->GetBinContent(1+1)) / (0.5*(tW_tt_mutau_selection_yield->GetBinContent(1+1) + tW_tt_mutau_selection_yield_Interf->GetBinContent(1+1)))
+
+0.182315
+
+tW_tt_mutau_selection_yield->GetBinContent(1+1)
+tW_tt_mutau_selection_yield->GetBinError(1+1) / tW_tt_mutau_selection_yield->GetBinContent(1+1)
+
+tW_tt_mutau_selection_yield_Interf->GetBinContent(1+1)
+tW_tt_mutau_selection_yield_Interf->GetBinError(1+1)
+tW_tt_mutau_selection_yield_Interf->GetBinError(1+1) / tW_tt_mutau_selection_yield_Interf->GetBinContent(1+1)
+
+0.0147423
+0.000717642
+0.0486792
+
+tW_tt_mutau_selection_yield->GetBinContent(1+1)        * 35860
+tW_tt_mutau_selection_yield_Interf->GetBinContent(1+1) * 35860
+
+634.706
+528.657
+
+100. / 20000
+(double) 0.00500000
+
+0.5%
+
+tW_tt_mutau_selection_yield_lj->GetBinContent(1+1)           * 35860
+tW_tt_mutau_selection_yield_ljout->GetBinContent(1+1)        * 35860
+tW_tt_mutau_selection_yield_Interf_lj->GetBinContent(1+1)    * 35860
+tW_tt_mutau_selection_yield_Interf_ljout->GetBinContent(1+1) * 35860
+
+260.194
+374.513
+
+249.296
+279.361
+
+(tW_tt_mutau_selection_yield_lj->GetBinContent(1+1)    - tW_tt_mutau_selection_yield_Interf_lj->GetBinContent(1+1)    ) * 35860
+(tW_tt_mutau_selection_yield_ljout->GetBinContent(1+1) - tW_tt_mutau_selection_yield_Interf_ljout->GetBinContent(1+1) ) * 35860
+
+10.8980
+95.1514
+
+10.8980 / 10490
+95.1514 / 12972
+
+0.00103889
+0.00733514
+
+-- the effect is larger in the signal-like category! probably because it affects tW->leptauh more than others?
+
+
+
+## acceptance
+
+probably won't work, there is no signal definition here:
+
+time python signal_acceptance.py --alternative-genjets --only-signal temp/acceptance_with_interf/ gstore_outdirs/v37p3/ST_tW_top_5f_DS_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/*/*/*/*root  &
 
 
 
