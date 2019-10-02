@@ -1,3 +1,84 @@
+# fixing figures
+
+Michele:
+dashed line at 1 in the ratio figure
+cut zero of the Y axis
+
+Andrea:
+leave only mT in the figure of signal-background comparison
+
+others:
+
+Fig1:
+Use TDR style so that tick marks appear on all four sides of the frame.
+The luminosity and CM energy should be flush right with the frame. gray -> grey (assuming BE spelling and punctuation conventions)
+Suggest to use log scale for these plots
+Legend: all entries should start with a capital letter (except the “t” as these are names).
+Caption: Prefit is slang.
+
+-- about prefit Thomas' suggestion was "...states observed prior to fitting."
+
+Fig.1, caption, last sentence: Suggestion: “... indicated the systematic and statistical uncertainties of all ...”. Probably mention they are summed in quadrature. 
+
+Fig2: Use TDR style for plot.
+
+ Figures:
+
+- please set the linecolor in histograms explicitly to black (there are some occurrences of blue lines)
+
+>> Done.
+
+- the hashed area for the uncertainties is hardly visible when printed
+
+>> Corrected.
+
+- please consider using a sans-serif font for the figures, it improves readability a lot
+
+>> We had another suggestion for the serif fonts to conform to the text of the paper. Indeed, it seems that sans-sserif fits figures better. We can switch to it if necessary.
+
+- please consider adding a horizontal line at y=1 for the Data/Pred. panels that guide the eye to see any possible slope.
+
+>> Added.
+
+
+
+
+# tables etc
+
+Table2: observed data -> data Capitalize first words. Be specific what the values in “Correlation means”. List “electron momentum scale” before “muon momentum scale”
+
+>>
+
+Tab. 2: Suggest aligning table entries at the decimal point.
+
+>>
+
+Page 11: I would suggest to have all equations (sets) enumerated - eq (1), etc; including on line 153.
+
+>> 
+
+ - Table 1: Drell--Yan -> DY (as introduced in Section 3); try also to align the numbers for the central values, e.g. by introducing dedicated columns for the central value, the '\pm' and the uncertainty; maybe highlight the 'signal', 'ttbar backgrounds', etc. with bold or italic typesetting (similar to Table 2), remove the vertical line
+
+>>
+
+- Table 2: Drell--Yan -> DY ; dibosons background -> diboson background ; semi-leptonic b-hadron branching fraction -> semileptonic b hadron branching fraction ; parton distribution functions -> PDFs
+
+>> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # systematics in the yields table
 
 python numbers_for_datacard.py histosels/v37_test13_bunch1_yields1_dy_tautau//dy_tautau_yields_data-qcd.root -y -d yield -c dy_eltau,dy_eltau_3j,dy_mutau,dy_mutau_3j --latex
@@ -2802,19 +2883,19 @@ output was in plots/v37_test172_paper_plots/
 
 tau_pt
 
-python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
-python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleElectron.root --output-type pdf -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c el_sel -x el_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type pdf -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --x-range-ratio-line 30,105
+python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleElectron.root --output-type pdf -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c el_sel -x el_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --x-range-ratio-line 30,105
 
 
 
 mT prefit
 
-python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite -p -r -c el_sel_ljout -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,100. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "signal-like"
-python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite -p -r -c el_sel_lj    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,100. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "background-like"
+python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite -p -r -c el_sel_ljout -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,100. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "signal-like"
+python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite -p -r -c el_sel_lj    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,100. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "background-like"
 
 
-python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite -p -r -c mu_sel_ljout -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,150. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "signal-like"
-python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots1/ --data-nick data_other --overwrite -p -r -c mu_sel_lj    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,150. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "background-like"
+python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite -p -r -c mu_sel_ljout -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,150. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "signal-like"
+python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots2/ --data-nick data_other --overwrite -p -r -c mu_sel_lj    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,150. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPmuTRG,LEPmuID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8  --label "background-like"
 
 
 
@@ -2826,7 +2907,10 @@ python get_shapes.py --x-title "#font[12]{m}_{T}(#font[12]{l}, #font[12]{p}^{mis
 
 python get_shapes.py --x-title "#font[12]{m}_{T}(#font[12]{l}, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --left-title "CMS #font[52]{Simulation}" --draw-overflows 5 --norm-formulas
 
-cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots1/
+
+python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --left-title "CMS #font[52]{Simulation}" --draw-overflows 5 --norm-formulas
+
+cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots2/
 
 
 nll NLL plot with lumi
@@ -2840,6 +2924,7 @@ ln -s histosels,datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys_hist
 ln -s histosels,datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys_histosels,datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys_Mt_lep_met_c_mu_sel_lj_NOMINAL_stack_ratio.pdf      prefit_mu_Mt_lj.pdf
 ln -s histosels,datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys_histosels,datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys_Mt_lep_met_c_mu_sel_ljout_NOMINAL_stack_ratio.pdf   prefit_mu_Mt_ljout.pdf
 
+ln -s ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf comparison_Mt_shape_signal_background.pdf
 
 
 
