@@ -1,3 +1,67 @@
+# "during the CWR"
+
+ *** Discussion title: Review of TOP-18-005
+
+Dear authors,
+
+the CWR for this paper has been just started, let me remind you that ...
+
+A new system has been designed to accelerate the submission process by
+asking authors to assist in formatting their paper in the correct
+journal format, following the procedure described on the following twiki
+page:
+
+https://twiki.cern.ch/twiki/bin/view/CMS/Internal/PaperSubmissionPrep
+
+Some of these steps are things already included in the CMS style guide,
+but for explicitness they are repeated in the twiki page.  If you have
+time during the Collaboration Wide Review and then before the Final
+Reading, I would suggest starting to make these changes. They will have
+to be done before the paper is submitted in any case.
+
+If you have any questions about what is required, please contact Bill
+Gary for assistance.
+
+We have also started a new policy that strongly encourages authors to
+prepare the HEPDATA records for their results as soon as possible so
+that they can be made public immediately after the paper is submitted to
+the journal and to arXiv, or at the very least, no later than a few days
+after the appearance of the paper on arXiv.  Below are the new
+instructions on the CMS publication twiki page:
+
+https://twiki.cern.ch/twiki/bin/view/CMS/Internal/Publications
+
+"The authors of CMS papers are strongly encouraged to prepare the
+HEPDATA records in advance of the Final Reading step, so that they can
+be made public immediately after the paper is submitted to the journal
+and arXiv. If need be, the preparation of the HEPDATA records can be
+concluded soon after the paper submission and made public through the
+HEPDATA platform with a delay of a few days relative to the appearance
+of the paper on the arXiv. In any case, these records can and should be
+made public as soon as the paper has been submitted. Naturally, these
+HEPDATA records correspond to the submitted version of our papers and
+will need to be revised if the published version of the paper, after the
+refereeing process, includes changes affecting the tabulated results."
+
+So it would be beneficial if you start working on this while you wait
+for the CWR to end and before the Final Reading is held. For details on
+how to submit your results to the HEPDATA site, see:
+
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/ArcCollaborationWideReview#Submission_of_the_results_to_the
+
+Thanks for your help on both of these matters.
+
+Best regards,
+
+Andrea
+
+-------------------------------------------------------------
+Visit this CMS message (to reply or unsubscribe) at:
+https://hypernews.cern.ch/HyperNews/CMS/get/TOP-18-005/78.html
+
+
+
+
 # fixing figures
 
 Michele:
