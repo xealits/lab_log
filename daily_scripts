@@ -1,3 +1,185 @@
+# the isolation parameters in genuine taus and fakes
+
+generator ID of the reco tau
+
+python sumup_ttree_draw.py "tau_matching_gen[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2" --output test_tau_gen_id_tt_dilep.root   --histo-name tau_gen_id_tt_dilep   gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+
+python sumup_ttree_draw.py "tau_matching_gen[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2" --output test_tau_gen_id_tt_semilep.root --histo-name tau_gen_id_tt_semilep gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+
+hadd -f test_all_tau_gen_id.root test_tau_gen_id_*root
+root -l test_all_tau_gen_id.root
+
+tau_gen_id_tt_dilep  ->Scale(1./tau_gen_id_tt_dilep  ->Integral())
+tau_gen_id_tt_semilep->Scale(1./tau_gen_id_tt_semilep->Integral())
+
+tau_gen_id_tt_semilep->SetLineColor(kRed)
+
+tau_gen_id_tt_dilep->Draw()
+tau_gen_id_tt_semilep->Draw("same")
+
+
+WARNING: strangely large number of 5, 6 gen id in dileptons!
+
+2, 3 are true taus (1ch and 3ch)
+
+5 - w
+6 - b
+
+add target requirements: OS and SV sign > 3.
+and plot all iso params for 3 types of tau: genuine, w, b
+
+check iso parameters that are != 0
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan(" tau_n_isolationCands[0]: tau_n_isolationChargedHadrCands[0]: tau_n_isolationGammaCands[0]: tau_n_isolationNeutrHadrCands[0]: tau_n_signalCands[0]: tau_n_signalChargedHadrCands[0]: tau_n_signalGammaCands[0]: tau_n_signalNeutrHadrCands[0]")
+
+tau_n_signalNeutrHadrCands seems = 0
+
+python sumup_ttree_draw.py "tau_matching_gen[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3." --output test_tau_gen_id_tt_dilep_full_sel.root   --histo-name tau_gen_id_tt_dilep_full_sel   gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root
+
+WARNING: 15k events, mostly 3, still some 5 and 6 !!!
+
+
+genuine taus:
+
+python sumup_ttree_draw.py "tau_n_isolationCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_isolationCands.root             --histo-name  tt_dilep_full_sel_isoparams_tau_n_isolationCands             gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_isolationChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_isolationChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_tau_n_isolationChargedHadrCand   gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_isolationGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_isolationGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_tau_n_isolationGammaCands        gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_isolationNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_isolationNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_tau_n_isolationNeutrHadrCands    gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+
+python sumup_ttree_draw.py "tau_n_signalCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_signalCands.root             --histo-name  tt_dilep_full_sel_isoparams_tau_n_signalCands             gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_signalChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_signalChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_tau_n_signalChargedHadrCand   gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_signalGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_signalGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_tau_n_signalGammaCands        gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+python sumup_ttree_draw.py "tau_n_signalNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 3" --output test_tt_dilep_full_sel_isoparams_tau_n_signalNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_tau_n_signalNeutrHadrCands    gstore_outdirs/94v2/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTTo2L2Nu/191003_153054/0000/*root   &
+
+
+w fakes
+
+python sumup_ttree_draw.py "tau_n_isolationCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands.root             --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands             gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCand   gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands        gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands    gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+
+python sumup_ttree_draw.py "tau_n_signalCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands.root             --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands             gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCand   gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands        gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 5" --output test_tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands    gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+
+
+b fakes
+
+python sumup_ttree_draw.py "tau_n_isolationCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands.root             --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands             gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCand   gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands        gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_isolationNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands    gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+
+python sumup_ttree_draw.py "tau_n_signalCands[0]"            --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands.root             --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands             gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalChargedHadrCands[0]" --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCands.root  --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCand   gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalGammaCands[0]"       --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands.root        --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands        gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+python sumup_ttree_draw.py "tau_n_signalNeutrHadrCands[0]"   --histo-range 20,-10,10   --cond-com "(abs(leps_ID) == 11 || abs(leps_ID) == 13) && (HLT_el || HLT_mu) && lep_matched_HLT[0] && tau_IDlev[0]>2 && tau_id[0]*lep_id[0] < 0 && tau_refited_index[0]>-1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 3. && abs(tau_matching_gen[0]) == 6" --output test_tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands.root    --histo-name  tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands    gstore_outdirs/94v2/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v2_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191003_153243/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*root   &
+
+
+hadd -f test_tt_dilep_full_sel_all_isoparams.root test_tt_dilep_full_sel_isoparams_*root
+root -l test_tt_dilep_full_sel_all_isoparams.root
+
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands             ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCand   ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands        ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands    ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands                ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCand      ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands           ->SetLineColor(kGreen)
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands       ->SetLineColor(kGreen)
+
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands             ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCand   ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands        ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands    ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands                ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCand      ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands           ->SetLineColor(kRed)
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands       ->SetLineColor(kRed)
+
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands             ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands           ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCand   ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCand ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands        ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands      ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands    ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands  ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands                ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands              ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCand      ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCand    ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands           ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands         ->Integral())
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands       ->Scale(1./tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands     ->Integral())
+
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands             ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands           ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCand   ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCand ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands        ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands      ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands    ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands  ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands                ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands              ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCand      ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCand    ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands           ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands         ->Integral())
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands       ->Scale(1./tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands     ->Integral())
+
+tt_dilep_full_sel_isoparams_tau_n_isolationCands            ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_isolationCands           ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_isolationChargedHadrCand  ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_isolationChargedHadrCand ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_isolationGammaCands       ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_isolationGammaCands      ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_isolationNeutrHadrCands   ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_isolationNeutrHadrCands  ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_signalCands               ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_signalCands              ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_signalChargedHadrCand     ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_signalChargedHadrCand    ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_signalGammaCands          ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_signalGammaCands         ->Integral())
+tt_dilep_full_sel_isoparams_tau_n_signalNeutrHadrCands      ->Scale(1./tt_dilep_full_sel_isoparams_tau_n_signalNeutrHadrCands     ->Integral())
+
+
+       tt_dilep_full_sel_isoparams_tau_n_isolationCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationCands     ->Draw("same")
+c1->SaveAs("isoparams_isolationCands.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_isolationChargedHadrCand     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationChargedHadrCand     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationChargedHadrCand     ->Draw("same")
+c1->SaveAs("isoparams_isolationChargedHadrCand.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_isolationNeutrHadrCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationNeutrHadrCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationNeutrHadrCands     ->Draw("same")
+c1->SaveAs("isoparams_isolationNeutrHadrCands.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_isolationGammaCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_isolationGammaCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_isolationGammaCands     ->Draw("same")
+c1->SaveAs("isoparams_isolationGammaCands.png")
+
+
+
+       tt_dilep_full_sel_isoparams_tau_n_signalCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalCands     ->Draw("same")
+c1->SaveAs("isoparams_signalCands.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_signalChargedHadrCand     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalChargedHadrCand     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalChargedHadrCand     ->Draw("same")
+c1->SaveAs("isoparams_signalChargedHadrCand.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_signalNeutrHadrCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalNeutrHadrCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalNeutrHadrCands     ->Draw("same")
+c1->SaveAs("isoparams_signalNeutrHadrCands.png")
+
+       tt_dilep_full_sel_isoparams_tau_n_signalGammaCands     ->Draw()
+tt_dilep_full_sel_isoparams_wfakes_tau_n_signalGammaCands     ->Draw("same")
+tt_dilep_full_sel_isoparams_bfakes_tau_n_signalGammaCands     ->Draw("same")
+c1->SaveAs("isoparams_signalGammaCands.png")
+
+
+
+-- the candidates in the signal cone are the same everywhere
+   the genuine taus have less candidates in the isolation cone, but not terrifically much less
+
+one possibility could be to get the momenta of the isolation particles and calculate the mass of the system -- is it close to D or B mesons or not?
+
+
+
+
+
 # "during the CWR"
 
  *** Discussion title: Review of TOP-18-005
