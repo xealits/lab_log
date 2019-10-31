@@ -659,6 +659,12 @@ python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs
 python stack_plot.py distrs/v37_test172_bunchCONTROLS1_mc_withTauSys.root distrs/v37_test172_bunchCONTROLS1/SingleMuon.root     --output-type png -o plots/v37_test172_paper_plots1_tau_pt_per_toppt/ --data-nick data_other --overwrite --ratio-range 0.55 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. -p -r --lumi 35900 -c mu_sel -x mu_selVloose -d tau_pt --wjet 1.4 --qcd 1.05 --title "top p_{T} Up" --title-x "#font[12]{p}_{T}(#tau_{h}) [GeV]" --title-y "Events" --draw-overflows 5 --legend-shift 0.05 --drop-bin 29.  --y-range 0,7500 --x-range 30,100 --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 3. --no-horizontal-error-bars --systematic TOPPTUp
 
 
+# 2017legacy general figures
+
+## check data is ok
+
+python sumup_ttree_draw.py "event_taus[0].pt()" --custom-range 20,30,35,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "(selection_stage ==  9 || selection_stage ==  7)" --output test_tt_mutau_tau_pt.root --histo-name tt_mutau_tau_pt  lstore_outdirs/94v1/processing2/Data2017legacy_13TeV_SingleMuon_*/*root     &
+python sumup_ttree_draw.py "event_taus[0].pt()" --custom-range 20,30,35,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "(selection_stage == 19 || selection_stage == 17)" --output test_tt_eltau_tau_pt.root --histo-name tt_eltau_tau_pt  lstore_outdirs/94v1/processing2/Data2017legacy_13TeV_SingleElectron_*/*root &
 
 
 
