@@ -22,6 +22,14 @@ rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
 rate_elmu_other         rateParam  elmu tt_other (@0)    dilep_norm
 rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
 
+correct the filenames of the datafiles
+
+RuntimeError: Error reading line 16 of file fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.txt: Process tt_other is declared as signal in some bin and as background in some other bin
+
+damn, with the lj error it must be a signal in elmu!!
+
+
+
 text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.txt
 
 separate fits:
@@ -56,7 +64,7 @@ plotImpacts.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json -o la
 
 -- something is wrong, overall the uncertainty is huge, +-0.4?
    tau fakes are not constrained
-   scale parameters are huge, Mf, Mr, Mfr, alsp some PDFs, Frag, Semilep etc
+   scale parameters are huge, Mf, Mr, Mfr, also some PDFs, Frag, Semilep etc
    PU somehow is huge
 
 combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
@@ -67,8 +75,413 @@ plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_1.json -o 
 -- also weird, large JER, TES? what TES is doing here? etc
 
 
+## checking syst variations
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s PUUp,PUDown
+
+-- more than 10%, but linear
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s FragUp,FragDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s SemilepBRUp,SemilepBRDown
+
+Frag is way more than 10%
+Semilep is asymmetric and large
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TESUp,TESDown
+
+ok, but "down" is somewhat random
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JERUp,JERDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JESUp,JESDown
+
+JER is random, often asymmetric
+JES is somewhat more reasonable
+both are small
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s bSFUp,bSFDown
+
+very smooth, linear, and small correction
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_1.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TOPPTUp,TOPPTDown
+
+-- small reasonable effect
+
+
+
+fit with only experimental systematics
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root   --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name MuShapes --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match
+
+-- mu is ok, elmu does not converse with various errors
+
+root -l higgsCombineMuShapes.MultiDimFit.mH120.root
+limit->Draw("2*deltaNLL:r", "deltaNLL>0 && 2*deltaNLL<10", "L")
+
+looks OK, though somewhat big?
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit         --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match  --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doFits --parallel 5  --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match  --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json  --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match  --name MuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_1
+
+   r :    +1.000   -0.116/+0.133 (68%)
+
+probably very large PU?
+yep, PU is the first impact
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit   --freezeParameters PU  --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match  --name MuShapes
+
+   r :    +1.000   -0.073/+0.084 (68%)
+
+OK
+
+
+
+## normalizations for PU and theoretical systematics
+
+python syst_rates.py gstore_outdirs/94v3/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v3_MC2017legacy_Fall17_TTTo2L2Nu*/*/*/*root
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s PUUp,PUDown
+
+-- (was) more than 10%, but linear
+   ok now
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s FragUp,FragDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s SemilepBRUp,SemilepBRDown
+
+was Frag is way more than 10%
+    Semilep is asymmetric and large
+
+ok, but SemilepBR is asymmetric??
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TESUp,TESDown
+
+ok, but "down" is somewhat random
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JERUp,JERDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JESUp,JESDown
+
+JER is random, often asymmetric
+JES is somewhat more reasonable
+both are small
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s bSFUp,bSFDown
+
+very smooth, linear, and small correction
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TOPPTUp,TOPPTDown
+
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s PUUp,PUDown
+
+-- more than 10%, but linear
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s FragUp,FragDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s SemilepBRUp,SemilepBRDown
+
+Frag is way more than 10%
+Semilep is asymmetric and large
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TESUp,TESDown
+
+ok, but "down" is somewhat random
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JERUp,JERDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s JESUp,JESDown
+
+JER is random, often asymmetric
+JES is somewhat more reasonable
+both are small
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s bSFUp,bSFDown
+
+very smooth, linear, and small correction
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_mutau -c mu_sel -d Mt_lep_met_c --y-range 0,2000 -r -s TOPPTUp,TOPPTDown
+
+
+
+## and fit again
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.txt
+text2workspace.py fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.txt
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.root   --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name MuShapes
+
+-- smooth line, but again large variation
+
+   fixed PU normalization: same?
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_2.json  --name MuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.208/+0.300 (68%)
+
+-- yep! the normalization in PU again,
+   plus a bunch of PDFs are off
+
+   fixed PU normalization:
+
+   r :    +1.000   -0.208/+0.300 (68%)
+
+   Pu looks exactly the same!
+
+rechecked, reproduced the workspace:
+
+   r :    +1.000   -0.139/+0.301 (68%)
+
+ok!
+
+now, 4 strange PDF-s 1,2,3,4
+and others are also strange
+
+
+check elmu
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name ElMuShapes
+
+-- every point has a problem with the minimum
+   but NLL is smooth, symetric, somewhat narrower than mutau
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2
+
+--- ????
+    PDFs are small
+    TOPPT is weirdly large, 15%
+    LEPmuTRG too
+    JER, JES, Mr, Peterson, Mfr, PU
+
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_elmu -c tt_elmu -d Mt_lep_met_c  -r -s JERUp,JERDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_elmu -c tt_elmu -d Mt_lep_met_c  -r -s JESUp,JESDown
+
+-- negligible variations
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s JERUp,JERDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s JESUp,JESDown
+
+same
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s PUUp,PUDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s MrUp,MrDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s MfrUp,MfrDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s PetersonUp,PetersonDown
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s TOPPTUp,TOPPTDown
+
+-- all very small and reasonable
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s LEPmuTRGUp,LEPmuTRGDown
+
+-- both way off
+
+python mc_per_sys.py distrs/distrs_94v3_processing1_mc_2.root -p tt_other -c tt_elmu -d Mt_lep_met_c  -r -s LEPmuIDUp,LEPmuIDDown
+
+-- same behavior
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes --freezeParameters LEPmuID,LEPmuTRG
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes --freezeParameters LEPmuID,LEPmuTRG
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json  --name ElMuShapes --freezeParameters LEPmuID,LEPmuTRG
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.146/+0.140 (68%)
+
+still weird toppt and others???
+maybe that's because "other" is not signal?
+
+with it as a signal:
+
+   r :    +1.000   -0.120/+0.224 (68%)
+
+damn
+
+
+maybe try without pdfs?
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json  --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.072/+0.050 (68%)
+
+LEPmu are weird, others are OK
+-- they are incorrectly calculated in stage2!!!
+
+no pdf scan:
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf --freezeParameters LEPmuTRG,LEPmuID
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf --freezeParameters LEPmuTRG,LEPmuID
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json  --name ElMuShapes  --freezeNuisanceGroup tt_th_pdf --freezeParameters LEPmuTRG,LEPmuID
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.045/+0.048 (68%)
+
+ok
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.045/+0.048 (68%)
+
+-- impacts look small here
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_2.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_2
+
+   r :    +1.000   -0.073/+0.088 (68%)
+
+-- they look natural, like usual
+   tau ID at 5 %
+
+remake elmu with an inclusive tt_elmu
+
+
+
+## inclusive elmu, noratio both
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.txt
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed_noratio.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed_noratio.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed_noratio.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed_noratio.root -m 125 -o latest_toys_asimov_impacts_both_94v3_processing1_mc_2_noratio.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_both_94v3_processing1_mc_2_noratio.json -o latest_toys_asimov_impacts_both_94v3_processing1_mc_2_noratio
+
+-- fakes are the largest
+   tau ID is constrained
+
+combineTool.py -M Impacts --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0  -t -1 -d ttxsec/v27dilep2_ratio_6_100fb_all.root -m 125 --robustFit 1 --doInitialFit                      -n RatioAllShapesExpect6noSV_100fb
+
+combineTool.py -M Impacts --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0  -t -1 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0  -t -1 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0  -t -1 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_both_94v3_processing1_mc_2.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_both_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_both_94v3_processing1_mc_2
+
+   tau_ratio :    +1.000   -1000000000000000019884624838656.000/+1000000000000000019884624838656.000 (68%)
+
+Error: minimization failed at tau_ratio = 6.25e+27
+WARNING: underflow to -1.16212e+32 in pdf_binmu_obsOnly for bin 0, weight 2791.86
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu) evaluation error, 
+
+tau_ratio is defined [0.9, 1.1] ???????????!!!!
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+
+
+
+
 
 ## ratio fits
+
+without pdfs and LEPmu (LEPel are not in!)
+
+combineCards.py mu=fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.txt elmu=fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.txt > fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.txt
+
+with the issue of lj events I need to propagate this to tt_other in elmu:
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_elmu_other         rateParam  elmu tt_other (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+tt_other is set to 6, background
+it does not matter, because we redefine the signal for ratio anyway
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.txt
+
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other,LEPmuTRG,LEPmuID --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name RatioElMuShapes   --freezeNuisanceGroup tt_th_pdf
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other,LEPmuTRG,LEPmuID --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name RatioElMuShapes   --freezeNuisanceGroup tt_th_pdf
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other,LEPmuTRG,LEPmuID --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json  --name RatioElMuShapes   --freezeNuisanceGroup tt_th_pdf
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2
+
+
+
+cp fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.txt   fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.txt
+cp fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.txt
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.txt
+text2workspace.py fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.txt
+
+
+remove them altogether
+combineCards.py mu=fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.txt elmu=fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.txt > fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.txt
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed
+
+   tau_ratio :    +1.000   -1000000000000000019884624838656.000/+1000000000000000019884624838656.000 (68%)
+
+something is totally wrong
+
+just signal:
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+   r :    +1.000   -0.149/+0.139 (68%)
+
+-- something is bad
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doInitialFit           --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 --robustFit 1 --doFits --parallel 5    --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2
+
+   r :    +1.000   -0.207/+0.161 (68%)
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit           --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5    --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2
+
+   r :    +1.000   -0.149/+0.139 (68%)
+
+-- all elmu impacts propagated, TOPPT about 7%, PU, Mr, JER, Mfr, JES 
+   why are they large in elmu???
+
+
+oh! correct ratio freeze
+
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0 -t -1 -d ttxsec/v27dilep2_ratio_6_100fb_all.root -m 125 --robustFit 1 --doInitialFit                      -n RatioAllShapesExpect6noSV_100fb
+
+
+combineTool.py -M Impacts  -t -1 --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1.0 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_2_removed.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_2_removed
+
+   tau_ratio :    +1.000   -1000000000000000019884624838656.000/+1000000000000000019884624838656.000 (68%)
+   tau_ratio :    +1.000   -1000000000000000019884624838656.000/+1000000000000000019884624838656.000 (68%)
+
+same crap
+
+
+
 
 combine -M MultiDimFit ttxsec/fit-stuff/ratio_both_1.txt --algo grid --points 100 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu --rMin 0.5 --rMax 1.5 --name RatioElMuShapes
 
