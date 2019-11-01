@@ -1,3 +1,103 @@
+# preliminary ratio fit in tt only
+
+shapes data_obs  mu_sel     fit-stuff/distrs_94v3_processing1_mc_1.root mu_sel/data/NOMINAL/mu_sel_data_NOMINAL_Mt_lep_met_c                  mu_sel/data/$SYSTEMATIC/mu_sel_data_$SYSTEMATIC_Mt_lep_met_c
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.txt
+text2workspace.py fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.txt
+
+combineCards.py mu=fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.txt elmu=fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.txt > fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.txt
+
+usual ratio:
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+with the issue of lj events I need to propagate this to tt_other in elmu:
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_elmu_other         rateParam  elmu tt_other (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.txt
+
+separate fits:
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root   --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name MuShapes
+combine -M MultiDimFit fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.root --algo grid --points 100 -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 --name ElMuShapes
+
+-- mu is ok, elmu does not converse with various errors
+
+root -l higgsCombineMuShapes.MultiDimFit.mH120.root
+limit->Draw("2*deltaNLL:r", "deltaNLL>0 && 2*deltaNLL<10", "L")
+
+-- somehow the distribution is wider than usual
+
+root -l higgsCombineElMuShapes.MultiDimFit.mH120.root
+limit->Draw("2*deltaNLL:r", "deltaNLL>0 && 2*deltaNLL<10", "L")
+
+-- not too bad actually, no jumps
+
+made tt_other a signal there
+similar errors, the NLL curve has jumps
+
+
+impacts:
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit           --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doFits --parallel 5    --name MuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_1.root -m 125 -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json  --name MuShapes
+plotImpacts_my.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_1
+
+plotImpacts.py -i latest_toys_asimov_impacts_mu_94v3_processing1_mc_1.json -o latest_toys_asimov_impacts_mu_94v3_processing1_mc_1
+
+-- something is wrong, overall the uncertainty is huge, +-0.4?
+   tau fakes are not constrained
+   scale parameters are huge, Mf, Mr, Mfr, alsp some PDFs, Frag, Semilep etc
+   PU somehow is huge
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit           --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doFits --parallel 5    --name ElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1  --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_1.root -m 125 -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_1.json  --name ElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_elmu_94v3_processing1_mc_1.json -o latest_toys_asimov_impacts_elmu_94v3_processing1_mc_1
+
+-- also weird, large JER, TES? what TES is doing here? etc
+
+
+
+## ratio fits
+
+combine -M MultiDimFit ttxsec/fit-stuff/ratio_both_1.txt --algo grid --points 100 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu --rMin 0.5 --rMax 1.5 --name RatioElMuShapes
+
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 -d ttxsec/fit-stuff/datacard_AN_v2_mu.root -m 125 --robustFit 1 --doInitialFit
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 -d ttxsec/fit-stuff/datacard_AN_v2_mu.root -m 125 --robustFit 1 --doFits --parallel 5
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 -d ttxsec/fit-stuff/datacard_AN_v2_mu.root -m 125 -o latest_mu_toys_asimov_impacts.json
+../../CombineHarvester/CombineTools/scripts/plotImpacts_my.py -i latest_mu_toys_asimov_impacts.json -o latest_mu_toys_asimov_impacts
+
+to these:
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.root --algo grid --points 100 -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 --name RatioElMuShapes
+
+-- the fit crashes everywhere
+
+root -l higgsCombineRatioElMuShapes.MultiDimFit.mH120.root
+limit->Draw("2*deltaNLL:r", "deltaNLL>0 && 2*deltaNLL<10", "L")
+
+
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doInitialFit           --name RatioElMuShapes
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.root -m 125 --robustFit 1 --doFits --parallel 5    --name RatioElMuShapes
+../../CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_1.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_1.json  --name RatioElMuShapes
+../../CombineHarvester/CombineTools/scripts/plotImpacts_my.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_1.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_1
+
+
+
+
+
+
+
 # the isolation parameters in genuine taus and fakes
 
 generator ID of the reco tau
