@@ -1,4 +1,31 @@
-# variation of the fit
+# lj_var sig-bckg comparison for the paper with new sumup_loop
+
+time sumup_loop 0 0 1 41300 NOMINAL mu_sel,el_sel std lj_var outfile_lj_var.root lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root
+
+naturally:
+Error in <TTree::SetBranchAddress>: unknown branch -> event_jets_lj_w_mass
+Error in <TTree::SetBranchAddress>: unknown branch -> event_jets_lj_t_mass
+Error in <TTree::SetBranchAddress>: unknown branch -> event_taus_pat_sv_leng
+
+
+python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 5 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 200 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " "
+
+cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots3/compare_lep_sel_tt_leptau_tt_lj_NOMINAL_lj_var_signal,background_formula.pdf
+
+
+
+# FR Kevin's questions and the variation of the fit
+
+Analysis question:  The ttbar other background is pretty large, comparable to the signal.  When you fit for the signal strength, is this also applied to the ttbar background as well?  If not, why not and how do we account for this issue?  If so, then some of the measurement is affected by the ttbar background and one would have to consider this when measuring the R_ltau/R_ll and the partial decay width.
+
+%BLUE% >> In the fit we do not apply the signal strength to the ttbar background with mis-identified taus, because: 1) including ttbar->lqq events in the signal strength would change the strategy of the analysis, we would not be able to use this signal strength to estimate the branching fraction top->tau for the measurement of the ratio and partial decay width, 2) the large uncertainty in tau mis-identification would absorb a possible improvement in the uncertainty in the measurement of the cross section. Effectively, we just measure the number of ttbar->lepton+tau events, which we can use both for the cross section and the ratio measurements. And at the same time we measure the number of background events with mis-identified taus, but we do not use the constraints of branching fractions of other ttbar processes, such as lepton+jets. This estimation of background events is carried out as the yield of SM prediction in MC multiplied by the loosely constrained tau mis-identification scale factor. But since the constrain is loose, it effectively estimates just the number of background events with mis-identified taus. This procedure works well for the measurement of the ratio. From the measurement of the number of ttbar->lepton+tau events we can derive both the production cross section of ttbar and the partial width of top->tau decay. In the first case we fix the branching fraction of top->tau by taking it from SM prediction. It is included in the fiducial cross sections. In the second case we fix the ttbar cross section by taking it from the measurement in dilepton final states.
+
+L23: How are these handled?
+
+%BLUE% >> \tau_ell\tau_h events are treated as a background. Including it in the signal vs in the background, we see a small effect on the results, i.e. of the order of 0.1%.
+
 
 ## linear signal strength on tau_l tau_h
 
