@@ -1,6 +1,17 @@
+# NLL plot with arrows and brazil plot background
+
+python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "Cross section [pb]" --output-type pdf --font-size 30 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS" --left-title-below --mark-dileptons 803. --add-brazil && evince uncertainty_scans_v37_test172BIN1_test2_both_exp_obs.pdf
+
+python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "Cross section [pb]" --output-type pdf --font-size 30 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS" --left-title-below --mark-dileptons 803.  && evince uncertainty_scans_v37_test172BIN1_test2_both_exp_obs.pdf
+
+ln -s uncertainty_scans_v37_test172BIN1_test2_both_exp_obs.pdf uncertainty_scans_both.pdf
+
+
+
+
 # lj_var sig-bckg comparison for the paper with new sumup_loop
 
-time sumup_loop 0 0 1 41300 NOMINAL mu_sel,el_sel std lj_var outfile_lj_var.root lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root
+time sumup_loop 0 0 1 41300 NOMINAL mu_sel,el_sel,lep_sel std lj_var outfile_lj_var.root lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root
 
 naturally:
 Error in <TTree::SetBranchAddress>: unknown branch -> event_jets_lj_w_mass
@@ -10,9 +21,53 @@ Error in <TTree::SetBranchAddress>: unknown branch -> event_taus_pat_sv_leng
 
 python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 5 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside
 
-python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 200 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " "
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 200 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0.3
 
 cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots3/compare_lep_sel_tt_leptau_tt_lj_NOMINAL_lj_var_signal,background_formula.pdf
+
+
+## the special pad for the untagged events
+
+reproduce the lj var with reassigned untagged events!
+
+time sumup_loop 0 0 1 41300 NOMINAL mu_sel,el_sel,lep_sel std lj_var outfile_lj_var_moved_untagged.root lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root
+
+old file:
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 45 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.3 --add-outlier-plot 0.1,0.05
+
+new:
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 45 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.3 --add-outlier-plot 0.1,0.05
+
+root [1] NOMINAL->Get("lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var")->Print()
+TH1.Print Name  = lep_sel_tt_leptau_NOMINAL_lj_var, Entries= 66329, Total sum= 29752.4
+root [2] NOMINAL->Get("lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var")->Print()
+TH1.Print Name  = lep_sel_tt_lj_NOMINAL_lj_var, Entries= 29836, Total sum= 14809.7
+
+root [6] ((TH1D*) NOMINAL->Get("lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var"))->GetBinContent(-1)
+(Double_t) 7835.03
+root [8] ((TH1D*) NOMINAL->Get("lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var"))->GetBinContent(-1)
+(Double_t) 2091.09
+
+7835.03 / (29752.4 + 14809.7)
+2091.09 / (29752.4 + 14809.7)
+
+0.175823
+0.0469253
+
+font sizes for 2-column figure
+--font-size-axes-titles 40 --font-size-axes-labels 30
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 45 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.3 --add-outlier-plot 0.1758,0.0469
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 10 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.3 --add-outlier-plot 0.1758,0.0469
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 18 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.25 --add-outlier-plot 0.1758,0.0469
+
+cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots3/compare_lep_sel_tt_leptau_tt_lj_NOMINAL_lj_var_signal,background_formula.pdf
+
+
 
 
 
@@ -3785,6 +3840,9 @@ python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "probability d
 
 python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 32 --draw-overflows 5 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside
 
+python get_shapes.py --x-title "#font[12]{m}_{T} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "background":../studies/mt-per-tau-pt-in-new-bins/v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive --y-range 0,0.159 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --draw-overflows 10 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside
+
+
 cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots3/
 
 
@@ -3792,7 +3850,7 @@ nll NLL plot with lumi
 
 python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "cross section [pb]" --output-type pdf --font-size 30 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS #font[52]{Preliminary}" --left-title-below
 
-python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "Cross section [pb]" --output-type pdf --font-size 20 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS" --left-title-below
+python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "Cross section [pb]" --output-type pdf --font-size 30 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS" --left-title-below
 
 ln -s distrs,v37_test172_bunchCONTROLS1_mc_withTauSys_distrs,v37_test172_bunchCONTROLS1,SingleElectron_tau_pt_el_sel_NOMINAL_stack_ratio_x_el_selVloose_dataqcd.pdf   prefit_el_sel_tau_pt.pdf
 ln -s distrs,v37_test172_bunchCONTROLS1_mc_withTauSys_distrs,v37_test172_bunchCONTROLS1,SingleMuon_tau_pt_mu_sel_NOMINAL_stack_ratio_x_mu_selVloose_dataqcd.pdf       prefit_mu_sel_tau_pt.pdf
