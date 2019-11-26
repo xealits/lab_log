@@ -1,3 +1,30 @@
+# Formatting corrections from Bill Gary
+
+renaming figures
+
+	renamed:    Plots/prefit_el_sel_tau_pt.pdf -> Figure_001-a.pdf
+	renamed:    Plots/prefit_mu_sel_tau_pt.pdf -> Figure_001-b.pdf
+	renamed:    Plots/comparison_Mt_shape_signal_background.pdf -> Figure_002-a.pdf
+	renamed:    Plots/comparison_lj_var_shape_signal_background.pdf -> Figure_002-b.pdf
+	renamed:    Plots/prefit_el_Mt_ljout.pdf -> Figure_003-a.pdf
+	renamed:    Plots/prefit_mu_Mt_ljout.pdf -> Figure_003-b.pdf
+	renamed:    Plots/prefit_el_Mt_lj.pdf -> Figure_003-c.pdf
+	renamed:    Plots/prefit_mu_Mt_lj.pdf -> Figure_003-d.pdf
+	renamed:    Plots/uncertainty_scans_both.pdf -> Figure_004.pdf
+
+sed -i 's,Plots/prefit_el_sel_tau_pt.pdf,Figure_001-a.pdf,g' TOP-18-005.tex 
+sed -i 's,Plots/prefit_mu_sel_tau_pt.pdf,Figure_001-b.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/comparison_Mt_shape_signal_background.pdf,Figure_002-a.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/comparison_lj_var_shape_signal_background.pdf,Figure_002-b.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/prefit_el_Mt_ljout.pdf,Figure_003-a.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/prefit_mu_Mt_ljout.pdf,Figure_003-b.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/prefit_el_Mt_lj.pdf,Figure_003-c.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/prefit_mu_Mt_lj.pdf,Figure_003-d.pdf,g' TOP-18-005.tex
+sed -i 's,Plots/uncertainty_scans_both.pdf,Figure_004.pdf,g' TOP-18-005.tex
+
+
+
+
 # NLL plot with arrows and brazil plot background
 
 python ttxsec/fit-stuff/plot_uncertainty_scans.py v37_test172BIN1_test2 --xsec-scale 831.76 --title-x "Cross section [pb]" --output-type pdf --font-size 30 --canvas-size 600 --offset-y 0.8 --offset-x 0.8 --left-title "CMS" --left-title-below --mark-dileptons 803. --add-brazil && evince uncertainty_scans_v37_test172BIN1_test2_both_exp_obs.pdf
