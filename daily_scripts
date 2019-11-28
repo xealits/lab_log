@@ -1,3 +1,48 @@
+# preliminary ratio fit in tt only, ntuples 2017 systematics
+
+scp otoldaie@lxplus.cern.ch:~/work/public/CMSSW_10_3_3/src/UserCode/proc/jobsums/distrs//distrs_94v4_processing3_fit1.root fit-stuff/
+
+cp fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2_removed.txt   fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed.txt
+cp fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_2_removed.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed.txt
+
+cp fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed.txt   fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed_autonorm.txt
+cp fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed_autonorm.txt
+
+vim -p fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed_autonorm.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed_autonorm.txt
+
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed_autonorm.txt
+text2workspace.py fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed_autonorm.txt
+
+remove them altogether
+combineCards.py mu=fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed_autonorm.txt elmu=fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed_autonorm.txt > fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_removed_autonorm.txt
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_removed_autonorm.txt
+
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_removed_autonorm.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_removed_autonorm.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_removed_autonorm.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_removed_autonorm.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_removed_autonorm.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_removed_autonorm
+
+old tau ID SF:
+
+   tau_ratio :    +1.000   -0.055/+0.059 (68%)
+
+new:
+
+   tau_ratio :    +1.000   -0.057/+0.065 (68%)
+
+
+
+
+
 # Formatting corrections from Bill Gary
 
 renaming figures
@@ -91,6 +136,8 @@ python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability
 python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 10 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.3 --add-outlier-plot 0.1758,0.0469
 
 python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 18 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0,0.25 --add-outlier-plot 0.1758,0.0469
+
+python get_shapes.py --x-title "#font[12]{D}_{jjb} [GeV]" --y-title "Probability density" --norm-binwidth --formula "background,black,2:signal,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_leptau/lep_sel_tt_leptau_NOMINAL_lj_var "background":outfile_lj_var_moved_untagged.root:NOMINAL/lep_sel/tt_lj/lep_sel_tt_lj_NOMINAL_lj_var --y-range 0,0.349 --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --font-size-axes-titles 40 --draw-overflows 18 --norm-formulas --left-title "CMS #font[52]{Simulation}" --left-title-inside --title " " --vertical-line 60.,0.001,0.25 --add-outlier-plot 0.1758,0.0469
 
 cp ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf plots/v37_test172_paper_plots3/compare_lep_sel_tt_leptau_tt_lj_NOMINAL_lj_var_signal,background_formula.pdf
 
