@@ -1,3 +1,95 @@
+# plots in new ntuples, including DY final states
+
+mkdir -p plots/94v4_processing3_plot1/
+
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c el_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c el_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c mu_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c mu_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_eltau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_mutau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c tt_elmu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_mumu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_94v4_processing3_plot1.root --do-not-reweight --no-data -o plots/94v4_processing3_plot1/ --overwrite -p -r -c dy_elel   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+
+
+
+
+
+# implementing the default shapes for processes without some systematics
+
+a datacard with all tt modeling systematics:
+fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.txt
+
+cp fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_removed_autonorm.txt fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+vim -p fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt fit-stuff/datacard_ratio_mu_94v3_processing1_mc_2.txt
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.root -m 125 --robustFit 1 --doInitialFit          --name RatioMuShapes
+
+-- with Frag uncertainty it strangely works!
+   no! Frag was already there! but it is only in tt! strange
+   lets add pdfs
+
+let's try all uncertainties and ratio fit
+
+cp fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_removed_autonorm.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+
+
+
+
+vim -p fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+text2workspace.py fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt
+text2workspace.py fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+
+combineCards.py mu=fit-stuff/datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt elmu=fit-stuff/datacard_ratio_elmu_94v3_processing1_mc_3_testModeling_autonorm.txt > fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+vim fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+text2workspace.py fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_both_94v3_processing1_mc_3_testModeling_autonorm.root -m 125 -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_testModeling_autonorm.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_testModeling_autonorm.json -o latest_toys_asimov_impacts_ratio_94v3_processing1_mc_3_testModeling_autonorm
+
+all ok!
+
+and add lep IDs!
+and correct bSF!
+
+no LepSFs
+   tau_ratio :    +1.000   -0.056/+0.061 (68%)
+
+with LepSFs
+   tau_ratio :    +1.000   -0.056/+0.062 (68%)
+
+with bSF shape instead of 3% flat uncertainty
+   tau_ratio :    +1.000   -0.062/+0.069 (68%)
+
+damn! very large bSF uncertainty
+
+with new TAUID
+   tau_ratio :    +1.000   -0.063/+0.074 (68%)
+
+
+
+
+
+
+
 # preliminary ratio fit in tt only, ntuples 2017 systematics
 
 scp otoldaie@lxplus.cern.ch:~/work/public/CMSSW_10_3_3/src/UserCode/proc/jobsums/distrs//distrs_94v4_processing3_fit1.root fit-stuff/
