@@ -18,6 +18,80 @@ python stack_plot.py distrs//distrs_94v4_processing3_plot1.root distrs//distrs_9
 
 
 
+same in new processing and new ntuples:
+
+new gen processes
+
+ KEY: TDirectoryFile	dy_tautau;1	dy_tautau
+ KEY: TDirectoryFile	dy_other;1	dy_other
+ KEY: TDirectoryFile	data;1	data
+ KEY: TDirectoryFile	stop_elmu;1	stop_elmu
+ KEY: TDirectoryFile	stop_eltau;1	stop_eltau
+ KEY: TDirectoryFile	stop_lj;1	stop_lj
+ KEY: TDirectoryFile	stop_mutau;1	stop_mutau
+ KEY: TDirectoryFile	stop_other;1	stop_other
+ KEY: TDirectoryFile	tt_elmu;1	tt_elmu
+ KEY: TDirectoryFile	tt_eltau1ch;1	tt_eltau1ch
+ KEY: TDirectoryFile	tt_eltau3ch;1	tt_eltau3ch
+ KEY: TDirectoryFile	tt_ljb;1	tt_ljb
+ KEY: TDirectoryFile	tt_ljo;1	tt_ljo
+ KEY: TDirectoryFile	tt_ljw;1	tt_ljw
+ KEY: TDirectoryFile	tt_ljz;1	tt_ljz
+ KEY: TDirectoryFile	tt_ltaul;1	tt_ltaul
+ KEY: TDirectoryFile	tt_mutau1ch;1	tt_mutau1ch
+ KEY: TDirectoryFile	tt_mutau3ch;1	tt_mutau3ch
+ KEY: TDirectoryFile	tt_taueltaumu;1	tt_taueltaumu
+ KEY: TDirectoryFile	tt_taulj;1	tt_taulj
+ KEY: TDirectoryFile	tt_taultauh;1	tt_taultauh
+ KEY: TDirectoryFile	tt_other;1	tt_other
+ KEY: TDirectoryFile	wjets_tauh;1	wjets_tauh
+ KEY: TDirectoryFile	wjets_taul;1	wjets_taul
+ KEY: TDirectoryFile	wjets_other;1	wjets_other
+
+
+export nt=94v5
+export proc=processing1
+export distr=plot1
+
+export plots_dir=plots/${nt}_${proc}_${distr}/
+mkdir -p $plots_dir
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mumu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_elel   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+## 2d histo of pT-s?
+
+ttree_out->Draw("event_leptons[0].pt():event_taus[0].pt()", "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)", "colz")
+
+test binning:
+python sumup_ttree_draw.py "event_leptons[0].pt():@event_taus.size()" --histo-range 10,0,10,20,0,100   --cond-com "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)" --output test_2d_pTs_dy.root   --histo-name test_2d_pTs_dy   --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1_1.root
+
+
+python sumup_ttree_draw.py "event_leptons[0].pt():event_taus[0].pt()" --histo-range 20,0,100,20,0,150   --cond-com "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)" --output test_2d_pTs_dy.root     --histo-name test_2d_pTs_dy    --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madg*/MC*.root &
+
+python sumup_ttree_draw.py "event_leptons[0].pt():event_taus[0].pt()" --histo-range 20,0,100,20,0,150   --cond-com "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)" --output test_2d_pTs_wjets.root  --histo-name test_2d_pTs_wjets --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_WJets*/*root &
+
+
+python sumup_ttree_draw.py "event_leptons[0].pt():event_taus[0].pt()" --histo-range 20,0,100,20,0,150   --cond-com "(selection_stage_dy == 235 || selection_stage_dy == 234 || selection_stage_dy == 225 || selection_stage_dy == 224)" --output test_2d_pTs_dy_eltau_dy.root     --histo-name test_2d_pTs_dy_eltau_dy    --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madg*/MC*.root &
+python sumup_ttree_draw.py "event_leptons[0].pt():event_taus[0].pt()" --histo-range 20,0,100,20,0,150   --cond-com "(selection_stage_dy == 235 || selection_stage_dy == 234 || selection_stage_dy == 225 || selection_stage_dy == 224)" --output test_2d_pTs_dy_eltau_wjets.root  --histo-name test_2d_pTs_dy_eltau_wjets --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_WJets*/*root &
+
+
 
 
 
