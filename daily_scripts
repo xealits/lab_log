@@ -56,19 +56,74 @@ export distr=plot1
 export plots_dir=plots/${nt}_${proc}_${distr}/
 mkdir -p $plots_dir
 
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
 
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+export nt=94v5
+export proc=processing1
+export distr=plot2
 
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mumu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_elel   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+export more_opt=
+
+export output_type=png
+
+export plots_dir=plots/${nt}_${proc}_${distr}/
+mkdir -p $plots_dir
+
+
+for d in Mt_lep_met_c leading_lep_pt dilep_mass_dy_tautau dilep_mass
+do
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu   -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mumu   -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_elel   -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+done
+
+for d in tau_pt tau_sv_sign
+do
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d ${d} --ratio-range 0.5 ${more_opt} --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+done
+
+export more_opt="--y-range 0,140000"
+
+for d in tau_pt
+do
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d ${d} --ratio-range 0.5 --y-range 0,150000 --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d ${d} --ratio-range 0.5 --y-range 0,150000 --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d ${d} --ratio-range 0.5 --y-range 0,150000 --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d ${d} --ratio-range 0.5 --y-range 0,150000 --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+done
+
+
+for d in tau_sv_sign leading_lep_pt tau_pt
+do
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau_ss -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_ss -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d ${d} --ratio-range 0.5  --cumulative --title ""  --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+done
+
+
 
 
 python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
@@ -176,6 +231,31 @@ in sumup_loop:
 
 now:
 all ok!
+
+
+## few ttbar, a lot of DY and wjets in tt_elmu
+
+dy_other, not tautau
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu   -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+    root [4] tt_elmu->Get("tt_elmu/NOMINAL/tt_elmu_tt_elmu_NOMINAL_leading_lep_pt")->Print()
+    TH1.Print Name  = tt_elmu_tt_elmu_NOMINAL_leading_lep_pt, Entries= 526394, Total sum= 291311
+    
+    root [5] tt_elmu->Get("dy_other/NOMINAL/tt_elmu_dy_other_NOMINAL_leading_lep_pt")->Print()
+    TH1.Print Name  = tt_elmu_dy_other_NOMINAL_leading_lep_pt, Entries= 16796402, Total sum= 4.18583e+07
+
+
+genproc:
+
+python sumup_ttree_draw.py "gen_proc_id" --histo-range 50,0,50   --cond-com "(selection_stage == 9 || selection_stage == 7)" --output test_mu_sel_gen_proc_id_TTToSemiLeptonic.root  --histo-name test_mu_sel_gen_proc_id_TTToSemiLeptonic --ttree ttree_out  lstore_outdirs/94v5/processing1/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*.root
+
+-- noticed immediately a bug: sel > 200 || sel < 220
+
+all right now
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu_tight   -d ${d} --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
 
 
 
