@@ -71,11 +71,31 @@ python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_$
 python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_elel   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
 
 
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
-python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d dilep_mass_dy_tautau --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d dilep_mass_dy_tautau --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
 
 
-## 2d histo of pT-s?
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "m(l, #tau_{h}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+
+DEBUG:root:absent NOMINAL
+DEBUG:root:absent NOMINAL dy_mutau_wjets_other_NOMINAL_dilep_mass_dy_tautau
+
+???
+
+-- fixed this, was a weird bug
+
+
+And there is some mess-up with gen_proc_id in TTbar.
+
+
+
+
+## 2d histo of pT-s? YEP, works
 
 ttree_out->Draw("event_leptons[0].pt():event_taus[0].pt()", "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)", "colz")
 
@@ -93,6 +113,69 @@ python sumup_ttree_draw.py "event_leptons[0].pt():event_taus[0].pt()" --histo-ra
 
 
 
+## gen_proc_id in ttbar
+
+export file_TTTo2L=distrs/94v5/processing1/plot1/MC2017legacy_Fall17_TTTo2L2Nu.root
+export file_TTToSemiLeptonic=distrs/94v5/processing1/plot1/MC2017legacy_Fall17_TTToSemiLeptonic_v2.root
+export file_TTToHadronic=distrs/94v5/processing1/plot1/MC2017legacy_Fall17_TTToHadronic_13TeV_v2.root
+
+python stack_plot.py ${file_TTTo2L} ${file_TTTo2L}                     --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "m(l, #tau_{h}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_TTToSemiLeptonic} ${file_TTToSemiLeptonic} --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "m(l, #tau_{h}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_TTToHadronic} ${file_TTToHadronic}         --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d dilep_mass --ratio-range 0.5 --bin-norm --title "" --title-x "m(l, #tau_{h}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+-- SemiLeptonic is mis-classified
+
+what's in ttree-s?
+
+python sumup_ttree_draw.py "gen_proc_id" --histo-range 50,0,50   --cond-com "(selection_stage == 9 || selection_stage == 7)" --output test_mu_sel_gen_proc_id_TTToSemiLeptonic.root  --histo-name test_mu_sel_gen_proc_id_TTToSemiLeptonic --ttree ttree_out  lstore_outdirs/94v5/processing1/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_*.root
+
+-- all events are at 11 and 20-25
+
+in sumup_loop:
+
+1. check if the event_selection is right
+
+    root [2] test_mu_sel_gen_proc_id_TTToSemiLeptonic->Print()
+    TH1.Print Name  = test_mu_sel_gen_proc_id_TTToSemiLeptonic, Entries= 44592, Total sum= 44592
+
+    root -l jobsums/distrs/94v5/processing1/plot1/MC2017legacy_Fall17_TTToSemiLeptonic_v2.root
+
+	tt_elmu       ->Get("mu_sel/NOMINAL/tt_elmu_mu_sel_NOMINAL_dilep_mass")
+	tt_eltau1ch   ->Get("mu_sel/NOMINAL/tt_eltau1ch_mu_sel_NOMINAL_dilep_mass")
+	tt_eltau3ch   ->Get("mu_sel/NOMINAL/tt_eltau3ch_mu_sel_NOMINAL_dilep_mass")
+	tt_ljb        ->Get("mu_sel/NOMINAL/tt_ljb_mu_sel_NOMINAL_dilep_mass")
+	tt_ljo        ->Get("mu_sel/NOMINAL/tt_ljo_mu_sel_NOMINAL_dilep_mass")
+	tt_ljw        ->Get("mu_sel/NOMINAL/tt_ljw_mu_sel_NOMINAL_dilep_mass")
+	tt_ljz        ->Get("mu_sel/NOMINAL/tt_ljz_mu_sel_NOMINAL_dilep_mass")
+	tt_ltaul      ->Get("mu_sel/NOMINAL/tt_ltaul_mu_sel_NOMINAL_dilep_mass")
+	tt_mutau1ch   ->Get("mu_sel/NOMINAL/tt_mutau1ch_mu_sel_NOMINAL_dilep_mass")
+	tt_mutau3ch   ->Get("mu_sel/NOMINAL/tt_mutau3ch_mu_sel_NOMINAL_dilep_mass")
+	tt_taueltaumu ->Get("mu_sel/NOMINAL/tt_taueltaumu")
+	tt_taulj      ->Get("mu_sel/NOMINAL/tt_taulj_mu_sel_NOMINAL_dilep_mass")
+	tt_taultauh   ->Get("mu_sel/NOMINAL/tt_taultauh_mu_sel_NOMINAL_dilep_mass")
+	tt_other      ->Get("mu_sel/NOMINAL/tt_other_mu_sel_NOMINAL_dilep_mass")
+
+	((TH1D*) mu_sel->Get("tt_elmu/NOMINAL/mu_sel_tt_elmu_NOMINAL_dilep_mass"))             ->GetEntries() + ((TH1D*) mu_sel->Get("tt_eltau1ch/NOMINAL/mu_sel_tt_eltau1ch_NOMINAL_dilep_mass"))     ->GetEntries() + ((TH1D*) mu_sel->Get("tt_eltau3ch/NOMINAL/mu_sel_tt_eltau3ch_NOMINAL_dilep_mass"))     ->GetEntries() + ((TH1D*) mu_sel->Get("tt_ljb/NOMINAL/mu_sel_tt_ljb_NOMINAL_dilep_mass"))               ->GetEntries() + ((TH1D*) mu_sel->Get("tt_ljo/NOMINAL/mu_sel_tt_ljo_NOMINAL_dilep_mass"))               ->GetEntries() + ((TH1D*) mu_sel->Get("tt_ljw/NOMINAL/mu_sel_tt_ljw_NOMINAL_dilep_mass"))               ->GetEntries() + ((TH1D*) mu_sel->Get("tt_ljz/NOMINAL/mu_sel_tt_ljz_NOMINAL_dilep_mass"))               ->GetEntries() + ((TH1D*) mu_sel->Get("tt_ltaul/NOMINAL/mu_sel_tt_ltaul_NOMINAL_dilep_mass"))           ->GetEntries() + ((TH1D*) mu_sel->Get("tt_mutau1ch/NOMINAL/mu_sel_tt_mutau1ch_NOMINAL_dilep_mass"))     ->GetEntries() + ((TH1D*) mu_sel->Get("tt_mutau3ch/NOMINAL/mu_sel_tt_mutau3ch_NOMINAL_dilep_mass"))     ->GetEntries() + ((TH1D*) mu_sel->Get("tt_taueltaumu/NOMINAL/mu_sel_tt_taueltaumu_NOMINAL_dilep_mass")) ->GetEntries() + ((TH1D*) mu_sel->Get("tt_taulj/NOMINAL/mu_sel_tt_taulj_NOMINAL_dilep_mass"))           ->GetEntries() + ((TH1D*) mu_sel->Get("tt_taultauh/NOMINAL/mu_sel_tt_taultauh_NOMINAL_dilep_mass"))     ->GetEntries() + ((TH1D*) mu_sel->Get("tt_other/NOMINAL/mu_sel_tt_other_NOMINAL_dilep_mass"))           ->GetEntries()
+
+    44592.000
+
+    full match!
+
+    root [22] ((TH1D*) mu_sel->Get("tt_elmu/NOMINAL/mu_sel_tt_elmu_NOMINAL_dilep_mass"))             ->GetEntries()
+    (double) 42485.000
+
+2. check how the processes are classified
+
+    // temporary fix for lj events in elmu final state
+    bool NT_genproc_tt_elmu_lj()
+            {
+            return NT_gen_proc_id == 3 || NT_gen_proc_id == 0 || (NT_gen_proc_id > 20 && NT_gen_proc_id < 30);
+            }
+
+    -- ha!
+
+now:
+all ok!
 
 
 
