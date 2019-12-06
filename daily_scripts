@@ -356,6 +356,416 @@ root [24] 0.117512 * 35900
 
 
 
+## fitting
+
+distrs_94v5_processing1_fit1.root
+
+cp datacard_ratio_mu_94v3_processing1_mc_3_testModeling_autonorm.txt   datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt
+cp datacard_ratio_elmu_94v3_processing1_mc_3_testModeling_autonorm.txt datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt
+
+cp datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt        datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt
+cp datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt      datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt
+
+vim -p datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt
+
+
+text2workspace.py fit-stuff/datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt
+text2workspace.py fit-stuff/datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt
+
+text2workspace.py fit-stuff/datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt
+text2workspace.py fit-stuff/datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt
+
+-- all processed well
+
+
+
+## tt channels
+
+combineCards.py mu=fit-stuff/datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt elmu=fit-stuff/datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt > fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.txt
+
+text2workspace.py fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.txt
+
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters tt_mutau,tt_elmu,tt_other --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_tt-channels.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_tt-channels.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_tt-channels
+
+   tau_ratio :    +1.000   -0.076/+0.084 (68%)
+
+-- ooook
+
+tau ID, tau fakes are gigantic
+TES is third
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+   tau_ratio :    +1.000   -0.076/+0.084 (68%)
+
+
+
+
+### the issue with null norm of wjets_other???
+
+export nt=94v5
+export proc=processing1
+export distr=fit1
+
+export more_opt=
+
+export output_type=png
+
+export plots_dir=plots/${nt}_${proc}_${distr}/
+mkdir -p $plots_dir
+
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+-- yeah, there are none of these, and there were none in the control distrs before the last update
+
+
+
+
+## 4 channels
+
+3% were obtained in:
+
+ttxsec/v27dilep2_ratio_6fixed2_10kSV_all.root
+
+-- this is only ttbar ratio
+
+1000fb tests were done in
+
+ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double.txt
+ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2.root
+
+fitting/ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double.txt
+
+-- this is all 4 channels
+
+
+norm_tt                 extArg                   1.         [0.8,1.2]
+norm_dy                 extArg                   1.         [0.8,1.2]
+dy_ratio                extArg                   1.         [0.85,1.15]
+tt_per_dy               extArg                   1.         [0.85,1.15]
+
+rate_elmu               rateParam  elmu     tt_other  (@0)       norm_tt
+rate_eltau              rateParam  el       tt_eltau  (@0*@1*@2) norm_tt,dy_ratio,tt_per_dy
+
+rate_mumu               rateParam  dy_mumu     dy_other  (@0)    norm_dy
+rate_mutau              rateParam  dy_mutau    dy_tautau (@0*@1) norm_dy,dy_ratio
+
+this is tt channels only now:
+
+dilep_norm              extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.9,1.1]
+rate_elmu               rateParam  elmu tt_elmu  (@0)    dilep_norm
+rate_mutau              rateParam  mu   tt_mutau (@0*@1) dilep_norm,tau_ratio
+
+
+
+combineCards.py mu=fit-stuff/datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt elmu=fit-stuff/datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt dy_mutau=fit-stuff/datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt dy_mumu=fit-stuff/datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt > fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.txt
+
+norm_tt                 extArg                   1.         [0.8,1.2]
+norm_dy                 extArg                   1.         [0.8,1.2]
+dy_ratio                extArg                   1.         [0.85,1.15]
+tau_ratio               extArg                   1.         [0.85,1.15]
+                                                                                                                                                                                                                                                                               
+rate_elmu               rateParam  elmu     tt_elmu   (@0)       norm_tt
+rate_eltau              rateParam  mu       tt_mutau  (@0*@1*@2) norm_tt,dy_ratio,tau_ratio
+rate_mumu               rateParam  dy_mumu     dy_other  (@0)    norm_dy
+rate_mutau              rateParam  dy_mutau    dy_tautau (@0*@1) norm_dy,dy_ratio
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels
+
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.02 min (cpu), 0.02 min (real)
+
+--- something broke
+
+DY norm at maximum, then wjets norm
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt
+
+removed dy_norm
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp
+
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+aha!
+
+-- fakes and wjets norm are at the top
+
+
+
+## fit in 140 fb
+
+cp datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt     datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1_140fb.txt
+cp datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt   datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1_140fb.txt
+
+cp datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt     datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1_140fb.txt
+cp datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt   datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1_140fb.txt
+
+combineCards.py mu=fit-stuff/datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1_140fb.txt elmu=fit-stuff/datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1_140fb.txt dy_mutau=fit-stuff/datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1_140fb.txt dy_mumu=fit-stuff/datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1_140fb.txt > fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_140fb.txt
+
+norm_tt                 extArg                   1.         [0.8,1.2]
+norm_dy                 extArg                   1.         [0.8,1.2]
+dy_ratio                extArg                   1.         [0.85,1.15]
+tau_ratio               extArg                   1.         [0.85,1.15]
+                                                                                                                                                                                                                                                                               
+rate_elmu               rateParam  elmu     tt_elmu   (@0)       norm_tt
+rate_eltau              rateParam  mu       tt_mutau  (@0*@1*@2) norm_tt,dy_ratio,tau_ratio
+rate_mumu               rateParam  dy_mumu     dy_other  (@0)    norm_dy
+rate_mutau              rateParam  dy_mutau    dy_tautau (@0*@1) norm_dy,dy_ratio
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_140fb.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_140fb.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_140fb.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_140fb.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_140fb.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_140fb.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_140fb
+
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.03 min (cpu), 0.03 min (real)
+
+???
+
+
+## fit in 1000 fb
+
+cp datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1.txt     datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+cp datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1.txt   datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+
+cp datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1.txt     datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+cp datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1.txt   datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+
+combineCards.py mu=fit-stuff/datacard_ratio_tt_mu_94v5_processing1_fit1_higgsCombine1_1000fb.txt elmu=fit-stuff/datacard_ratio_tt_elmu_94v5_processing1_fit1_higgsCombine1_1000fb.txt dy_mutau=fit-stuff/datacard_ratio_dy_mu_94v5_processing1_fit1_higgsCombine1_1000fb.txt dy_mumu=fit-stuff/datacard_ratio_dy_mumu_94v5_processing1_fit1_higgsCombine1_1000fb.txt > fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_1000fb.txt
+
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_1000fb.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_1000fb.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_1000fb.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_1000fb.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_1000fb.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_1000fb
+
+
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+ 
+Done in 0.01 min (cpu), 0.01 min (real)
+
+
+
+## debugging fits in 140 and 1000 fb
+
+difference in datafiles?
+
+root -l fit-stuff/distrs_94v5_processing1_fit1.root
+dy_mumu->Get("dy_other/NOMINAL/dy_mumu_dy_other_NOMINAL_leading_lep_pt")->Print()
+.q
+
+root -l fit-stuff/distrs_94v5_processing1_fit2.root
+dy_mumu->Get("dy_other/NOMINAL/dy_mumu_dy_other_NOMINAL_leading_lep_pt")->Print()
+.q
+
+root -l fit-stuff/distrs_94v5_processing1_fit3.root
+dy_mumu->Get("dy_other/NOMINAL/dy_mumu_dy_other_NOMINAL_leading_lep_pt")->Print()
+.q
+
+
+TH1.Print Name  = dy_mumu_dy_other_NOMINAL_leading_lep_pt, Entries= 16502484, Total sum= 4.14464e+07
+TH1.Print Name  = dy_mumu_dy_other_NOMINAL_leading_lep_pt, Entries= 16502484, Total sum= 1.40496e+08
+TH1.Print Name  = dy_mumu_dy_other_NOMINAL_leading_lep_pt, Entries= 16502484, Total sum= 1.00354e+09
+
+diff fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.txt
+diff fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit3_higgsCombine1_1000fb.txt
+
+-- only the datafile names are different
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_WORKED.root
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_WORKED.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit3_higgsCombine1_1000fb.txt
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root  -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit3_higgsCombine1_1000fb.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.03 min (cpu), 0.03 min (real)
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+combineTool.py -M Impacts  -t -1 --setParameters tau_ratio=1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit3_higgsCombine1_1000fb.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+same
+
+combineTool.py -M Impacts  -t -1 --setParameters tau_ratio=1,norm_tt=1,norm_dy=1,dy_ratio=1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit3_higgsCombine1_1000fb.root -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+same
+
+
+combineTool.py -M Impacts  -t -1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+huh?
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+hmm? what does this mean?
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1,tau_ratio=1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root  -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1,tau_ratio=1,norm_tt=1,norm_dy=1,dy_ratio=1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root  -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root  -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes140fb
+
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.03 min (cpu), 0.03 min (real)
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs ratio_param -d fit-stuff/datacard_ratio_nominal.root  -m 125 --robustFit 1 --doInitialFit          --name RatioShapes
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs ratio_param -d fit-stuff/datacard_ratio_140fb.root    -m 125 --robustFit 1 --doInitialFit          --name RatioShapes140fb
+
+   ratio_param :    +1.000   -0.060/+0.062 (68%)
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : ratio_param
+ Warning - No valid low-error found, will report difference to minimum of range for : ratio_param
+   ratio_param :    +1.000   -0.150/+0.150 (68%)
+Done in 0.03 min (cpu), 0.03 min (real)
+
+
+
+
+
+
+
+rest:
+
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r --rMin 0.5 --rMax 1.5 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp
+
+
+
+### try removeing more nuisance parameters
+
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.txt
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.root  -m 125 --robustFit 1 --doInitialFit   --name RatioElMuShapes140fb
+
+no PDFs:
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --freezeNuisanceGroup exp --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.root  -m 125 --robustFit 1 --doInitialFit   --name RatioElMuShapes140fb
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+tau group = tau_fakes TAUID
+tt_th_match group = Mfr Mf Mr
+tt_th_frag group = Frag SemilepBR Peterson
+exp group = JER JES PU TAUID lumi_13TeV tau_fakes TOPPT wjets_norm bSF TES
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --freezeNuisanceGroup exp,tt_th_match,tt_th_frag --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.root  -m 125 --robustFit 1 --doInitialFit   --name RatioElMuShapes140fb
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.00 min (cpu), 0.00 min (real)
+
+
+
+
+
 
 
 # implementing the default shapes for processes without some systematics
