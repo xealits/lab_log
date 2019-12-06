@@ -258,6 +258,105 @@ python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_$
 
 
 
+## the figures of tests2018, mT in ttbar and lep_pt in dy
+
+export nt=94v5
+export proc=processing1
+export distr=plot2
+
+export more_opt=
+
+export output_type=png
+
+export plots_dir=plots/${nt}_${proc}_${distr}/
+mkdir -p $plots_dir
+
+
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel    -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel    -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c tt_elmu_tight   -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_eltau    -d leading_lep_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau    -d leading_lep_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_elel     -d leading_lep_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mumu     -d leading_lep_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+-- elel is empty, all the rest are OK, dy_eltau is garbage as expected
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_tauSV3  -d leading_lep_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+-- all right, lep_pt in DY is very different from ttbar, and we actually need a fit in tau_pt
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_tauSV3    -d tau_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_tauSV3    -d tau_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c dy_mutau_tauSV3  -d tau_pt --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+
+
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c el_sel_ss -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_${nt}_${proc}_${distr}.root --do-not-reweight --no-data -o ${plots_dir} --overwrite -p -r -c mu_sel_ss -d Mt_lep_met_c --ratio-range 0.5 ${more_opt} --title ""    --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type ${output_type}
+
+
+
+
+
+## the yields
+
+the old yields on NCG
+
+root -l distrs/distrs_v27dilep2_mc_and_data.root
+
+dy_other;1	dy_other
+ KEY: TDirectoryFile	dy_tautau;1	dy_tautau
+ KEY: TDirectoryFile	s_top_lj;1	s_top_lj
+ KEY: TDirectoryFile	s_top_mutau;1	s_top_mutau
+ KEY: TDirectoryFile	s_top_other;1	s_top_other
+ KEY: TDirectoryFile	tt_lj;1	tt_lj
+ KEY: TDirectoryFile	tt_mutau;1	tt_mutau
+ KEY: TDirectoryFile	tt_other;1	tt_other
+ KEY: TDirectoryFile	tt_taulj;1	tt_taulj
+ KEY: TDirectoryFile	tt_taultauh;1	tt_taultauh
+ KEY: TDirectoryFile	wjets_taul;1	wjets_taul
+ KEY: TDirectoryFile	wjets_tauh;1	wjets_tauh
+ KEY: TDirectoryFile	wjets_other;1	wjets_other
+ KEY: TDirectoryFile	dibosons
+
+root [3] mu_selSV->Get("data/NOMINAL/mu_selSV_data_NOMINAL_Mt_lep_met_c")->Print()
+TH1.Print Name  = mu_selSV_data_NOMINAL_Mt_lep_met_c, Entries= 3846, Total sum= 3804
+
+((TH1D*) mu_selSV->Get("dy_other/NOMINAL/mu_selSV_dy_other_NOMINAL_Mt_lep_met_c"))       ->Integral() +
+((TH1D*) mu_selSV->Get("dy_tautau/NOMINAL/mu_selSV_dy_tautau_NOMINAL_Mt_lep_met_c"))     ->Integral() +
+((TH1D*) mu_selSV->Get("s_top_lj/NOMINAL/mu_selSV_s_top_lj_NOMINAL_Mt_lep_met_c"))       ->Integral() +
+((TH1D*) mu_selSV->Get("s_top_mutau/NOMINAL/mu_selSV_s_top_mutau_NOMINAL_Mt_lep_met_c")) ->Integral() +
+((TH1D*) mu_selSV->Get("s_top_other/NOMINAL/mu_selSV_s_top_other_NOMINAL_Mt_lep_met_c")) ->Integral() +
+((TH1D*) mu_selSV->Get("tt_lj/NOMINAL/mu_selSV_tt_lj_NOMINAL_Mt_lep_met_c"))             ->Integral() +
+((TH1D*) mu_selSV->Get("tt_mutau/NOMINAL/mu_selSV_tt_mutau_NOMINAL_Mt_lep_met_c"))       ->Integral() +
+((TH1D*) mu_selSV->Get("tt_other/NOMINAL/mu_selSV_tt_other_NOMINAL_Mt_lep_met_c"))       ->Integral() +
+((TH1D*) mu_selSV->Get("tt_taulj/NOMINAL/mu_selSV_tt_taulj_NOMINAL_Mt_lep_met_c"))       ->Integral() +
+((TH1D*) mu_selSV->Get("tt_taultauh/NOMINAL/mu_selSV_tt_taultauh_NOMINAL_Mt_lep_met_c")) ->Integral() +
+((TH1D*) mu_selSV->Get("wjets_taul/NOMINAL/mu_selSV_wjets_taul_NOMINAL_Mt_lep_met_c"))   ->Integral() +
+((TH1D*) mu_selSV->Get("wjets_tauh/NOMINAL/mu_selSV_wjets_tauh_NOMINAL_Mt_lep_met_c"))   ->Integral() +
+((TH1D*) mu_selSV->Get("wjets_other/NOMINAL/mu_selSV_wjets_other_NOMINAL_Mt_lep_met_c")) ->Integral() +
+((TH1D*) mu_selSV->Get("dibosons/NOMINAL/mu_selSV_dibosons_NOMINAL_Mt_lep_met_c"))       ->Integral()
+
+((TH1D*) mu_selSV->Get("dy_other/NOMINAL/mu_selSV_dy_other_NOMINAL_Mt_lep_met_c"))       ->Integral() + ((TH1D*) mu_selSV->Get("dy_tautau/NOMINAL/mu_selSV_dy_tautau_NOMINAL_Mt_lep_met_c"))     ->Integral() + ((TH1D*) mu_selSV->Get("s_top_lj/NOMINAL/mu_selSV_s_top_lj_NOMINAL_Mt_lep_met_c"))       ->Integral() + ((TH1D*) mu_selSV->Get("s_top_mutau/NOMINAL/mu_selSV_s_top_mutau_NOMINAL_Mt_lep_met_c")) ->Integral() + ((TH1D*) mu_selSV->Get("s_top_other/NOMINAL/mu_selSV_s_top_other_NOMINAL_Mt_lep_met_c")) ->Integral() + ((TH1D*) mu_selSV->Get("tt_lj/NOMINAL/mu_selSV_tt_lj_NOMINAL_Mt_lep_met_c"))             ->Integral() + ((TH1D*) mu_selSV->Get("tt_mutau/NOMINAL/mu_selSV_tt_mutau_NOMINAL_Mt_lep_met_c"))       ->Integral() + ((TH1D*) mu_selSV->Get("tt_other/NOMINAL/mu_selSV_tt_other_NOMINAL_Mt_lep_met_c"))       ->Integral() + ((TH1D*) mu_selSV->Get("tt_taulj/NOMINAL/mu_selSV_tt_taulj_NOMINAL_Mt_lep_met_c"))       ->Integral() + ((TH1D*) mu_selSV->Get("tt_taultauh/NOMINAL/mu_selSV_tt_taultauh_NOMINAL_Mt_lep_met_c")) ->Integral() + ((TH1D*) mu_selSV->Get("wjets_taul/NOMINAL/mu_selSV_wjets_taul_NOMINAL_Mt_lep_met_c"))   ->Integral() + ((TH1D*) mu_selSV->Get("wjets_tauh/NOMINAL/mu_selSV_wjets_tauh_NOMINAL_Mt_lep_met_c"))   ->Integral() + ((TH1D*) mu_selSV->Get("wjets_other/NOMINAL/mu_selSV_wjets_other_NOMINAL_Mt_lep_met_c")) ->Integral() + ((TH1D*) mu_selSV->Get("dibosons/NOMINAL/mu_selSV_dibosons_NOMINAL_Mt_lep_met_c"))       ->Integral()
+
+0.117512 * 35900
+
+root [24] 0.117512 * 35900
+(double) 4218.68
+
+
+
+
 
 # implementing the default shapes for processes without some systematics
 
