@@ -1,3 +1,55 @@
+# optimization studies
+
+how to do it?
+
+make this table:
+
+           selection channel
+proc def   normalized number of events
+
+then efficiencies are easy to get
+normalization is calculated per dtag
+
+
+
+I need to watch for processes:
+
+tt
+
+leptau 3ch
+leptau 1ch
+
+l jets, and when a tau is selected
+l jets b
+l jets w
+l jets other
+
+dy tautau
+
+wjets
+
+
+
+leptau
+
+py script to keep pairs and other data structure
+it generates commands
+run the commands in parallel with xargs
+-- xargs breaks on quote symbols...
+   let's write job files
+
+python optimization_commands.py
+ls opt*.sh | xargs -P 6 -I JOB sh JOB
+
+template:
+
+python sumup_ttree_draw.py "event_leptons[0].pt():@event_taus.size()" --histo-range 10,0,10,20,0,100   --cond-com "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)" --output test_2d_pTs_dy.root   --histo-name test_2d_pTs_dy   --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1_1.root
+
+can sumup_ttree_draw.py scale?
+
+
+
+
 # plots in new ntuples, including DY final states
 
 mkdir -p plots/94v4_processing3_plot1/
