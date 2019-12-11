@@ -40,12 +40,137 @@ run the commands in parallel with xargs
 
 python optimization_commands.py
 ls opt*.sh | xargs -P 6 -I JOB sh JOB
+ls optimization_jobs/*.sh | xargs -P 8 -I JOB sh JOB
 
 template:
 
 python sumup_ttree_draw.py "event_leptons[0].pt():@event_taus.size()" --histo-range 10,0,10,20,0,100   --cond-com "(selection_stage_dy == 135 || selection_stage_dy == 134 || selection_stage_dy == 125 || selection_stage_dy == 124)" --output test_2d_pTs_dy.root   --histo-name test_2d_pTs_dy   --ttree ttree_out  lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_ext1_v1_1.root
 
 can sumup_ttree_draw.py scale?
+
+
+
+## an issue with tauSV and tauSV3
+
+root -l optimization-studies/2/opt_HLT_mu_tt_tauSV_3ch_tt_mutau3ch.root
+
+  KEY: TH1F	HLT_mu_tt_tauSV_3ch_tt_mutau3ch;1	5 {((HLT_mu && abs(leps_ID) == 13 && tau_IDlev[0] > 0 && nbjets_noVLooseTau > 0) && (tau_SV_geom_flightLenSign[0] > 0.)) && (((abs(gen_t_w_decay_id) > 15*15 && abs(gen_tb_w_decay_id) == 13) || (abs(gen_tb_w_decay_id) > 15*15 && abs(gen_t_w_decay_id) == 13)) && (abs(gen_t_w_decay_id) >= 15*30 || abs(gen_tb_w_decay_id) >= 15*30))}
+root [2] HLT_mu_tt_tauSV_3ch_tt_mutau3ch->Print()
+TH1.Print Name  = HLT_mu_tt_tauSV_3ch_tt_mutau3ch, Entries= 7148, Total sum= 7148
+
+root -l optimization-studies/2/opt_HLT_mu_tt_tauSV_3sign_tt_mutau3ch.root
+
+  KEY: TH1F	HLT_mu_tt_tauSV_3sign_tt_mutau3ch;1	5 {((HLT_mu && abs(leps_ID) == 13 && tau_IDlev[0] > 0 && nbjets_noVLooseTau > 0) && (tau_SV_geom_flightLenSign[0] > 3.)) && (((abs(gen_t_w_decay_id) > 15*15 && abs(gen_tb_w_decay_id) == 13) || (abs(gen_tb_w_decay_id) > 15*15 && abs(gen_t_w_decay_id) == 13)) && (abs(gen_t_w_decay_id) >= 15*30 || abs(gen_tb_w_decay_id) >= 15*30))}
+root [2] HLT_mu_tt_tauSV_3sign_tt_mutau3ch->Print()
+TH1.Print Name  = HLT_mu_tt_tauSV_3sign_tt_mutau3ch, Entries= 11060, Total sum= 11060
+
+{((HLT_mu && abs(leps_ID) == 13 && tau_IDlev[0] > 0 && nbjets_noVLooseTau > 0) && (tau_SV_geom_flightLenSign[0] > 0.)) && (((abs(gen_t_w_decay_id) > 15*15 && abs(gen_tb_w_decay_id) == 13) || (abs(gen_tb_w_decay_id) > 15*15 && abs(gen_t_w_decay_id) == 13)) && (abs(gen_t_w_decay_id) >= 15*30 || abs(gen_tb_w_decay_id) >= 15*30))}
+{((HLT_mu && abs(leps_ID) == 13 && tau_IDlev[0] > 0 && nbjets_noVLooseTau > 0) && (tau_SV_geom_flightLenSign[0] > 3.)) && (((abs(gen_t_w_decay_id) > 15*15 && abs(gen_tb_w_decay_id) == 13) || (abs(gen_tb_w_decay_id) > 15*15 && abs(gen_t_w_decay_id) == 13)) && (abs(gen_t_w_decay_id) >= 15*30 || abs(gen_tb_w_decay_id) >= 15*30))}
+
+?????
+
+
+
+## 2L VS old 1M
+
+root -l ./lstore_outdirs//94v5/processingTestB2L/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_15.root
+root -l ./lstore_outdirs//94v5/processingTestB1M/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_15.root
+
+root -l ./lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_15.root
+
+ttree_out->Draw("5", "selection_stage == 9 || selection_stage == 7")
+
+[
+1615
+2231
+1784
+]
+
+julia> 2231 ./ 1615
+1.381424148606811
+
+background!!!!
+
+ I need the background!!
+python genjobs.py 94v5 processingTestB2L --do-W-stitching channels_nom_sys_muon_sel_main --submit queue --batch-system condor --dtags MC2017legacy_Fall17_TTToSemiLeptonic_v2
+python genjobs.py 94v5 processingTestB1M --do-W-stitching channels_nom_sys_muon_sel_main --submit queue --batch-system condor --dtags MC2017legacy_Fall17_TTToSemiLeptonic_v2
+
+
+python channel_distrs_full_loop.py --do-W-stitching  -l logss ./lstore_outdirs//94v5/processingTestB2L/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root channels_nom_sys_muon_sel_main -i ./gstore_outdirs//94v5/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v5_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191201_174541/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root
+
+root -l ./lstore_outdirs//94v5/processingTestB2L/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root
+root -l ./lstore_outdirs//94v5/processingTestB1M/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root
+
+root -l ./lstore_outdirs//94v5/processing1/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root
+
+ttree_out->Draw("5", "selection_stage == 9 || selection_stage == 7")
+
+[
+289
+393
+305
+]
+
+ratios
+
+ 0.178947
+ 0.176154
+ 0.170964
+
+
+just 1M, no additional jets?
+-- plot distrs
+
+        event_jets_n_jets[0]  = N_jets_nom_all
+        event_jets_n_bjets[0] = N_jets_nom_med
+        event_jets_n_jets_lepmatched[0] = len(jets_nom.lepmatched)
+
+ttree_out->Draw("event_jets_n_jets",  "selection_stage == 9 || selection_stage == 7")
+ttree_out->Draw("event_jets_n_bjets", "selection_stage == 9 || selection_stage == 7")
+ttree_out->Draw("event_jets_n_jets - event_jets_n_bjets", "selection_stage == 9 || selection_stage == 7")
+
+
+### test only 1M
+
+time python channel_distrs_full_loop.py --do-W-stitching  -l logss ./lstore_outdirs//94v5/processingTestBonly1M/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_15.root channels_nom_sys_muon_sel_main -i ./gstore_outdirs//94v5/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v5_MC2017legacy_Fall17_TTTo2L2Nu/191201_173420/0000/MC2017legacy_Fall17_TTTo2L2Nu_15.root     &
+time python channel_distrs_full_loop.py --do-W-stitching  -l logss ./lstore_outdirs//94v5/processingTestBonly1M/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root channels_nom_sys_muon_sel_main -i ./gstore_outdirs//94v5/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v5_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191201_174541/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root     &
+
+root -l ./lstore_outdirs//94v5/processingTestBonly1M/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_15.root
+root -l ./lstore_outdirs//94v5/processingTestBonly1M/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root
+
+2441
+394
+
+-- really? why? a random additional jet is a feature of lj background!!
+plot distributions
+
+ttree_out->Draw("event_jets_n_jets - event_jets_n_bjets", "selection_stage == 9 || selection_stage == 7")
+ttree_out->Draw("event_jets_n_bjets", "selection_stage == 9 || selection_stage == 7")
+
+semileptonic
+non b tagged -- a bit at 1, peak at 2-3-4, 5-6, then tail
+b tagged     -- 240 at 1, 150 at 2, 10 at 3
+
+signal
+non b tagged -- peak 1-2-3 (500-800-500), 4-5 (300-100), then tail
+b tagged     -- 1400 at 1, 1000 at 2, less than 50 at 3
+
+1Mb suits our signal best
+
+2441. / 1784.
+1.368273542600897
+increase not 1.5
+
+394. / 305
+1.2918032786885245
+very slight improvement of sig/bckg
+
+
+
+## testing tt mumu
+
+time python channel_distrs_full_loop.py --do-W-stitching  -l logss ./temp/MC2017legacy_Fall17_TTTo2L2Nu_15.root           channels_nom_sys_muon_sel_main -i ./gstore_outdirs//94v5/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v5_MC2017legacy_Fall17_TTTo2L2Nu/191201_173420/0000/MC2017legacy_Fall17_TTTo2L2Nu_15.root     &
+time python channel_distrs_full_loop.py --do-W-stitching  -l logss ./temp/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root channels_nom_sys_muon_sel_main -i ./gstore_outdirs//94v5/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Ntupler_94v5_MC2017legacy_Fall17_TTToSemiLeptonic_v2/191201_174541/0000/MC2017legacy_Fall17_TTToSemiLeptonic_v2_62.root     &
 
 
 
@@ -484,6 +609,64 @@ python stack_plot.py distrs//distrs_${nt}_${proc}_${distr}.root distrs//distrs_$
 
 
 
+## 4 channels with full norm_tt and single top in ratio
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes_cleaner.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes_cleaner.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes_cleaner.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakesCleaner --cminDefaultMinimizerTolerance 5.
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes_cleaner.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakesCleaner --cminDefaultMinimizerTolerance 5.
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.066/+0.100 (68%)
+
+original lumi_mult=2.0:
+
+   tau_ratio :    +1.000   -0.034/+0.036 (68%)
+
+now:
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+
+and no additional norm in mu selection:
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+-- with any tolerance....
+
+
+bin                               mu           mu           mu           mu           mu           mu           mu           mu
+process                           tt_mutau     tt_lj        stop_lj      stop_mutau   tt_taulj     dy_tautau    stop_other   tt_other
+
+elmu         elmu         elmu         elmu         elmu         dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mutau     dy_mumu      dy_mumu      dy_mumu      dy_mumu
+tt_elmu      stop_elmu    tt_other     stop_other   tt_ltaul     tt_mutau     tt_lj        stop_lj      stop_mutau   tt_taulj     dy_tautau    tt_other     stop_other   wjets_other  dy_other     wjets_other  stop_other   tt_other 
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name RatioMFakes
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json  --name RatioMFakes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5
+
+
+
+
+
 ## 4 channels
 
 3% were obtained in:
@@ -814,6 +997,1161 @@ best fit parameter values and profile-likelihood uncertainties:
    tau_ratio :    +1.000   -0.150/+0.150 (68%)
 Done in 0.00 min (cpu), 0.00 min (real)
 
+
+
+### full impacts of 140fb, smaller variations, NLL, mult factor instead of other histos, only tt
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.root   -m 125 --robustFit 1 --doInitialFit          --name RatioElMuShapes
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_temp.root  -m 125 --robustFit 1 --doInitialFit   --name RatioElMuShapes140fb
+
+-- all the same
+
+
+
+#### full impacts of 140fb
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.txt
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root -m 125 --robustFit 1 --doInitialFit   --name RatioElMuShapes140fb
+
+-- same
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioElMuShapes
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit2_higgsCombine1_four_channels_140fb.json  --name RatioElMuShapes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit2_higgsCombine1_four_channels_140fb.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit2_higgsCombine1_four_channels_140fb
+
+-- it is just empty
+
+
+
+#### also try smaller variation of ratio
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_ratioparam.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_ratioparam.txt
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb_ratioparam.root -m 125 --robustFit 1 --doInitialFit   --name RatioSmallElMu
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.050/+0.050 (68%)
+Done in 0.02 min (cpu), 0.02 min (real)
+
+same
+
+
+
+#### NLL
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit2_higgsCombine1_140fb.root --algo grid -t -1 --points 100 --redefineSignalPOIs tau_ratio --freezeParameters r --setParameters r=1 --name RatioElMuShapes
+
+ POI: tau_ratio= 1 -> [0.85,1.15]
+Point 0/100 tau_ratio = 0.8515
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+Point 45/100 tau_ratio = 0.9865
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 46/100 tau_ratio = 0.9895
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 47/100 tau_ratio = 0.9925
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 48/100 tau_ratio = 0.9955
+Info in <Minuit2>: MnGlobalCorrelationCoeff: inversion of matrix fails.
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 49/100 tau_ratio = 0.9985
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 50/100 tau_ratio = 1.0015
+Info in <Minuit2>: MnGlobalCorrelationCoeff: inversion of matrix fails.
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 51/100 tau_ratio = 1.0045
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 52/100 tau_ratio = 1.0075
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 53/100 tau_ratio = 1.0105
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 54/100 tau_ratio = 1.0135
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 55/100 tau_ratio = 1.0165
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 56/100 tau_ratio = 1.0195
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 57/100 tau_ratio = 1.0225
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 58/100 tau_ratio = 1.0255
+
+
+
+#### mult factor
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.txt
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doInitialFit   --name RatioMultlElMu
+
+
+mult=1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.059/+0.062 (68%)
+Done in 0.26 min (cpu), 0.27 min (real)
+
+
+mult=1.1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.057/+0.060 (68%)
+Done in 0.51 min (cpu), 0.51 min (real)
+
+
+mult=1.2
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.056/+0.150 (68%)
+Done in 0.45 min (cpu), 0.45 min (real)
+
+
+
+mult=1.5
+
+Error: minimization failed at tau_ratio = 1.00894
+Error: minimization failed at tau_ratio = 0.977031
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+Done in 0.27 min (cpu), 0.27 min (real)
+
+
+mult=2
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+full impacts with mult=1.2
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioMultlElMu
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult.json  --name RatioMultlElMu
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult
+
+
+-- only errors?
+tau fakes are wildly off
+
+cp  fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.txt
+vim fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.txt
+
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.root -m 125 --robustFit 1 --doInitialFit   --name RatioMultlElMu
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.042 (68%)
+Done in 0.65 min (cpu), 0.65 min (real)
+
+hmmm
+
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioMultlElMu
+combineTool.py -M Impacts  -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_nofakes.json  --name RatioMultlElMu
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_nofakes.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_nofakes
+
+
+
+#### freeze lumi
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r,lumi_13TeV --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMultlNoFakesElMu
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.040/+0.150 (68%)
+Done in 0.57 min (cpu), 0.57 min (real)
+
+
+
+#### -v3 debug info
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult_nofakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMultlNoFakesElMu -v3
+
+Minuit does not converge...
+
+
+
+#### multiply tt mutau
+
+mult_tt                 extArg                   2.1
+rate_lumi               rateParam  mu tt_mutau   (@0) mult_tt
+
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+
+#### only tt ratio
+
+rate_elmu               rateParam  elmu     tt_elmu   (@0)       norm_tt
+rate_eltau              rateParam  mu       tt_mutau  (@0*@1)    norm_tt,tau_ratio
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.076/+0.082 (68%)
+
+lumi_mult = 3.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.076/+0.082 (68%)
+
+rest of impacts:
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doInitialFit --name RatioOnlyTTElMu
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doFits --parallel 5   --name RatioOnlyTTElMu
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_onlyTT.json  --name RatioOnlyTTElMu
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_onlyTT.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult_onlyTT
+
+
+w. dy_ratio fixed:
+
+combineTool.py -M Impacts -t -1 --setParameters r=1,dy_ratio=1 --freezeParameters r,dy_ratio --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doInitialFit --name RatioMultlElMu
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+
+w. dy_ratio as poi:
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio,dy_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.root -m 125 --robustFit 1 --doInitialFit --name RatioMultlElMu
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.076/+0.082 (68%)
+    dy_ratio :    +1.000   -0.053/+0.058 (68%)
+
+so it does not absorb anything?
+
+
+
+
+
+#### alternative formula
+
+rate_elmu               rateParam  elmu     tt_elmu   (@0)       norm_tt
+rate_eltau              rateParam  mu       tt_mutau  (@0*@1*@2) norm_tt,dy_ratio,tau_ratio
+
+->
+
+rate_elmu               rateParam  elmu     tt_elmu   (@0/@1)   norm_tt,tau_ratio
+rate_eltau              rateParam  mu       tt_mutau  (@0*@1)   norm_tt,dy_ratio
+
+with
+lumi_mult               extArg                   1.0
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+
+
+
+#### more POIs
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult.txt fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio,dy_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioAllPOI
+
+
+lumi_mult=3
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+lumi_mult=1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+    dy_ratio :    +1.000   -0.052/+0.058 (68%)
+
+
+
+
+#### running the old datacard
+
+cp ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double.txt ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.txt
+
+text2workspace.py ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tt_per_dy -d ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.root -m 125 --robustFit 1 --doInitialFit --name RatioOldDatacard
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tt_per_dy :    +1.000   -0.021/+0.018 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tt_per_dy,dy_ratio -d ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.root -m 125 --robustFit 1 --doInitialFit --name RatioOldDatacard
+
+best fit parameter values and profile-likelihood uncertainties: 
+   tt_per_dy :    +1.000   -0.021/+0.018 (68%)
+    dy_ratio :    +1.000   -0.045/+0.047 (68%)
+
+
+
+
+
+#### random tests
+
+lnN tau fakes
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+lumi_mult = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+wow!
+
+lnU:
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.060/+0.062 (68%)
+
+
+tau_fakes               lnU       -            1.5          1.5          -            1.5          -            1.5          1.5          -            -            -            -            -            -            1.5          1.5          -            1.5          -            1.5          1.5          -            -            -            -            -
+
+randomly fixed TES
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+
+randomly enlarged norm_params ranges:
+
+norm_tt                 extArg                   1.         [0.7,1.3]
+norm_dy                 extArg                   1.         [0.7,1.3]
+dy_ratio                extArg                   1.         [0.85,1.15]
+tau_ratio               extArg                   1.         [0.85,1.15]
+
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.044/+0.046 (68%)
+
+lumi_mult 1.5
+
+Error: closed range without finding crossing.
+Error: minimization failed at tau_ratio = 0.969062
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+norm_tt                 extArg                   1.         [0.6,1.4]
+norm_dy                 extArg                   1.         [0.6,1.4]
+dy_ratio                extArg                   1.         [0.9,1.1]
+tau_ratio               extArg                   1.         [0.9,1.1]
+
+Error: minimization failed at tau_ratio = 1
+Error: minimization failed at tau_ratio = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+lumi_mult 1.2
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+
+norm_tt                 extArg                   1.         [0.6,1.4]
+norm_dy                 extArg                   1.         [0.6,1.4]
+dy_ratio                extArg                   1.         [0.7,1.3]
+tau_ratio               extArg                   1.         [0.7,1.3]
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.038/+0.040 (68%)
+
+lumi_mult=1.5
+
+Error: minimization failed at tau_ratio = 1.03056
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.300/+0.300 (68%)
+
+
+norm_tt                 extArg                   1.         [0.2,1.8]
+norm_dy                 extArg                   1.         [0.2,1.8]
+dy_ratio                extArg                   1.         [0.4,1.6]
+tau_ratio               extArg                   1.         [0.4,1.6]
+
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+Error: closed range without finding crossing.
+Error: minimization failed at dy_ratio = 1
+Error: minimization failed at dy_ratio = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.045 (68%)
+ Warning - No valid high-error found, will report difference to maximum of range for : dy_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : dy_ratio
+    dy_ratio :    +1.000   -0.150/+0.150 (68%)
+
+
+norm_tt                 extArg                   1.         [0.8,1.2]
+norm_dy                 extArg                   1.         [0.8,1.2]
+dy_ratio                extArg                   1.         [0.4,1.6]
+tau_ratio               extArg                   1.         [0.4,1.6]
+
+
+Error: minimization failed at tau_ratio = 1
+Error: minimization failed at tau_ratio = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.600/+0.600 (68%)
+
+
+norm_tt                 extArg                   1.         [0.2,1.8]
+norm_dy                 extArg                   1.         [0.2,1.8]
+dy_ratio                extArg                   1.         [0.8,1.2]
+tau_ratio               extArg                   1.         [0.8,1.2]
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --freezeNuisanceGroup tt_th_pdf --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+Error: minimization failed at tau_ratio = 1
+Error: minimization failed at tau_ratio = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.800/+0.800 (68%)
+
+lumi_mult=1.2
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+now cannot reproduce old result
+
+norm_tt                 extArg                   1.         [0.6,1.4]
+norm_dy                 extArg                   1.         [0.6,1.4]
+dy_ratio                extArg                   1.         [0.9,1.1]
+tau_ratio               extArg                   1.         [0.9,1.1]
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --freezeNuisanceGroup tt_th_pdf --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.046 (68%)
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.2 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+--- damn!
+
+
+
+
+[olek@fermi02 fitting]$ vim fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt
+[olek@fermi02 fitting]$ 
+[olek@fermi02 fitting]$ text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt
+^[[A^[[A^[[A
+[olek@fermi02 fitting]$ combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+Have POIs: ['tau_ratio']
+>> combine -M MultiDimFit -n _initialFit_RatioMore --algo singles --redefineSignalPOIs tau_ratio -t -1 --freezeParameters r --robustFit 1 -m 125 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root --setParameters r=1
+ <<< Combine >>> 
+>>> including systematics
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 123456
+Set Default Value of Parameter r To : 1
+Computing results starting from expected outcome (a-priori)
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.038/+0.040 (68%)
+Done in 0.69 min (cpu), 0.69 min (real)
+[olek@fermi02 fitting]$ 
+
+
+
+reset
+
+norm_tt                 extArg                   1.         [0.6,1.4]
+norm_dy                 extArg                   1.         [0.6,1.4]
+dy_ratio                extArg                   1.         [0.7,1.3]
+tau_ratio               extArg                   1.         [0.7,1.3]
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.2 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.043/+0.047 (68%)
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.038/+0.040 (68%)
+
+
+
+lumi_mult=1.3
+
+Computing results starting from expected outcome (a-priori)
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.035/+0.300 (68%)
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.4 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+Error: minimization failed at tau_ratio = 1
+Error: minimization failed at tau_ratio = 1
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.300/+0.300 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.4,tau_ratio=1.0,dy_ratio=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.4,tau_ratio=1.0,dy_ratio=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 0.5
+
+
+
+
+
+#### running raw combine
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=1.3 --freezeParameters r --redefineSignalPOIs tau_ratio
+
+ --- FitDiagnostics ---
+Fit failed.
+
+
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=1.3 --freezeParameters r --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.5
+
+[WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-hcomb.gitbooks.io/combine/content/part3/nonstandard.html#fit-parameter-uncertainties for more information.
+
+ --- FitDiagnostics ---
+Best fit tau_ratio: 1  -0.3/+0.0258025  (68% CL)
+
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=1.5 --freezeParameters r --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.5
+
+Computing results starting from expected outcome (a-priori)
+[WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-hcomb.gitbooks.io/combine/content/part3/nonstandard.html#fit-parameter-uncertainties for more information.
+
+ --- FitDiagnostics ---
+Best fit tau_ratio: 1  -0.3/+0.0223692  (68% CL)
+Done in 0.11 min (cpu), 0.12 min (real)
+
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.5
+
+Computing results starting from expected outcome (a-priori)
+[WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-hcomb.gitbooks.io/combine/content/part3/nonstandard.html#fit-parameter-uncertainties for more information.
+
+ --- FitDiagnostics ---
+Best fit tau_ratio: 1  -0.3/+0.0159817  (68% CL)
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r,lumi_13TeV --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.5
+
+
+
+#### getting the half-convergance into impacts?
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.2
+
+Best fit tau_ratio: 1  -0.4/+0.0157326  (68% CL)
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 0.2
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 0 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 0.2
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 0.2
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 0.2
+
+Error: minimization failed at tau_ratio = 1.02755
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.400/+0.400 (68%)
+
+norm_tt                 extArg                   1.         [0.3,1.7]
+norm_dy                 extArg                   1.         [0.3,1.7]
+dy_ratio                extArg                   1.         [0.5,1.5]
+tau_ratio               extArg                   1.         [0.6,1.4]
+
+to
+
+norm_tt                 extArg                   1.         [0.1,1.9]
+norm_dy                 extArg                   1.         [0.1,1.9]
+dy_ratio                extArg                   1.         [0.1,1.9]
+tau_ratio               extArg                   1.         [0.1,1.9]
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt
+
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 1.
+
+Error: closed range without finding crossing.
+Error: minimization failed at tau_ratio = 0.968968
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 5.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.031/+0.034 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 5.
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 10.
+
+Error: minimization failed at tau_ratio = 1.01835
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+tolerance 20
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+50
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.025 (68%)
+
+100
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+40
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.5 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 40
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.025 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=3.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 40
+
+Error: minimization failed at tau_ratio = 1.00051
+Error: minimization failed at tau_ratio = 0.983648
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+
+1000
+
+Error: minimization failed at tau_ratio = 1.01471
+Error: minimization failed at tau_ratio = 0.988236
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+
+
+#### some impacts
+
+$ combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --robustFit 1 --doInitialFit --name RatioMore --cminDefaultMinimizerTolerance 10.
+Have POIs: ['tau_ratio']
+>> combine -M MultiDimFit -n _initialFit_RatioMore --algo singles --redefineSignalPOIs tau_ratio -t -1 --freezeParameters r --robustFit 1 --cminDefaultMinimizerTolerance 10. -m 125 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root --setParameters r=1.0,lumi_mult=2.0
+ <<< Combine >>> 
+>>> including systematics
+   Options for Robust Minimizer :: 
+        Tolerance  10
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 123456
+Set Default Value of Parameter r To : 1
+Set Default Value of Parameter lumi_mult To : 2
+Computing results starting from expected outcome (a-priori)
+
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+   tau_ratio :    +1.000   -0.025/+0.027 (68%)
+
+is it something?
+
+
+let's see impacts
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --cminDefaultMinimizerTolerance 10. --robustFit 1 --doInitialFit --name RatioMore
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --cminDefaultMinimizerTolerance 10. --robustFit 1 --doFits --parallel 5   --name RatioMore
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.root -m 125 --cminDefaultMinimizerTolerance 10. -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_more.json  --name RatioMore
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_more.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_more
+
+
+
+##### and let's add fakes back
+
+cp  fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2.txt  fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt
+
+tau_fakes               lnN       -            1.5          1.5          -            1.5          -            1.5          1.5          -            -            -            -            -            -            1.5          1.5          -            1.5          -            1.5          1.5          -            -            -            -            -
+
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 10. --robustFit 1 --doInitialFit --name RatioMFakes
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.035 (68%)
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 20.
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+Error: minimization failed at tau_ratio = 0.972848
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.035 (68%)
+
+
+
+lnU
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+5
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.036 (68%)
+
+10
+
+Error: minimization failed at tau_ratio = 0.967365
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.036 (68%)
+
+50.
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+0.01
+
+ ---------------------------
+
+ WARNING: MultiDimFit failed
+
+ ---------------------------
+
+
+100.
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.900/+0.900 (68%)
+
+
+
+--cminDefaultMinimizerTolerance 100.
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 100.
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.033/+0.100 (68%)
+
+--stepSize 0.1
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 100. --stepSize 0.01
+
+Error: minimization failed at tau_ratio = 1.00427
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 10. --stepSize 0.0001
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.100/+0.100 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 10. --stepSize 0.0001
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 50. --stepSize 0.0001
+
+a lot of
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 50. --stepSize 0.0001
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 50. --stepSize 0.001
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.050/+0.050 (68%)
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 50. --stepSize 0.001
+
+
+
+
+
+#### hal-side fits with fakes
+
+fakes lnU 1.5
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 10.
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.034/+0.100 (68%)
+
+100
+
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.033/+0.100 (68%)
+
+
+#### the one that works on both sides !!!!!!!!!!!!!!
+
+5
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+   tau_ratio :    +1.000   -0.034/+0.036 (68%)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name RatioMFakes
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json  --name RatioMFakes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5
+
+-- asymmetric, but not too bad
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=3.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakesMore --cminDefaultMinimizerTolerance 5.
+
+
+
+
+#### 100 tests
+
+foreach tolerance ( `seq 1 100` )
+combine -M MultiDimFit -n _initialFit_RatioMFakesMore --algo singles --redefineSignalPOIs tau_ratio -t -1 --freezeParameters r --robustFit 1 --cminDefaultMinimizerTolerance $tolerance -m 125 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --setParameters r=1.0,lumi_mult=3.0
+end
+
+>> combine -M MultiDimFit -n _initialFit_RatioMFakesMore --algo singles --redefineSignalPOIs tau_ratio -t -1 --freezeParameters r --robustFit 1 --cminDefaultMinimizerTolerance 55 -m 125 -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --setParameters r=1.0,lumi_mult=3.0
+ <<< Combine >>> 
+>>> including systematics
+   Options for Robust Minimizer :: 
+        Tolerance  55
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 123456
+Set Default Value of Parameter r To : 1
+Set Default Value of Parameter lumi_mult To : 3
+Computing results starting from expected outcome (a-priori)
+Error: minimization failed at tau_ratio = 1.02502
+Error: minimization failed at tau_ratio = 0.989687
+
+-- half with tolerance < 48-55 did not converge on 1.02502
+   the other half failed on 0.989687
+
+also
+
+        Tolerance  33
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 123456
+Set Default Value of Parameter r To : 1
+Set Default Value of Parameter lumi_mult To : 3
+Computing results starting from expected outcome (a-priori)
+Error: minimization failed at tau_ratio = 1.02133
+Error: minimization failed at tau_ratio = 0.999375
+
+some fail at 0.999375
+
+small tolerance just
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+
+
+
+
+#### el_sel in ttbar
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult3.txt
+
+combine -M FitDiagnostics fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult3.root -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r,lumi_13TeV --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 0.5
+
+
+[WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-hcomb.gitbooks.io/combine/content/part3/nonstandard.html#fit-parameter-uncertainties for more information.
+
+ --- FitDiagnostics ---
+Best fit tau_ratio: 1  -1e+30/+0.017467  (68% CL)
+
+
+TAUID                   shape     1.0          -            -            1.0          -            1.0          -            -            -            -            -            -            -            1.0          -            -            1.0          -            1.0          -            -            -            -            -            -            - 
+
+
+[WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-hcomb.gitbooks.io/combine/content/part3/nonstandard.html#fit-parameter-uncertainties for more information.
+
+ --- FitDiagnostics ---
+Best fit tau_ratio: 1  -1e+30/+0.0188999  (68% CL)
 
 
 
