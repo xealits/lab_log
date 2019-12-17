@@ -1,3 +1,114 @@
+# more information on the fit
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+-- neither converges now
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.95 --rMax 1.05 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5. --saveSpecifiedNuis norm_tt,norm_dy
+
+limit->Draw("2*deltaNLL:tau_ratio", "deltaNLL>0 && 2*deltaNLL<10", "L")
+
+-- the NLL does not reach 1
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.9 --rMax 1.1 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5. --saveSpecifiedNuis norm_tt,norm_dy
+
+Caught exception Nuisance Parameter norm_tt not in model.
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.9 --rMax 1.1 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5. --saveSpecifiedNuis rate_elmu
+
+Caught exception Nuisance Parameter rate_elmu not in model.
+
+how to catch problems with the range of these params?
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.9 --rMax 1.1 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5.
+
+all points show
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+the range did not change
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt
+
+NLL is over 1 with 0.9-1.1 range
+
+some points
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+
+but the NLL curve is fine
+
+NLL is over 4 woth 0.85-1.15 range
+
+forgot to freeze r?!
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.9 --rMax 1.1 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5. --freezeParameters r
+
+Point 69/100 tau_ratio = 1.0585
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 70/100 tau_ratio = 1.0615
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 71/100 tau_ratio = 1.0645
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 72/100 tau_ratio = 1.0675
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 73/100 tau_ratio = 1.0705
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 74/100 tau_ratio = 1.0735
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 75/100 tau_ratio = 1.0765
+
+all other points are
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+NLL is the same, good
+
+repeat the prelim fit
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+   tau_ratio :    +1.000   -0.059/+0.062 (68%)
+
+but
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+Error: closed range without finding crossing.
+Error: closed range without finding crossing.
+
+ --- MultiDimFit ---
+best fit parameter values and profile-likelihood uncertainties: 
+ Warning - No valid high-error found, will report difference to maximum of range for : tau_ratio
+ Warning - No valid low-error found, will report difference to minimum of range for : tau_ratio
+   tau_ratio :    +1.000   -0.150/+0.150 (68%)
+
+NLL:
+
+combine -M MultiDimFit fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root --algo grid --points 100 --rMin 0.9 --rMax 1.1 --name mutau_mTall_lumi1_NLL -t -1 --setParameters r=1.0,lumi_mult=2.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5. --freezeParameters r
+
+Point 47/100 tau_ratio = 0.9925
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 48/100 tau_ratio = 0.9955
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+Point 49/100 tau_ratio = 0.9985
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 50/100 tau_ratio = 1.0015
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 51/100 tau_ratio = 1.0045
+Info in <Minuit2>: Minuit2Minimizer::Minimize : Minimization did NOT converge, Edm is above max
+Point 52/100 tau_ratio = 1.0075
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+all other points are
+[WARNING] Minimisation finished with status 1 (covariance forced positive definite), this could indicate a problem with the minimim!
+
+-- there are breaks at 0.86, with NLL > 10
+   but it is practically the same as when lumi_mult=1.0!
+
+
+
+
+
 # the old working fit with the lumi 1,2 and unc breakdowns
 
 combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
