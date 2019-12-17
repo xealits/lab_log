@@ -1,3 +1,233 @@
+# the old working fit with the lumi 1,2 and unc breakdowns
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name RatioMFakes
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakes.json  --name RatioMFakes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakes.json -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakes
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakesLumi2 --cminDefaultMinimizerTolerance 5.
+
+-- does not converge now
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name RatioMFakesLumi2
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakesLumi2.json  --name RatioMFakesLumi2
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakesLumi2.json -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_RatioMFakesLumi2
+
+
+
+
+
+
+
+
+## unc breakdown
+
+make fit_unc workspace=fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.root nn=eltau_taupt_temp toys="-t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 10." min=0.9 max=1.1
+
+
+old working one:
+
+
+
+
+make fit_unc workspace=fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root nn=mutau_mTall toys="-t -1 --setParameters r=1.0,lumi_mult=2.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5." min=0.95 max=1.05
+make fit_unc workspace=fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root nn=mutau_mTall_lumi1 toys="-t -1 --setParameters r=1.0,lumi_mult=1.0 --redefineSignalPOIs tau_ratio --cminDefaultMinimizerTolerance 5." min=0.95 max=1.05
+
+plot1DScan.py --output scan_mutau_mTall_lumi1 higgsCombinemutau_mTall_lumi1FullUncertaintyWLumi.MultiDimFit.mH120.root --others 'higgsCombinemutau_mTall_lumi1FullUncertaintyNoLumi.MultiDimFit.mH120.root:lumi:4' 'higgsCombinemutau_mTall_lumi1NoSys.MultiDimFit.mH120.root:stat:2' --breakdown lumi,syst,stat --POI tau_ratio
+
+
+
+
+
+# re-stage2 fit
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.txt  fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.txt
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau.txt
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.txt
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT.txt
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT.txt
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.root -m 125 --robustFit 1 --doInitialFit --name Ratio2ElTauPt --cminDefaultMinimizerTolerance 10.
+
+
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.root -m 125 --robustFit 1 --doInitialFit --name Ratio2ElTauPtLumi1 --cminDefaultMinimizerTolerance 10.
+
+-- works
+   tau_ratio :    +1.000   -0.059/+0.059 (68%)
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name Ratio2ElTauPtLumi1
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_Ratio2ElTauPtLumi1.json  --name Ratio2ElTauPtLumi1
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_Ratio2ElTauPtLumi1.json -o latest_toys_asimov_impacts_ratio_94v5_processing2_fit1_higgsCombine1_four_channels_Ratio2ElTauPtLumi1
+
+
+
+
+
+mT
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT.root -m 125 --robustFit 1 --doInitialFit --name Ratio2ElmT --cminDefaultMinimizerTolerance 10.
+
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT_temp.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT_temp.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_mT_temp.root -m 125 --robustFit 1 --doInitialFit --name Ratio2ElmT --cminDefaultMinimizerTolerance 10.
+
+
+
+
+for lumi 2!
+
+cp fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp.txt fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp2.txt
+vim fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp2.txt
+
+text2workspace.py fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp2.txt
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt_temp2.root -m 125 --robustFit 1 --doInitialFit --name Ratio2fullRunElTauPt --cminDefaultMinimizerTolerance 10.
+
+
+
+
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing2_fit1_higgsCombine1_temp_mult2_fakes_eltau_taupt.root -m 125 --robustFit 1 --doInitialFit --name Ratio2ElTauPt --cminDefaultMinimizerTolerance 5.
+
+   tau_ratio :    +1.000   -0.034/+0.036 (68%)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. --robustFit 1 --doFits --parallel 5   --name RatioMFakes
+combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=2.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --cminDefaultMinimizerTolerance 5. -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json  --name RatioMFakes
+plotImpacts.py -i latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5.json -o latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_four_channels_temp_mult2_fakes5
+
+
+
+
+
+
+# control figures in re-stage2, 94v5 processing2
+
+
+export file_mc=distrs//distrs_94v5_processing2_plot1.root
+export file_data=distrs//distrs_94v10_processing2_plot1.root
+export plot_dir=plots/94v5_processing2_plot1/
+
+mkdir -p ${plot_dir}
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d leading_lep_pt --ratio-range 0.5  --title "" --title-x "leading lepton p_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d leading_lep_pt --ratio-range 0.5  --title "" --title-x "leading lepton p_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d tau_pt --ratio-range 0.5  --title "" --title-x "tau p_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d tau_pt --ratio-range 0.5  --title "" --title-x "tau p_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d tau_sv_sign --ratio-range 0.5  --title "" --title-x "tau SV significance [#sigma]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d tau_sv_sign --ratio-range 0.5  --title "" --title-x "tau SV significance [#sigma]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+
+
+hadd jobsums/distrs//distrs_94v10_processing2_plot1_SingleMuon.root      jobsums/distrs//94v10/processing2/plot1/*SingleMuo*root
+hadd jobsums/distrs//distrs_94v10_processing2_plot1_SingleElectron.root  jobsums/distrs//94v10/processing2/plot1/*SingleEle*root
+
+
+
+from here
+
+export file_data=distrs//distrs_94v10_processing2_plot1_SingleMuon.root
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d leading_lep_pt --ratio-range 0.5  --title "" --title-x "leading lepton p_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3  --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d tau_pt         --ratio-range 0.5  --title "" --title-x "tau p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3  --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d tau_sv_sign    --ratio-range 0.5  --title "" --title-x "tau SV significance [#sigma]" --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3  --output-type pdf --logy
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel_tauSV3    -d tau_pt         --ratio-range 0.5  --title "" --title-x "tau p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3  --output-type pdf
+
+export file_data=distrs//distrs_94v10_processing2_plot1_SingleElectron.root
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c tt_elmu_tight   -d leading_lep_pt --ratio-range 0.5 --title "" --title-x "leading lepton p_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.56 --lumi-label 41.3 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d leading_lep_pt --ratio-range 0.5  --title "" --title-x "leading lepton p_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d tau_pt         --ratio-range 0.5  --title "" --title-x "tau p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d tau_sv_sign    --ratio-range 0.5  --title "" --title-x "tau SV significance [#sigma]" --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3 --output-type pdf --logy
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel_tauSV3    -d tau_pt         --ratio-range 0.5  --title "" --title-x "tau p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 0.5 --lumi-label 41.3 --output-type pdf
+
+to here
+
+
+export file_mc=distrs/distrs_v27dilep2_mc_and_data.root
+export file_data=distrs/distrs_v27dilep2_mc_and_data.root
+export plot_dir=plots/distrs_v27dilep2_mc_and_data_again/
+
+setenv file_mc   distrs/distrs_v27dilep2_mc_and_data.root
+setenv file_data distrs/distrs_v27dilep2_mc_and_data.root
+setenv plot_dir  plots/distrs_v27dilep2_mc_and_data_again/
+
+mkdir -p ${plot_dir}
+
+python stack_plot.py ${file_mc} ${file_data} -o ${plot_dir} --overwrite -p -r -c dy_mumu    -d lep_pt         --ratio-range 0.5  --title "" --title-x "leading lepton p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 40000 --lumi-label 41.3 --output-type pdf
+
+
+python stack_plot.py ${file_mc} ${file_data} -o ${plot_dir} --overwrite -p -r -c dy_mutau    -d lep_pt         --ratio-range 0.5  --title "" --title-x "leading lepton p_{T} [GeV]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 41000 --lumi-label 41.3 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} -o ${plot_dir} --overwrite -p -r -c dy_mutau    -d tau_sv_sign         --ratio-range 0.5  --title "" --title-x "tau SV significance [#sigma]"              --title-y "Events" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 41000 --lumi-label 41.3 --output-type pdf
+
+
+
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c el_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight -o ${plot_dir} --overwrite -p -r -c mu_sel    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_eltau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_mutau    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c tt_elmu_tight   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_mumu   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c el_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c mu_sel_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_mutau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_eltau_ss -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_elel   -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(e, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c el_sel_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c mu_sel_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c tt_elmu_tight  -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_mutau_tauSV3    -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_mumu        -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+python stack_plot.py ${file_mc} ${file_data} --do-not-reweight --no-data -o ${plot_dir} --overwrite -p -r -c dy_eltau_t    -d Mt_lep_met_c --ratio-range 0.5 --title "" --title-x "m_{T}(l, p^{miss}_{T}) [GeV]"   --title-y "Events/GeV" --draw-overflows 5 --legend-shift 0.02 --ratio-range 0.55 --font-size-axes-labels 20 --font-size-axes-titles 25 --lumi 1 --output-type pdf
+
+
+
+
 # optimization studies
 
 how to do it?
