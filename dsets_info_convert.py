@@ -9,12 +9,13 @@ with open(yaml_file) as f:
 #def print_xml_node(name, content="", attributes={}, indent=0):
 #    print(' '*indent + '<{name} {attrs}>')
 
-def xml_value(val):
-    value = str(val)
+def xml_value(value):
     try:
         value = str(float(value))
     except:
-        value = '"%s"' % value
+        value = str(value)
+
+    value = '"%s"' % value
     return value
 
 indent = ' '*2
