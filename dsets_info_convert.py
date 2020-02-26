@@ -33,5 +33,7 @@ for hard_proc in d['hard_processes']:
                 dtag = xml_value(dset['dtag']),
                 lp   = xml_value(dset['logic_path']))
         print(indent*2 + dset_attr)
+        print(indent*2 + '</dset>')
+    print(indent + '</hard_process>')
 
 print('</hard_processes>')
