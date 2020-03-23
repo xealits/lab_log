@@ -1,4 +1,48 @@
-# more information on the fit
+# fit with separate tt background 10%
+
+
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp.root          nn=v37_test172BIN1_el_test2_SepTT0          freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2.root   nn=v37_test172BIN1_mu_test2_expMu2_SepTT0   freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2.root nn=v37_test172BIN1_both_test2_expMu2_SepTT0 freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+
+
+cp ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp.txt          ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_SepTT.txt
+cp ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2.txt   ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_SepTT.txt
+cp ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2.txt ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_SepTT.txt
+
+make both mucard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_SepTT  elcard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_SepTT  bothcard=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_SepTT
+
+make workspace ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_SepTT.txt
+make workspace ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_SepTT.txt
+make workspace ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_SepTT.txt
+
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_el_exp_SepTT.root          nn=v37_test172BIN1_el_test2_SepTT1          freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_mu_exp_expMu2_SepTT.root   nn=v37_test172BIN1_mu_test2_expMu2_SepTT1   freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+make impacts    workspace=ttxsec/datacard_v37_test172_bunchFULLFIT1BIN1_both_exp_expMu2_SepTT.root nn=v37_test172BIN1_both_test2_expMu2_SepTT1 freeze="--freezeParameters lumi_13TeV" points=100 min=0.5 max=1.5    &
+
+python new_impact_table.py --quote-dileps --merge-pdf  v37_test172BIN1_test1/latest_impacts_v37_test172BIN1_el_test1.json v37_test172BIN1_test1/latest_impacts_v37_test172BIN1_mu_test1.json v37_test172BIN1_test1/latest_impacts_v37_test172BIN1_both_test1.json
+
+python new_impact_table.py --quote-dileps --merge-pdf  
+
+python new_impact_table.py --quote-dileps --merge-pdf  latest_impacts_v37_test172BIN1_el_test2_SepTT0.json latest_impacts_v37_test172BIN1_mu_test2_expMu2_SepTT0.json latest_impacts_v37_test172BIN1_both_test2_expMu2_SepTT0.json
+
+
+$\tauh$ jet identification  &  4.7 &  4.5 &  4.4 & 0.0 & 0 \\
+        \ttbar background  &  1.9 &  2.2 &  2.4 & 0.2 & 0 \\
+  pileup (PU) uncertainty  &  2.3 &  2.2 &  2.0 & 0.1 & 1 \\
+
+pu small!
+
+python new_impact_table.py --quote-dileps --merge-pdf  latest_impacts_v37_test172BIN1_el_test2_SepTT1.json latest_impacts_v37_test172BIN1_mu_test2_expMu2_SepTT1.json latest_impacts_v37_test172BIN1_both_test2_expMu2_SepTT1.json
+
+
+
+
+
+
+
+
+# systematics in the yields table
 
 combineTool.py -M Impacts -t -1 --setParameters r=1.0,lumi_mult=1.0 --freezeParameters r --redefineSignalPOIs tau_ratio -d fit-stuff/datacard_ratio_four_channels_94v5_processing1_fit1_higgsCombine1_temp_mult2_fakes.root -m 125 --robustFit 1 --doInitialFit --name RatioMFakes --cminDefaultMinimizerTolerance 5.
 
