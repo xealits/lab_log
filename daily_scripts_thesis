@@ -70,8 +70,8 @@ make plot_control_wjets_el nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 d
 
 
 
-make plot_lj_1 nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=mu datafile=SingleMuon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
-make plot_lj_1 nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=el datafile=SingleElectron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+make plot_lj_1 nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900   symbol_lep=#mu title_lep=muon       chan_tag=mu datafile=SingleMuon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+make plot_lj_1 nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900   symbol_lep=e   title_lep=electron   chan_tag=el datafile=SingleElectron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 
 
 make plot_presel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_lev=Cand chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
@@ -79,6 +79,7 @@ make plot_presel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_l
 
 make plot_sel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon       options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 make plot_sel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=el datafile=SingleElectron symbol_lep=e   title_lep=electron   options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+
 
 
 make plot_sel_fit_1  nt=v37 proc=test13 distrs=bunchFULLFIT2 lumi=35900 chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon       options="--data-nick data_other --overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --draw-overflows 5" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
@@ -93,6 +94,7 @@ make plot_sel_paper_1  nt=v37 proc=test13 distrs=bunchFULLFIT2 lumi=35900 chan_t
 TOFIX -- mu does no hase s_top_eltau!
 
 python stack_plot.py distrs/v37_test13_bunchFULLFIT2_mc.root distrs/v37_test13_bunchFULLFIT2/SingleMuon.root -o plots/v37_test13_bunchFULLFIT2/paper/ --data-nick data_other --overwrite -p -r --lumi 35900 -c mu_sel    -x mu_selVloose    -d Mt_lep_met_c --wjet 1.4 --qcd 1.05 --ratio-range 0.5 --bin-norm --title "" --title-x "M_{T}(#mu, MET) [GeV]"         --title-y "[Events/GeV]"     --draw-overflows 5 --legend-shift 0.02  --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_taultauh,tt_taulj,tt_other
+
 
 
 
@@ -118,6 +120,111 @@ cp plots/v37_test13_bunchFULLFIT2/thesis/paper/*pdf plots/v37_test13_thesis/pape
 
 make --keep-going rename_for_update             distrs=thesis  type=pdf
 make --keep-going rename_for_update_paper_plots distrs=thesis  type=pdf
+
+added lacking wjets:
+
+make --keep-going rename_for_update_wjets             distrs=thesis  type=pdf
+
+
+nvtx:
+
+make plot_sel_2  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon       options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+make plot_sel_2  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=el datafile=SingleElectron symbol_lep=e   title_lep=electron   options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+
+DEBUG:root:absent PUDown
+DEBUG:root:absent NOMINAL el_sel_ss_tt_taulj_NOMINAL_nvtx
+DEBUG:root:el_sel_ss_tt_other_PUDown_nvtx
+
+etc
+
+
+
+### nvtx
+
+distrs/v37_test13_bunchCONTROLNVTX/all/
+
+make multihadd2_distrs_all_dtags nt=v37 proc=test13 distrs=bunchCONTROLNVTX
+
+
+!!!!!!!!!!!!! nvtx was not saved in stage2 !!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+### met_f
+
+a specially produced bunch of plots:
+bunchCONTROLMET
+
+
+
+### amcatnlo wjets
+
+make plot_control_wjets_amcatnlo
+
+root -l jobsums/distrs/v37_test5_bunch2_mc_4_amcatnlo.root
+
+-- no control channels! only fit channels
+
+v37 --proc test172 --distrs bunchCONTROLS1
+
+distrs/v37_test172_bunchCONTROLS1_mc.root
+got everything
+and
+distrs/v37_test172_bunchCONTROLS1
+contains both NJets and amcatnlo
+
+but mc_norm does not have this directory???  it is on lxplus!!
+
+~/work/private/16/CMSSW_8_0_29/src/UserCode/NtuplerAnalyzer/proc/jobsums/mc_norm
+
+
+mkdir v37_test172_bunchCONTROLSamcatnlo
+mkdir v37_test172_bunchCONTROLSwnjets
+
+
+make plot_control_wjets_mu nt=v37 proc=test172 distrs=bunchCONTROLSamcatnlo lumi=35900 datafile=SingleMuon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'  --wjets 0.9"
+make plot_control_wjets_el nt=v37 proc=test172 distrs=bunchCONTROLSamcatnlo lumi=35900 datafile=SingleElectron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'  --wjets 0.9"
+
+make plot_control_wjets_mu nt=v37 proc=test172 distrs=bunchCONTROLSwnjets lumi=35900 datafile=SingleMuon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'  --wjets 1.3"
+make plot_control_wjets_el nt=v37 proc=test172 distrs=bunchCONTROLSwnjets lumi=35900 datafile=SingleElectron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'  --wjets 1.3"
+
+
+-- not enough data....?
+
+amcatnlo
+INFO:root:data       =   466527.786667      371.945610
+INFO:root:mc sum     =   575654.680341   575654.680341
+
+INFO:root:data       =   348153.506667      313.511074
+INFO:root:mc sum     =   410717.126939   410717.126939
+
+
+wNjets
+
+INFO:root:data       =   466527.786667      371.945610
+INFO:root:mc sum     =   475580.712558   475580.712558
+
+
+
+mkdir plots/v37_test172_bunchCONTROLSamcatnlo/thesis/
+mkdir plots/v37_test172_bunchCONTROLSwnjets/thesis/
+
+mv plots/v37_test172_bunchCONTROLSamcatnlo/*pdf    plots/v37_test172_bunchCONTROLSamcatnlo/thesis/
+mv plots/v37_test172_bunchCONTROLSwnjets/*pdf      plots/v37_test172_bunchCONTROLSwnjets/thesis/
+
+
+mkdir plots/v37_test172_thesis_wjets_amcatnlo/
+mkdir plots/v37_test172_thesis_wjets_wNjets/
+
+cp plots/v37_test172_bunchCONTROLSamcatnlo/thesis/*pdf  plots/v37_test172_thesis_wjets_amcatnlo/
+cp plots/v37_test172_bunchCONTROLSwnjets/thesis/*pdf    plots/v37_test172_thesis_wjets_wNjets/
+
+
+make --keep-going rename_for_update_wjets    proc=test172   distrs=thesis_wjets_amcatnlo  type=pdf
+make --keep-going rename_for_update_wjets    proc=test172   distrs=thesis_wjets_wNjets  type=pdf
+
 
 
 
