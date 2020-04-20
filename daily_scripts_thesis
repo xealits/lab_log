@@ -149,6 +149,80 @@ make multihadd2_distrs_all_dtags nt=v37 proc=test13 distrs=bunchCONTROLNVTX
 !!!!!!!!!!!!! nvtx was not saved in stage2 !!!!!!!!!!!!!!!!!!!
 
 
+on lxplus in new ntuples
+
+cd ~/work/public/CMSSW_10_3_3/src/UserCode/proc
+
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTX   hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmc hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+a test:
+time sumup_loop 0 1 0 41300 NOMINAL,PUUp,PUDown el_sel,el_sel_ss,mu_sel,mu_sel_ss std Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass jobsums/distrs//v37/processing2NVTX/plot1/Data13TeV_SingleElectron2016B_03Feb2017_ver2.root .lstore_outdirs//v37/processing2NVTX/Data13TeV_SingleElectron2016B_03Feb2017_ver2/*root
+
+MC fails
+
+time sumup_loop 0 1 0 35900 NOMINAL,PUUp,PUDown el_sel,el_sel_ss,mu_sel,mu_sel_ss std Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass jobsums/distrs//v37/processing2NVTXmc/plot1/MC2016_Summer16_TTJets_powheg.root lstore_outdirs//v37/processing2NVTXmc/MC2016_Summer16_TTJets_powheg/*root
+time sumup_loop 0 1 0 35900 NOMINAL,PUUp,PUDown el_sel,el_sel_ss,mu_sel,mu_sel_ss std Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass jobsums/distrs//v37/processing2NVTXmc/plot1/MC2016_Summer16_TTJets_powheg.root .lstore_outdirs//v37/processing2NVTXmc/MC2016_Summer16_TTJets_powheg/*root
+
+MC is 0
+
+NT_event_weight*NT_event_weight_PU*NT_event_weight_LEPmuID*NT_event_weight_LEPelID* NT_event_weight_LEPelTRG
+
+root -l .lstore_outdirs//v37/processing2NVTXmc/MC2016_Summer16_TTJets_powheg/MC2016_Summer16_TTJets_powheg_1.root
+
+
+and poor normalization because of the extrasss.....
+hadd processing2NVTXmcHADD/MC2016_Summer16_DYJetsToLL_50toInf_madgraph/MC2016_Summer16_DYJetsToLL_50toInf_madgraph_0.root processing2NVTXmc/MC2016_Summer16_DYJetsToLL_50toInf_madgraph*/*root
+
+first try no extras
+-- no, it's wjets -- the cross sections!!!
+
+ok, with extras copied:
+processing2NVTXmcHADD/
+
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmcHADD hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+
+
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize-data 2.5 --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8  --left-title "CMS #font[52]{Internal}"
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize-data 2.5 --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8  --left-title "CMS #font[52]{Internal}" --systematic PUUp
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize-data 2.5 --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8  --left-title "CMS #font[52]{Internal}" --systematic PUDown
+
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --systematic PUUp
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot1.root distrs//distrs_v37_processing2NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_sel -d nvtx --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --systematic PUDown
+
+
+python stack_plot.py histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root histosels/datafile_HISTOSEL_v37_test172_bunchFULLFIT1BIN1_with_tausys.root -o plots/v37_test172_paper_plots3/ --data-nick data_other --overwrite -p -r -c el_sel_lj    -d Mt_lep_met_c --ratio-range 0.5 --bin-norm --title "" --title-x "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]"   --title-y "Events / GeV" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other. --y-range 0,100. --uncertainty-systematic bSF,PU,JES,JER,TES,LEPelTRG,LEPelID,TauMisID,TauID --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.11 --offset-y 0.9 --margin-x 0.4 --offset-x 2.8   --left-title-inside --left-title-offset 0.04 --label "Background-like" --label-offset 0.25
+
+
+### lj procedure parameters
+
+at preselection
+
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTX   hists=plot1 simulate_data_output=0     systematics=NOMINAL  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmc hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmcHADD hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+
+
+
+
+### JES corrections
+
+[olek@fermi02 proc]$ pwd
+/lstore/cms/olek/CMSSW_8_0_26_patch1/src/UserCode/NtuplerAnalyzer/proc
+[olek@fermi02 proc]$ ls ./studies/jes_bSF_corrections/
+JES_corrections_barrel_b.png     JES_corrections_endcap_b.png     MC2016_Summer16_TTJets_powheg.root          MC2016_Summer16_TTJets_powheg_hdampDOWN.root  MC2016_Summer16_TTJets_powheg_isrup.root
+JES_corrections_barrel_c.png     JES_corrections_endcap_c.png     MC2016_Summer16_TTJets_powheg_fsrdown.root  MC2016_Summer16_TTJets_powheg_hdampUP.root    btaggin_efficiency_jes_corrections.py
+JES_corrections_barrel_udsg.png  JES_corrections_endcap_udsg.png  MC2016_Summer16_TTJets_powheg_fsrup.root    MC2016_Summer16_TTJets_powheg_isrdown.root    corrections_to_nominal_jes.root
+
+daily_scripts.1
+"corrections to JES in PS datasets"
+
+-- updated there.... damn this ROOT does not like for loop!
 
 
 

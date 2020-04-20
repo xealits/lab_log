@@ -963,6 +963,13 @@ make plot_sys_vars_tau_ID_misID mc=distrs/v37_test13_bunchFULLFIT2_mc.root data_
 
 ### corrections to JES in PS datasets
 
+--fonts1 133 --fonts1-size 32
+
+root -b -l corrections_to_nominal_jes.root
+
+fonts1 = 133
+fonts1_size = 32
+font_size_axes_titles = 40
 
 gStyle->SetOptStat(0)
 
@@ -1016,23 +1023,64 @@ isrdown   ->SetLineColor(kBlue+1)
 hdampup   ->SetLineColor(kGreen)
 hdampdown ->SetLineColor(kGreen+1)
 
-fsrup->GetYaxis()->SetTitleFont(63)
-fsrup->GetYaxis()->SetTitleSize(20)
-fsrup->GetXaxis()->SetTitleFont(63)
-fsrup->GetXaxis()->SetTitleSize(20)
-fsrup->GetYaxis()->SetLabelSize(0.02)
-fsrup->GetXaxis()->SetLabelSize(0.02)
+fsrup     ->SetLineWidth(3)
+fsrdown   ->SetLineWidth(3)
+isrup     ->SetLineWidth(3)
+isrdown   ->SetLineWidth(3)
+hdampup   ->SetLineWidth(3)
+hdampdown ->SetLineWidth(3)
 
+fsrup->GetXaxis()->SetTitleOffset(1.0)
+fsrup->GetYaxis()->SetLabelFont(fonts1)
+fsrup->GetXaxis()->SetLabelFont(fonts1)
+fsrup->GetYaxis()->SetLabelSize(fonts1_size)
+fsrup->GetXaxis()->SetLabelSize(fonts1_size)
+fsrup->GetYaxis()->SetTitleOffset(1.7)
+fsrup->GetYaxis()->SetTitleFont(fonts1)
+fsrup->GetXaxis()->SetTitleFont(fonts1)
+fsrup->GetYaxis()->SetTitleSize(font_size_axes_titles)
+fsrup->GetXaxis()->SetTitleSize(font_size_axes_titles)
 
-gPad->SetLeftMargin(0.15);
-gPad->SetBottomMargin(0.15);
+//gPad->SetLeftMargin(0.15);
+//gPad->SetBottomMargin(0.15);
 fsrup     ->GetYaxis()->SetRangeUser(0.97, 1.03)
-fsrup     ->GetYaxis()->SetTitleOffset(3.0)
-fsrup     ->GetXaxis()->SetTitleOffset(2.0)
-fsrup     ->SetXTitle("p^{gen}_{T} [GeV]")
-fsrup     ->SetYTitle("#frac{<p^{reco NOMINAL}_{T}>/<p^{gen NOMINAL}_{T}>}{<p^{reco PS systematic}_{T}>/<p^{gen PS systematic}_{T}>}")
+//fsrup     ->GetYaxis()->SetTitleOffset(3.0)
+//fsrup     ->GetXaxis()->SetTitleOffset(2.0)
 
-leg = new TLegend(0.6,0.7, 0.9,0.9)
+//fsrup->GetYaxis()->SetTitleFont(63)
+//fsrup->GetYaxis()->SetTitleSize(20)
+//fsrup->GetXaxis()->SetTitleFont(63)
+//fsrup->GetXaxis()->SetTitleSize(20)
+//fsrup->GetYaxis()->SetLabelSize(0.02)
+//fsrup->GetXaxis()->SetLabelSize(0.02)
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->Draw("Y+")
+
+y_axis_tick_len = 0.03
+left_margin = 0.25
+bottom_margin = 0.15
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+pad1->SetLeftMargin(left_margin)
+pad1->SetRightMargin(0.01)
+pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+
+pad1->SetTicks()
+pad1->cd()
+
+
+
+fsrup     ->SetXTitle("p^{gen}_{T} [GeV]")
+//fsrup     ->SetYTitle("#frac{<p^{reco NOMINAL}_{T}>/<p^{gen NOMINAL}_{T}>}{<p^{reco PS systematic}_{T}>/<p^{gen PS systematic}_{T}>}")
+fsrup     ->SetYTitle("#frac{JES nominal}{JES PS systematic}")
+
+leg = new TLegend(0.6,0.6, 0.89,0.89)
+leg->SetBorderSize(0)
+leg->SetTextFont(fonts1)
+leg->SetTextSize(fonts1_size)
+
 leg->AddEntry(fsrup,   "FSR Up",   "l")
 leg->AddEntry(fsrdown, "FSR Down", "l")
 leg->AddEntry(isrup,   "ISR Up",   "l")
@@ -1049,14 +1097,39 @@ hdampdown ->Draw("hist same")
 
 leg->Draw("same")
 
-c1->SaveAs("JES_corrections_barrel_b.png")
-c1->SaveAs("JES_corrections_endcap_b.png")
+left_title = new TPaveText(left_margin, 0.92, 0.8, 0.97, "brNDC") // left_title = TPaveText(0.15,  0.92, 0.5, 0.97, "brNDC")
+left_title->SetTextAlign(13) // this adjust to left (+ margin inside the box and top)
+left_title->SetMargin(0)
+left_title->AddText("CMS #font[52]{Simulation Internal}")
+left_title->SetFillColor(0)
+left_title->Draw("same")
 
-c1->SaveAs("JES_corrections_barrel_c.png")
-c1->SaveAs("JES_corrections_endcap_c.png")
+//if args.add_outlier_plot:
+//    right_title = TPaveText(0.65, 0.92, 0.945, 0.97, "brNDC")
+//else:
 
-c1->SaveAs("JES_corrections_barrel_udsg.png")
-c1->SaveAs("JES_corrections_endcap_udsg.png")
+right_title = new TPaveText(0.75, 0.92, 0.98, 0.97, "brNDC")
+right_title->SetTextAlign(33)
+right_title->SetMargin(0)
+right_title->AddText("(13 TeV)")
+right_title->SetTextFont(132)
+right_title->SetFillColor(0)
+
+right_title->Draw("same")
+
+cst->SaveAs("test_JES_corrections_barrel_b.pdf")
+
+cst->SaveAs("test_JES_corrections_endcap_b.pdf")
+
+
+cst->SaveAs("test_JES_corrections_barrel_c.pdf")
+
+cst->SaveAs("test_JES_corrections_endcap_c.pdf")
+
+
+cst->SaveAs("test_JES_corrections_barrel_udsg.pdf")
+
+cst->SaveAs("test_JES_corrections_endcap_udsg.pdf")
 
 no Tune:
 
