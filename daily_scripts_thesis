@@ -7,6 +7,325 @@ find . -name el_presel_bjet_pt.png
 ./plots/v37_test13_update2/renames/el_presel_bjet_pt.png
 
 
+## fake rates and fake factors
+
+/afs/cern.ch/user/o/otoldaie/work
+$ ls -l ./private/16/CMSSW_8_0_25/src/UserCode/ttbar-leptons-80X/analysis/fake-rates/j7.3_tauMVA_v10.6_tauMVA/                       
+total 10361
+-rw-r--r--. 1 otoldaie zh 2581754 Apr 19  2017 Data13TeV_JetHT2016X.root
+-rw-r--r--. 1 otoldaie zh 4571938 Apr 19  2017 Data13TeV_SingleLepton2016X.root
+-rw-r--r--. 1 otoldaie zh 3454040 Apr 19  2017 Data13TeV_SingleMuon2016X.root
+
+pwd
+/home/alex/Documents/lip_phd/lip/ttbar-leptons-80X/test
+
+ack tau_jets
+jet_fakefactor_data.cc
+jet_fakerate_measurements.cc
+
+
+#### script 1
+
+a la
+Documents/lip_phd/lip/ttbar-leptons-80X/test/jet_fakefactor_data.cc
+
+root -b -l /eos/user/o/otoldaie/mixed-llvv-ttbarleptons-project-old_tests_outdir/8_0_25_ttbar-leptons-80X_analysis/fake-rates/j7.3_tauMVA_v10.6_tauMVA/Data13TeV_JetHT2016X.root /eos/user/o/otoldaie/mixed-llvv-ttbarleptons-project-old_tests_outdir/8_0_25_ttbar-leptons-80X_analysis/fake-rates/j7.3_tauMVA_v10.6_tauMVA/Data13TeV_SingleMuon2016X.root /eos/user/o/otoldaie/mixed-llvv-ttbarleptons-project-old_tests_outdir/8_0_25_ttbar-leptons-80X_analysis/fake-rates/j7.3_tauMVA_v10.6_tauMVA/Data13TeV_SingleLepton2016X.root
+
+
+root [2] elmu_passbtagfinal_jets_distr
+(TH3D *) 0x44b8de0
+root [3] elmu_passbtagfinal_tau_jets_distr
+(TH3D *) 0x4520300
+
+  KEY: TH3D	elmu_passjets_jets_distr_large_bins;1	
+  KEY: TH3D	elmu_passjets_tau_jets_distr_large_bins;1	
+
+root [11] elmu_passbtagfinal_jets_distr->Print()
+TH1.Print Name  = elmu_passbtagfinal_jets_distr, Entries= 83489, Total sum= 83352
+root [12] elmu_passjetsNbtag_jets_distr->Print()
+TH1.Print Name  = elmu_passjetsNbtag_jets_distr, Entries= 109934, Total sum= 109789
+root [13] elmu_passjets_jets_distr->Print()
+TH1.Print Name  = elmu_passjets_jets_distr, Entries= 143949, Total sum= 143722
+
+
+  KEY: TH3D	HLTjet_qcd_jets_distr_large_bins;1	
+  KEY: TH3D	HLTjet_qcd_looseTaus_jets_distr;1	
+  KEY: TH3D	HLTjet_qcd_looseTaus_tau_jets_distr;1	
+  KEY: TH3D	HLTjet_qcd_tau_jets_distr;1	
+  KEY: TH3D	HLTjet_qcd_tau_jets_distr_large_bins;1	
+
+TH3D* histo_elmu_taus = (TH3D*) _file1->Get("HLTmu_elmu_tau_jets_distr_large_bins")
+TH3D* histo_elmu_jets = (TH3D*) _file1->Get("HLTmu_elmu_jets_distr_large_bins")
+
+TH3D* histo_qcd_taus = (TH3D*) _file0->Get("HLTjet_qcd_tau_jets_distr")
+TH3D* histo_qcd_jets = (TH3D*) _file0->Get("HLTjet_qcd_jets_distr")
+
+
+
+gStyle->SetOptStat(0)
+
+fonts1 = 133
+fonts1_size = 32
+font_size_axes_titles = 40
+
+title_offset_x = 0.8
+title_offset_y = 1.1
+
+y_axis_tick_len = 0.03
+left_margin = 0.15
+right_margin = 0.04
+bottom_margin = 0.12
+
+y_maximum = 1.0
+y_minimum = 0.0001
+
+TH3D* histo_qcd_taus = (TH3D*) _file0->Get("HLTjet_qcd_tau_jets_distr_large_bins")
+TH3D* histo_qcd_jets = (TH3D*) _file0->Get("HLTjet_qcd_jets_distr_large_bins")
+
+TH3D* histo_wjets_taus = (TH3D*) _file1->Get("HLTmu_wjets_tau_jets_distr_large_bins")
+TH3D* histo_wjets_jets = (TH3D*) _file1->Get("HLTmu_wjets_jets_distr_large_bins")
+
+TH3D* histo_elmu_taus = (TH3D*) _file2->Get("elmu_passjets_tau_jets_distr_large_bins")
+TH3D* histo_elmu_jets = (TH3D*) _file2->Get("elmu_passjets_jets_distr_large_bins")
+
+
+for fake factors
+
+TH3D* histo_qcd_taus = (TH3D*) _file0->Get("HLTjet_qcd_tightTaus_tau_jets_distr")  // nominator
+TH3D* histo_qcd_jets = (TH3D*) _file0->Get("HLTjet_qcd_looseTaus_tau_jets_distr")  // denominator
+
+TH3D* histo_wjets_taus = (TH3D*) _file1->Get("HLTmu_wjets_tightTaus_tau_jets_distr")
+TH3D* histo_wjets_jets = (TH3D*) _file1->Get("HLTmu_wjets_looseTaus_tau_jets_distr")
+
+y_maximum = 1.5
+y_minimum = 0.
+
+
+
+TH3D* histo_taus = histo_qcd_taus;
+TH3D* histo_jets = histo_qcd_jets;
+
+histo_taus = histo_wjets_taus;
+histo_jets = histo_wjets_jets;
+
+histo_taus = histo_elmu_taus;
+histo_jets = histo_elmu_jets;
+
+
+histo_taus_pt  = (TH1D*) histo_taus->Project3D("x")
+histo_taus_eta = (TH1D*) histo_taus->Project3D("y")
+histo_taus_r   = (TH1D*) histo_taus->Project3D("z")
+
+histo_jets_pt  = (TH1D*) histo_jets->Project3D("x")
+histo_jets_eta = (TH1D*) histo_jets->Project3D("y")
+histo_jets_r   = (TH1D*) histo_jets->Project3D("z")
+
+histo_taus_pt  -> Sumw2()
+histo_taus_eta -> Sumw2()
+histo_taus_r   -> Sumw2()
+histo_jets_pt  -> Sumw2()
+histo_jets_eta -> Sumw2()
+histo_jets_r   -> Sumw2()
+
+histo_taus_pt  -> Divide(histo_jets_pt)
+histo_taus_eta -> Divide(histo_jets_eta)
+histo_taus_r   -> Divide(histo_jets_r)
+
+histo_taus_pt  -> SetLineWidth(3)
+histo_taus_eta -> SetLineWidth(3)
+histo_taus_r   -> SetLineWidth(3)
+
+histo_taus_pt->SetTitle("")
+histo_taus_pt->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_taus_pt->GetYaxis()->SetLabelFont(fonts1)
+histo_taus_pt->GetXaxis()->SetLabelFont(fonts1)
+histo_taus_pt->GetYaxis()->SetLabelSize(fonts1_size)
+histo_taus_pt->GetXaxis()->SetLabelSize(fonts1_size)
+histo_taus_pt->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_taus_pt->GetYaxis()->SetTitleFont(fonts1)
+histo_taus_pt->GetXaxis()->SetTitleFont(fonts1)
+histo_taus_pt->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_pt->GetXaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_pt  ->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
+histo_taus_pt  ->GetXaxis()->SetRangeUser(0., 150.)
+
+histo_taus_pt     ->SetXTitle("p_{T} [GeV]")
+histo_taus_pt     ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
+
+histo_taus_eta->SetTitle("")
+histo_taus_eta->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_taus_eta->GetYaxis()->SetLabelFont(fonts1)
+histo_taus_eta->GetXaxis()->SetLabelFont(fonts1)
+histo_taus_eta->GetYaxis()->SetLabelSize(fonts1_size)
+histo_taus_eta->GetXaxis()->SetLabelSize(fonts1_size)
+histo_taus_eta->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_taus_eta->GetYaxis()->SetTitleFont(fonts1)
+histo_taus_eta->GetXaxis()->SetTitleFont(fonts1)
+histo_taus_eta->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_eta->GetXaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_eta->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
+
+histo_taus_eta    ->SetXTitle("#eta")
+histo_taus_eta    ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
+
+histo_taus_r->SetTitle("")
+histo_taus_r->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_taus_r->GetYaxis()->SetLabelFont(fonts1)
+histo_taus_r->GetXaxis()->SetLabelFont(fonts1)
+histo_taus_r->GetYaxis()->SetLabelSize(fonts1_size)
+histo_taus_r->GetXaxis()->SetLabelSize(fonts1_size)
+histo_taus_r->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_taus_r->GetYaxis()->SetTitleFont(fonts1)
+histo_taus_r->GetXaxis()->SetTitleFont(fonts1)
+histo_taus_r->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_r->GetXaxis()->SetTitleSize(font_size_axes_titles)
+histo_taus_r->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
+histo_taus_r->GetXaxis()->SetRangeUser(0., 0.3)
+
+histo_taus_r      ->SetXTitle("#font[52]{r}_{jet}")
+histo_taus_r      ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
+
+
+
+
+frate_qcd_pt  = (TH1D*) histo_taus_pt->Clone()
+frate_qcd_eta = (TH1D*) histo_taus_eta->Clone()
+frate_qcd_r   = (TH1D*) histo_taus_r->Clone()
+frate_qcd_pt  ->SetName( "frate_qcd_pt"  )
+frate_qcd_eta ->SetName( "frate_qcd_eta" )
+frate_qcd_r   ->SetName( "frate_qcd_r"   )
+frate_qcd_pt  ->SetLineColor(kBlack)
+frate_qcd_eta ->SetLineColor(kBlack)
+frate_qcd_r   ->SetLineColor(kBlack)
+
+frate_wjets_pt  = (TH1D*) histo_taus_pt->Clone()
+frate_wjets_eta = (TH1D*) histo_taus_eta->Clone()
+frate_wjets_r   = (TH1D*) histo_taus_r->Clone()
+frate_wjets_pt  ->SetName( "frate_wjets_pt"  )
+frate_wjets_eta ->SetName( "frate_wjets_eta" )
+frate_wjets_r   ->SetName( "frate_wjets_r"   )
+frate_wjets_pt  ->SetLineColor(kRed)
+frate_wjets_eta ->SetLineColor(kRed)
+frate_wjets_r   ->SetLineColor(kRed)
+
+frate_elmu_pt  = (TH1D*) histo_taus_pt->Clone()
+frate_elmu_eta = (TH1D*) histo_taus_eta->Clone()
+frate_elmu_r   = (TH1D*) histo_taus_r->Clone()
+frate_elmu_pt  ->SetName( "frate_elmu_pt"  )
+frate_elmu_eta ->SetName( "frate_elmu_eta" )
+frate_elmu_r   ->SetName( "frate_elmu_r"   )
+frate_elmu_pt  ->SetLineColor(kBlue)
+frate_elmu_eta ->SetLineColor(kBlue)
+frate_elmu_r   ->SetLineColor(kBlue)
+
+
+
+
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+pad1->SetLeftMargin(left_margin)
+pad1->SetRightMargin(right_margin)
+pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+//pad1->SetLogy() // comment out for fake factors
+
+pad1->SetTicks()
+pad1->cd()
+
+leg = new TLegend(0.6,0.6, 0.89,0.89)
+leg->SetBorderSize(0)
+leg->SetTextFont(fonts1)
+leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(frate_wjets_pt, "W+jets",       "l")
+//leg->AddEntry(frate_elmu_pt,  "e#mu+jets",    "l")
+leg->AddEntry(frate_qcd_pt,   "multijet QCD", "l")
+
+left_title = new TPaveText(left_margin, 0.92, 0.8, 0.97, "brNDC") // left_title = TPaveText(0.15,  0.92, 0.5, 0.97, "brNDC")
+left_title->SetTextAlign(13) // this adjust to left (+ margin inside the box and top)
+left_title->SetMargin(0)
+left_title->AddText("CMS #font[52]{Internal}")
+left_title->SetFillColor(0)
+
+right_title = new TPaveText(0.72 - right_margin, 0.92, 1. - right_margin, 0.97, "brNDC")
+right_title->SetTextAlign(33)
+right_title->SetMargin(0)
+right_title->AddText("35.9 fb^{-1} (13 TeV)")
+right_title->SetTextFont(132)
+right_title->SetFillColor(0)
+
+
+here
+
+
+frate_qcd_pt   ->Draw("")
+frate_wjets_pt ->Draw("same")
+frate_elmu_pt  ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_frates_pt.pdf")
+
+
+frate_qcd_eta   ->Draw("")
+frate_wjets_eta ->Draw("same")
+frate_elmu_eta  ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_frates_eta.pdf")
+
+
+frate_qcd_r   ->Draw("")
+frate_wjets_r ->Draw("same")
+frate_elmu_r  ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_frates_r.pdf")
+
+
+fake factors
+
+frate_qcd_pt   ->Draw("")
+frate_wjets_pt ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_fakefactors_pt.pdf")
+
+
+frate_qcd_eta   ->Draw("")
+frate_wjets_eta ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_fakefactors_eta.pdf")
+
+
+frate_qcd_r   ->Draw("")
+frate_wjets_r ->Draw("same")
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+cst->SaveAs("test_fakefactors_r.pdf")
+
+
+frate_qcd_r   ->GetYaxis()->SetRangeUser(0.0001, 1.)
+frate_wjets_r ->GetYaxis()->SetRangeUser(0.0001, 1.)
+frate_elmu_r  ->GetYaxis()->SetRangeUser(0.0001, 1.)
+
+frate_qcd_r   ->GetXaxis()->SetRangeUser(0., 0.3)
+frate_wjets_r ->GetXaxis()->SetRangeUser(0., 0.3)
+frate_elmu_r  ->GetXaxis()->SetRangeUser(0., 0.3)
+
+
+
+
+
 ## production of AN figures
 
 the log is in daily_scripts.1
