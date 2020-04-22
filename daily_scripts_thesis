@@ -77,6 +77,11 @@ make plot_lj_1 nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900   symbol_lep=
 make plot_presel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_lev=Cand chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 make plot_presel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_lev=Cand chan_tag=el datafile=SingleElectron symbol_lep=e   title_lep=electron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 
+
+make plot_presel_mc_qcd  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_lev=Cand chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon      options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+make plot_presel_mc_qcd  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 presel_lev=Cand chan_tag=el datafile=SingleElectron symbol_lep=e   title_lep=electron  options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}'"  merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
+
+
 make plot_sel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=mu datafile=SingleMuon     symbol_lep=#mu title_lep=muon       options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_mutau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 make plot_sel_1  nt=v37 proc=test13 distrs=bunchCONTROLS1 lumi=35900 chan_tag=el datafile=SingleElectron symbol_lep=e   title_lep=electron   options="--overwrite --output-type pdf --font-size-axes-titles 40 --font-size-axes-labels 30 --margin-y 0.14 --offset-y 1.2 --margin-x 0.4 --offset-x 2.8 --left-title 'CMS #font[52]{Internal}' --ratio-range 0.55" merge_procs="--merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.s_top_eltau,s_top_lj,s_top_other:s_top.tt_lj,tt_taulj,tt_taultauh,tt_other."
 
@@ -124,6 +129,9 @@ make --keep-going rename_for_update_paper_plots distrs=thesis  type=pdf
 added lacking wjets:
 
 make --keep-going rename_for_update_wjets             distrs=thesis  type=pdf
+
+make --keep-going rename_for_update_el_presel             distrs=thesis  type=pdf
+make --keep-going rename_for_update_mu_presel             distrs=thesis  type=pdf
 
 
 nvtx:
@@ -205,6 +213,220 @@ make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTX   hists=plot1 sim
 make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmc hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
 
 make histograms_to_fit lumi=35900 nt=v37  proc=processing2NVTXmcHADD hists=plot1 simulate_data_output=0     systematics=NOMINAL,PUUp,PUDown  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,nvtx,lj_var,lj_var_w_mass,lj_var_t_mass
+
+-- nope! need presel channels, that are not defined in sumup_loop now
+
+updated sumup loop:
+
+make histograms_to_fit nt=v37  proc=processing2NVTX       hists=plot2 simulate_data_output=0     systematics=NOMINAL  channels=el_old_presel,el_old_presel_ss,mu_old_presel,mu_old_presel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,lj_var,lj_var_w_mass,lj_var_t_mass
+make histograms_to_fit nt=v37  proc=processing2NVTXmcHADD hists=plot2 simulate_data_output=0     systematics=NOMINAL  channels=el_old_presel,el_old_presel_ss,mu_old_presel,mu_old_presel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,lj_var,lj_var_w_mass,lj_var_t_mass
+
+jobsums/distrs//distrs_v37_processing2NVTXmcHADD_plot2.root
+jobsums/distrs//distrs_v37_processing2NVTX_plot2.root
+
+
+python stack_plot.py  distrs/distrs_v37_processing2NVTXmcHADD_plot2.root distrs//distrs_v37_processing2NVTX_plot2.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --normalize  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+-- I need the MC QCD for the QCD comparison...
+   and the normalization to data is not good -- no data-driven QCD then..
+
+it looks like v37 presel = sel
+how was it generated?
+
+v33tauCands contains tauCnads, which requires selTaus.size() > 0 -- all taus that pass the kinematics, no ID requirement
+but it has only DY and QCD
+
+gstore_outdirs/v39/
+might be it
+
+to test, let's count selection_stage_presel in some file
+
+in v37:
+
+root -l lstore_outdirs/v37/processing2NVTX/Data13TeV_SingleMuon2016D_03Feb2017_v1/Data13TeV_SingleMuon2016D_03Feb2017_v1_10.root
+ttree_out->Draw("1", "selection_stage_presel == 9")
+(Long64_t) 90
+
+
+process v39
+root -l lstore_outdirs/v39/processing2NVTX/Data13TeV_SingleMuon2016D_03Feb2017_v1/Data13TeV_SingleMuon2016D_03Feb2017_v1_10.root
+ttree_out->Draw("1", "selection_stage_presel == 9")
+(Long64_t) 91
+
+damn....
+
+compare to normal seelction
+
+ttree_out->Draw("selection_stage_presel", "selection_stage_presel != 0")
+ttree_out->Draw("selection_stage", "selection_stage_presel != 0")
+
+-- no zeros!!
+
+v39
+ttree_out->Draw("selection_stage")
+also no zeros
+
+it seems to have the old tauCands, which means VLoose ID
+
+
+#### extremely old figures
+
+./AN-v1-pres/lj/v20v21p1_mu_mc_..,merge-sets,v20,p1,SingleMuon_dijet_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio_dataqcd.png
+./AN-v1-pres/lj/v20v21p1_mu_mc_..,merge-sets,v20,p1,SingleMuon_dijet_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio.png
+
+./AN-v1-pres/lj/v20v21p1_mu_mc_..,merge-sets,v20,p1,SingleMuon_dijet_trijet_mass_ctr_mu_tt_em_NOMINAL_stack_ratio.png
+
+v23 is the oldest on ncg
+
+but exactly
+./AN-v2-pres/QCD/mc_norm,v23p1_mc_rest_tt_singletop_wNjets_w0jets_..,merge-sets,v23,p1_data,SingleMuon_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio.png
+./AN-v2-pres/QCD/mc_norm,v23p1_mc_rest_tt_singletop_wNjets_w0jets_..,merge-sets,v23,p1_data,SingleMuon_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio_dataqcd.png
+./AN-v2-pres/QCD/mc_norm,v23p1_mc_rest_tt_singletop_wNjets_w0jets_..,merge-sets,v23,p1_data,SingleMuon_dijet_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio.png
+./AN-v2-pres/QCD/mc_norm,v23p1_mc_rest_tt_singletop_wNjets_w0jets_..,merge-sets,v23,p1_data,SingleMuon_dijet_trijet_mass_ctr_old_mu_presel_NOMINAL_stack_ratio_dataqcd.png
+
+-- might be exactly the figures in AN!!
+
+$ find jobsums -name "*v23*"
+jobsums/plots/answers_to_paper-draft-3_an-version-7/..,sw-dir,jobsums,mc_norm,v23p1_backups,v23p1_mc_fast_..,lstore_outdirs,merge-sets,v27,p1,SingleElectron_lep_relIso_el_ctr_old_el_presel_alliso_NOMINAL_osss-factor.png
+jobsums/distrs/v23p1_mc_HISTOSEL_lep_relIso_el_ctr_old_el_presel_alliso_NOMINAL.root
+
+
+#### remembered presel in v37 test172
+
+it contains el_preselCand
+
+and distrs/v37_test172_bunchCONTROLS1_mc.root contains el_preselCands with tt_lj about 10x the eltau?
+
+root -l lstore_outdirs/v37/test172/Data13TeV_SingleMuon2016H_03Feb2017_ver2/Data13TeV_SingleMuon2016H_03Feb2017_ver2_1.root
+ttree_out->Draw("selection_stage")
+-- has 0!
+
+ttree_out->Draw("selection_stage", "selection_stage_presel !=0")
+-- has 0 too!
+
+DAMN! the new processing have failed because presel is blocked right now!
+
+$ du -sh lstore_outdirs/v37/test172
+137G	lstore_outdirs/v37/test172
+
+does it have lj vars?
+
+no lj_var
+but
+
+*Br  162 :event_top_masses_medium : vector<double>                           *
+*Entries :    32740 : Total  Size=     461067 bytes  File Size  =      51631 *
+*Baskets :       19 : Basket Size=      32000 bytes  Compression=   8.92     *
+*............................................................................*
+*Br  163 :event_top_masses_loose : vector<double>                            *
+*Entries :    32740 : Total  Size=     461044 bytes  File Size  =      51744 *
+*Baskets :       19 : Basket Size=      32000 bytes  Compression=   8.90     *
+*............................................................................*
+*Br  164 :event_top_masses_closest : event_top_masses_closest/f              *
+
+event_jets_lj_var
+yes
+
+and?
+event_jets_lj_w_mass
+event_jets_lj_t_mass
+nope...
+
+
+check if v23 figures exist
+
+nothing useful in jobsums
+lstore is cleared
+
+proc/ contains only
+./queue_dir/v23
+full of stuff like
+python channel_distrs_full_loop.py -l logss /lstore/cms/olek/outdirs//v23/p2/Data13TeV_SingleMuon2016H_03Feb2017_ver2/ -i /gstore/t3cms/store/user/otoldaie//v23/SingleMuon/Ntupler_v23_Data13TeV_SingleMuon2016H_03Feb2017_ver2/180316_234546/0000/Data13TeV_SingleMuon2016H_03Feb2017_ver2_14.root   || true
+
+du -sh gstore_outdirs/v23/
+743G	gstore_outdirs/v23/
+
+du -sh gstore_outdirs/v37/
+1.3T
+
+
+python genjobs.py v37 processing3NVTX --options no_prop_lepjets --do-W-stitching --metmuegclean false channels_nom_sys_muon_sel_main --submit queue
+
+copying
+
+cd lstore_outdirs/v37/processing3NVTX
+
+mv MC2016_Summer16_DYJetsToLL_50toInf_madgraph_ext2_v1/*root MC2016_Summer16_DYJetsToLL_50toInf_madgraph/
+
+mkdir init
+
+mv MC2016_Summer16_DYJetsToLL_10to50_amcatnlo_v1_ext1 MC2016_Summer16_DYJetsToLL_50toInf_madgraph_ext2_v1 MC2016_Summer16_W2Jets_madgraph_ext1 MC2016_Summer16_W3Jets_madgraph_ext1 MC2016_Summer16_W4Jets_madgraph_ext1 MC2016_Summer16_W4Jets_madgraph_ext2 MC2016_Summer16_WJets_madgraph_ext2_v1 init/
+
+mv init//MC2016_Summer16_DYJetsToLL_10to50_amcatnlo_v*/*root MC2016_Summer16_DYJetsToLL_10to50_amcatnlo/
+mv init/MC2016_Summer16_W2Jets_madgraph_ext1/*root MC2016_Summer16_W2Jets_madgraph/
+mv init/MC2016_Summer16_W3Jets_madgrap*/*root MC2016_Summer16_W3Jets_madgraph/
+mv init/MC2016_Summer16_W4Jets_madgrap*/*root MC2016_Summer16_W4Jets_madgraph/
+mv init/MC2016_Summer16_WJets_madgrap*/*root MC2016_Summer16_WJets_madgraph/
+
+
+lstore_outdirs/v37/processing3NVTX/
+
+make histograms_to_fit nt=v37  proc=processing3NVTX    lumi=35900   hists=plot1 simulate_data_output=0     systematics=NOMINAL  channels=el_old_presel,el_old_presel_ss,mu_old_presel,mu_old_presel_ss processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,lj_var,lj_var_w_mass,lj_var_t_mass
+
+distrs//distrs_v37_processing3NVTX_plot1.root
+
+ KEY: TH1D	mu_old_presel_data_NOMINAL_lj_var;1	mu_old_presel_data_NOMINAL_lj_var
+ KEY: TH1D	mu_old_presel_data_NOMINAL_lj_var_w_mass;1	mu_old_presel_data_NOMINAL_lj_var_w_mass
+ KEY: TH1D	mu_old_presel_data_NOMINAL_lj_var_t_mass;1	mu_old_presel_data_NOMINAL_lj_var_t_mass
+
+python stack_plot.py  distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var --title "" --title-x "#font[12]{N}_{vtx}"   --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm  --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --qcd-factor 1. --wjets 1.4 --normalize 0.7
+
+ --normalize
+ --draw-overflows 5
+
+MC QCD is not good. But the statistical fluctuation is the same.
+Added filter efficiencies...
+
+and now it is worse...
+
+root [3] ((TH1D*) mu_old_presel->Get("qcd_other/NOMINAL/mu_old_presel_qcd_other_NOMINAL_lj_var"))->GetBinContent(3)
+(double) 12075.424
+root [4] ((TH1D*) mu_old_presel->Get("qcd_other/NOMINAL/mu_old_presel_qcd_other_NOMINAL_lj_var"))->GetBinContent(4)
+(double) 108342.40
+root [5] ((TH1D*) mu_old_presel->Get("qcd_other/NOMINAL/mu_old_presel_qcd_other_NOMINAL_lj_var"))->GetBinContent(5)
+(double) 18015.393
+
+MC2016_Summer16_QCD_HT-200-300.root contributes 2 events, one hits bin 4 and gives there 84k
+MC2016_Summer16_QCD_HT-300-500.root contributes the other 20k in bin4
+and broad massive chunk everywhere else starting from bin3
+
+without the chunk
+
+final muons
+
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var --title "" --title-x "#font[12]{D}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 2. --wjets 1. --normalize 0.7
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var_w_mass --title "" --title-x "#font[12]{m}_{jj}"  --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 2. --wjets 1. --normalize 0.7
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var_t_mass --title "" --title-x "#font[12]{m}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 2. --wjets 1. --normalize 0.7
+
+
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var        --title "" --title-x "#font[12]{D}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.7 --qcd 1.05
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var_w_mass --title "" --title-x "#font[12]{m}_{jj}"  --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.7 --qcd 1.05
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c mu_old_presel -d lj_var_t_mass --title "" --title-x "#font[12]{m}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.7 --qcd 1.05
+
+
+MC2016_Summer16_QCD_HT-100-200.root
+-- gigantic spike in 1 bin in el presel
+
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var --title "" --title-x "#font[12]{D}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 1. --wjets 1. --normalize 0.69
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var_w_mass --title "" --title-x "#font[12]{m}_{jj}"  --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 1. --wjets 1. --normalize 0.69
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var_t_mass --title "" --title-x "#font[12]{m}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --qcd-factor 1. --wjets 1. --normalize 0.69
+
+slightly worse than muons.. not sure if sumup_loop applies all old corrections..
+
+
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var        --title "" --title-x "#font[12]{D}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.69 --qcd 1.05
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var_w_mass --title "" --title-x "#font[12]{m}_{jj}"  --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.69 --qcd 1.05
+python stack_plot.py distrs//distrs_v37_processing3NVTX_plot1.root distrs//distrs_v37_processing3NVTX_plot1.root -o plots/v37_processing2NVTX_thesis/ --data-nick data --overwrite -p -r -c el_old_presel -d lj_var_t_mass --title "" --title-x "#font[12]{m}_{jjb}" --title-y "Events/GeV" --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_eltau,stop_lj,stop_other:stop.tt_lj,tt_taulj,tt_other. --do-not-reweight --bin-norm --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8 --left-title "CMS #font[52]{Internal}" --wjets 1. --normalize-mc 0.69 --qcd 1.05
 
 
 
