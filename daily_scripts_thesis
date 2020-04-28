@@ -7,6 +7,300 @@ find . -name el_presel_bjet_pt.png
 ./plots/v37_test13_update2/renames/el_presel_bjet_pt.png
 
 
+## lepuni remaining fitting figures
+
+### tt only fit
+
+scrap/lepuni_test1_distrs_94v5_processing1_fit1_with_tt-only-fit
+
+$ cp latest_toys_asimov_impacts_ratio_94v5_processing1_fit1_higgsCombine1_tt-channels.pdf ~/MEGAsync/current-business/thesis/working-directory/Plots_c3/tt_only_ratio_impacts.pdf
+
+on lxplus
+~/work/public/CMSSW_8_1_0/src/HiggsAnalysis/CombinedLimit/fitting
+
+not present!
+
+on NCG
+/lstore/cms/olek/CMSSW_8_1_0/src/HiggsAnalysis/CombinedLimit/fitting
+
+the card
+fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root
+
+
+combine -M MultiDimFit --algo none                -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r              fit-stuff/datacard_ratio_tt_both_94v5_processing1_fit1_higgsCombine1.root --saveWorkspace -n TTonlyRatioBestfit
+combine -M MultiDimFit --algo grid --points  100  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters all --fastScan higgsCombineTTonlyRatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit          -n TTonlyRatioNoSys
+combine -M MultiDimFit --algo grid --points  100  -t -1 --expectSignal 1 --redefineSignalPOIs tau_ratio --freezeParameters r              higgsCombineTTonlyRatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit          -n TTonlyRatioFullUncertainty
+
+plot1DScan.py --POI tau_ratio higgsCombineTTonlyRatioFullUncertainty.MultiDimFit.mH120.root --others 'higgsCombineTTonlyRatioNoSys.MultiDimFit.mH120.root:stat:2' --breakdown syst,stat
+
+mv ./scan.png tt_only_ratio_nll_breakdown.png
+mv ./scan.pdf tt_only_ratio_nll_breakdown.pdf
+
+
+
+other instructions: 
+
+combine -M MultiDimFit --algo grid --points  100 --rMin 0.7 --rMax 1.3 higgsCombineTTonlyRatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit --freezeParameters "lumi_13TeV,tauID_eff,tau_fakes,dy_norm,wjets_norm,qcd_norm,JES,JER,TauES,bSF,PU" --freezeNuisanceGroup "th_tt" -n TTonlyRatioNoSysButTOPPT
+combine -M MultiDimFit --algo grid --points  100 --rMin 0.7 --rMax 1.3 higgsCombineTTonlyRatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit --freezeParameters "tauID_eff"  -n TTonlyRatioNoTau
+combine -M MultiDimFit --algo grid --points  100 --rMin 0.7 --rMax 1.3 higgsCombineTTonlyRatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit --freezeParameters "lumi_13TeV" -n TTonlyRatioNoLumi
+
+plot1DScan.py higgsCombineTTonlyRatioFullUncertainty.MultiDimFit.mH120.root --others 'higgsCombineTTonlyRatioNoLumi.MultiDimFit.mH120.root:lumi:4' 'higgsCombineTTonlyRatioNoSys.MultiDimFit.mH120.root:stat:2' --breakdown lumi,syst,stat
+
+
+no the weights if needed --freezeNuisanceGroup tt_th_pdf,tt_th_frag,tt_th_match
+
+To plot the breakdown with the script from Harvester repository:
+
+    plot1DScan.py higgsCombineMuFullUncertainty.MultiDimFit.mH120.root --others 'higgsCombineMuNoLumi.MultiDimFit.mH120.root:lumi:4' 'higgsCombineMuNoSys.MultiDimFit.mH120.root:stat:2' --breakdown lumi,syst,stat
+
+It outputs 2 files, renaming them:
+
+    mv scan.png mu_uncert_break_scan.png
+    mv scan.pdf mu_uncert_break_scan.pdf
+
+
+
+### four channels
+
+scrap/lepuni_test1_fit_final/
+
+impacts
+
+cp lepuni_test1_fit_final/old-lumi1/impacts_old_lumi1.pdf ~/MEGAsync/current-business/thesis/working-directory/Plots_c3/four_channels_ratio_impacts_lumi_41.pdf
+cp lepuni_test1_fit_final/old-lumi2/impacts_old_lumi2.pdf ~/MEGAsync/current-business/thesis/working-directory/Plots_c3/four_channels_ratio_impacts_lumi_145.pdf
+
+nll breakdowns
+
+lepuni_test1_fit_final/old-lumi1//scan_mutau_mTall_lumi1.pdf
+does not render Delta?
+
+cp lepuni_test1_fit_final/old-lumi1/scan_mutau_mTall_lumi1.pdf ~/MEGAsync/current-business/thesis/working-directory/Plots_c3/four_channels_ratio_nll_breakdown_lumi_41.pdf
+cp lepuni_test1_fit_final/old-lumi2/scan_mutau_mTall.pdf       ~/MEGAsync/current-business/thesis/working-directory/Plots_c3/four_channels_ratio_nll_breakdown_lumi_145.pdf
+
+
+#### 1000 fbinv?
+
+it was not produced? was it never produced in new datacards?
+
+run an old one? and make only NLL scan
+
+combineTool.py -M Impacts -t -1 --setParameters r=1 --freezeParameters r --redefineSignalPOIs tt_per_dy,dy_ratio -d ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.root -m 125 --robustFit 1 --doInitialFit --name RatioOldDatacard
+
+combine -M MultiDimFit --algo none                -t -1 --expectSignal 1 --redefineSignalPOIs tt_per_dy --freezeParameters r              ttxsec/v27dilep2_ratio_6fixed2_1000fbElSV_all_c2_double_newtests.root --saveWorkspace -n Four1000RatioBestfit
+combine -M MultiDimFit --algo grid --points  100  -t -1 --expectSignal 1 --redefineSignalPOIs tt_per_dy --freezeParameters all --fastScan higgsCombineFour1000RatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit    -n Four1000RatioNoSys
+combine -M MultiDimFit --algo grid --points  100  -t -1 --expectSignal 1 --redefineSignalPOIs tt_per_dy --freezeParameters r              higgsCombineFour1000RatioBestfit.MultiDimFit.mH120.root --snapshotName MultiDimFit    -n Four1000RatioFullUncertainty
+
+plot1DScan.py --POI tt_per_dy higgsCombineFour1000RatioFullUncertainty.MultiDimFit.mH120.root --others 'higgsCombineFour1000RatioNoSys.MultiDimFit.mH120.root:stat:2' --breakdown syst,stat --translate translate_names.json
+
+mv ./scan.png four_channels_ratio_nll_breakdown_lumi_1000.png
+mv ./scan.pdf four_channels_ratio_nll_breakdown_lumi_1000.pdf
+
+
+
+### summary figure of the uncertainties in four channels per lumi
+
+
+
+
+
+## lepuni control figures and shape comparison
+
+$ cat all_includegr_c3
+\includegraphics[width=0.45\textwidth]{Plots_c3/lepuni_tt_elmu_lep_pt.png} \hfill
+\includegraphics[width=0.45\textwidth]{Plots_c3/lepuni_dy_mumu_lep_pt.png} \\
+\includegraphics[width=0.45\textwidth]{Plots_c3/lepuni_tt_elmu_mt.png} \hfill
+\includegraphics[width=0.45\textwidth]{Plots_c3/lepuni_dy_mumu_m.png}  
+
+%\includegraphics[width=0.45\textwidth]{Plots/el_presel_met.png} \hfill
+%\includegraphics[width=0.45\textwidth]{Plots/el_presel_Mt_lep_met.png}  
+%\includegraphics[width=0.48\textwidth]{figures/Figure_002-a.pdf}     \hfill
+%\includegraphics[width=0.48\textwidth]{figures/Figure_002-b.pdf}
+
+\includegraphics[width=0.48\textwidth]{figures/mt_distrs_ttbar.pdf}     \hfill
+\includegraphics[width=0.48\textwidth]{figures/mt_distrs_dyjets.pdf} % TODO: maybe use mass between leptons or lepton pt in DY?
+
+-- control figures with data in light dilepton, and shape comparison for leptaus in MC
+
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot1.root distrs/distrs_94v5_processing1_plot1.root -o plots/distrs_94v5_processing1_plot1_thesis/ --data-nick data --overwrite -p -r -c tt_elmu -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+ --normalize
+
+simulated data... and MC = DY + W+jets? like dy_mutau
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot1.root distrs/distrs_94v5_processing1_plot1.root -o plots/distrs_94v5_processing1_plot1_thesis/ --data-nick data --overwrite -p -r -c tt_elmu -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+-- no, dy_other mostly
+
+in scrap this one is all right:
+lepuni_test1_distrs_94v5_processing1_plot2/distrs,,distrs_94v5_processing1_plot2_distrs,,distrs_94v5_processing1_plot2_Mt_lep_met_c_tt_elmu_tight_NOMINAL_stack_ratio_nodata.png
+
+distrs/distrs_94v5_processing1_plot2.root
+
+still the data is simulated!
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs/distrs_94v5_processing1_plot2.root -o plots/distrs_94v5_processing1_plot1_thesis/ --data-nick data --overwrite -p -r -c tt_elmu -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+-- a lot of low-pT DY ->tautau!
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs/distrs_94v5_processing1_plot2.root -o plots/distrs_94v5_processing1_plot1_thesis/ --data-nick data --overwrite -p -r -c tt_elmu_tight -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+-- perfect
+
+check an old with dibosons included? -- yeah, they are negligible already in OS el+mu selection with no b tag
+merge all non-tt and non-single-t processes
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs/distrs_94v5_processing1_plot2.root -o plots/distrs_94v5_processing1_plot1_thesis/ --data-nick data --overwrite -p -r -c tt_elmu_tight -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other,dy_other,dy_tautau:other.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.13 --offset-y 1.1 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}"
+
+
+produce data for this
+
+$ find lstore_outdirs/94v10/processing2 -name "*root" | wc -l
+811
+$ find lstore_outdirs/94v1/processing2 -name "*root" | wc -l
+1295
+
+have this
+make histograms_to_fit nt=94v10 proc=processing2 hists=plot1 simulate_data_output=0     systematics=NOMINAL  channels=el_sel,el_sel_ss,mu_sel,mu_sel_ss,el_sel_tauSV3,mu_sel_tauSV3,el_sel_ss_tauSV3,mu_sel_ss_tauSV3,tt_elmu_tight processes=std distrs=Mt_lep_met_c,leading_lep_pt,tau_pt,tau_sv_sign
+
+
+also try lstore_outdirs/94v1/processing2 ?
+
+distrs//distrs_94v10_processing2_plot2.root contains only data
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c tt_elmu_tight -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other,dy_other,dy_tautau:other.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15 --drop-bin 27.,21.
+
+-- large disagreement in the smallest bin..?
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c tt_elmu_tight -d Mt_lep_met_c --title "" --title-x "#font[12]{m}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other,dy_other,dy_tautau:other.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15
+
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c dy_mumu -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other,dy_other,dy_tautau:other.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15
+ --drop-bin 27.,21.
+
+data = 0???
+NT_event_met_lep_mt
+
+lstore_outdirs/94v10/processing2/Data2017legacy_13TeV_SingleMuon_2017D/Data2017legacy_13TeV_SingleMuon_2017D_1.root
+ttree_out->Draw("event_met_lep_mt")
+indeed...
+
+event_met_lep_mt_init? yeah
+
+-- no dy_mumu and dy_elel
+
+elel does not pass in stage2
+ttree_out->Draw("selection_stage_dy_mumu")
+is 0 in lstore
+
+and no Data ntuples left............
+
+
+
+
+### shape of dilep mass in DY mutau, DY tautau VS W+jets
+
+
+  KEY: TDirectoryFile	dy_mutau;1	dy_mutau
+  KEY: TDirectoryFile	dy_mutau_ss;1	dy_mutau_ss
+  KEY: TDirectoryFile	dy_eltau;1	dy_eltau
+  KEY: TDirectoryFile	dy_eltau_ss;1	dy_eltau_ss
+  KEY: TDirectoryFile	dy_mutau_tauSV3;1	dy_mutau_tauSV3
+  KEY: TDirectoryFile	dy_mutau_ss_tauSV3;1	dy_mutau_ss_tauSV3
+  KEY: TDirectoryFile	dy_eltau_tauSV3;1	dy_eltau_tauSV3
+  KEY: TDirectoryFile	dy_eltau_ss_tauSV3;1	dy_eltau_ss_tauSV3
+
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c dy_mutau -d leading_lep_pt --title "" --title-x "leading lepton #font[12]{p}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c dy_mutau -d dilep_mass_dy_tautau --title "" --title-x "#font[12]{m}_{ll} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15
+
+clear lack of Data here...
+elmu is probably doubled!
+
+but ok shapes
+
+python stack_plot.py  distrs/distrs_94v5_processing1_plot2.root distrs//distrs_94v10_processing2_plot2.root    -o plots/distrs_lepuni_figures_thesis/ --data-nick data --overwrite -p -r -c dy_mutau -d met_c --title "" --title-x "#font[12]{p}^{miss}_{T} [GeV]"   --title-y "Events" --draw-overflows 5 --legend-shift 0.04 --merge-procs wjets_taul,wjets_tauh,wjets_other:wjets.dy_other,dy_tautau:dy.stop_mutau,stop_elmu,stop_eltau,stop_lj,stop_other:stop.tt_elmu,tt_eltau1ch,tt_eltau3ch,tt_ljb,tt_ljo,tt_ljw,tt_ljz,tt_ltaul,tt_mutau1ch,tt_mutau3ch,tt_taueltaumu,tt_taulj,tt_taultauh,tt_other. --do-not-reweight  --lumi 1. --lumi-label 35.9 --output-type pdf --ratio-range 0.55 --font-size-axes-labels 30 --font-size-axes-titles 40 --margin-y 0.15 --offset-y 1.3 --margin-x 0.4 --offset-x 2.8   --left-title "CMS #font[52]{Internal}" --normalize 1.15
+
+
+mT title #font[12]{m}_{T}
+
+python get_shapes2.py --x-title "#font[12]{p}_{T} [GeV]" --y-title "Probability density" --title "" --norm-binwidth --formula "background_dy_sel,black,2:signal_dy_sel,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/dy_tautau/NOMINAL/dy_mutau_dy_tautau_NOMINAL_leading_lep_pt "background_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/wjets_other/NOMINAL/dy_mutau_wjets_other_NOMINAL_leading_lep_pt --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --norm-formulas --left-title "CMS #font[52]{Internal Simulation}"  --x-range 0,150 --y-range 0,0.5
+
+--draw-overflows 10
+--left-title-inside
+
+mv ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf               ./lep_pt_distrs_dyjets.pdf
+mv ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal_dy_sel,background_dy_sel_formula.pdf ./lep_pt_distrs_dyjets.pdf
+
+python get_shapes2.py --x-title "#font[12]{m}_{ll} [GeV]" --y-title "Probability density" --title "" --norm-binwidth --formula "background_dy_sel,black,2:signal_dy_sel,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/dy_tautau/NOMINAL/dy_mutau_dy_tautau_NOMINAL_dilep_mass_dy_tautau "background_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/wjets_other/NOMINAL/dy_mutau_wjets_other_NOMINAL_dilep_mass_dy_tautau --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --norm-formulas --left-title "CMS #font[52]{Internal Simulation}"  --y-range 0,0.1 --legend-shift -0.05
+
+mv ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal,background_formula.pdf               ./mdilep_distrs_dyjets.pdf
+mv ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_signal_dy_sel,background_dy_sel_formula.pdf ./mdilep_distrs_dyjets.pdf
+
+
+titles:
+'signal':     '#splitline{Signal}{t#bar{t}#rightarrow l#nu #tau_{h}#nu b#bar{b}}',
+'background': "#splitline{Background}{t#bar{t}#rightarrow l#nu q#bar{q}' b#bar{b}}",
+
+
+
+
+### dy_mumu control figures
+
+lep pt and ?
+dilep mass and mt are pointless
+
+limit to lep pt?
+
+
+## last fit figres: bands
+
+bands: NCG NtuplerAnalyzer/grshade.py
+
+as a style model:
+
+python get_shapes2.py --x-title "#font[12]{m}_{ll} [GeV]" --y-title "Probability density" --title "" --norm-binwidth --formula "background_dy_sel,black,2:signal_dy_sel,red" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "signal_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/dy_tautau/NOMINAL/dy_mutau_dy_tautau_NOMINAL_dilep_mass_dy_tautau "background_dy_sel":distrs/distrs_94v5_processing1_plot2.root:dy_mutau/wjets_other/NOMINAL/dy_mutau_wjets_other_NOMINAL_dilep_mass_dy_tautau --output-type pdf --no-std-path --fonts1 133 --fonts1-size 30 --norm-formulas --left-title "CMS #font[52]{Internal Simulation}"  --y-range 0,0.1 --legend-shift -0.05
+
+-- get_shapes2? lxplus
+
+python grshade.py
+
+in scrap/
+
+cd thesis_figures/c2-xsection/1/
+scp "ncg:/lstore/cms/olek/CMSSW_8_0_26_patch1/src/UserCode/NtuplerAnalyzer/expected-limits-band_*pdf" ./
+
+
+## last fit figres: covariances
+
+correct figures are in ./an-and-paper-draft-3/covariance_fit_s_ElCorrel_fin.png etc
+
+there are also these figures:
+distrs,distrs_redo_v25v26_mc_4_..,quick-test,redo-v25-v26_cats_hadds,SingleElectron_Mt_lep_met_f_el_sel_lj_NOMINAL_stack_ratio_x_el_selVloose_lj_dataqcd.png
+
+combine -M FitDiagnostics ttxsec/datacard_v25v26redo_el_lnU_noQCDpu_fixPUnorms_noMC.root   --freezeNuisanceGroup tt_th_pdf --plots --saveShapes --saveWithUncertainties --name ElCorrel
+mv covariance_fit_s.png covariance_fit_s_ElCorrel.png
+combine -M FitDiagnostics ttxsec/datacard_v25v26redo_mu_lnU_noQCDpu_fixPUnorms_noMC.root   --freezeNuisanceGroup tt_th_pdf --plots --saveShapes --saveWithUncertainties --name MuCorrel
+mv covariance_fit_s.png covariance_fit_s_MuCorrel.png
+combine -M FitDiagnostics ttxsec/datacard_v25v26redo_both_lnU_noQCDpu_fixPUnorms_noMC.root --freezeNuisanceGroup tt_th_pdf --plots --saveShapes --saveWithUncertainties --name BothCorrel
+mv covariance_fit_s.png covariance_fit_s_BothCorrel.png
+
+-- these are in AN
+
+root -l fitDiagnosticsElCorrel.root
+covariance_fit_s->Draw("colz")
+c1->SaveAs("covariance_fit_s_ElCorrel_fin.pdf")
+
+root -l fitDiagnosticsMuCorrel.root
+covariance_fit_s->Draw("colz")
+c1->SaveAs("covariance_fit_s_MuCorrel_fin.pdf")
+
+root -l fitDiagnosticsBothCorrel.root
+covariance_fit_s->Draw("colz")
+c1->SaveAs("covariance_fit_s_BothCorrel_fin.pdf")
+
+
+
 ## fake rates and fake factors
 
 /afs/cern.ch/user/o/otoldaie/work
@@ -24,7 +318,279 @@ jet_fakefactor_data.cc
 jet_fakerate_measurements.cc
 
 
-#### script 1
+### recalculation
+
+following v10.7_v10.7_tauMVA/v10.7_tauMVA/solving-linear-equations
+
+julia> fractions = [
+       0.04362537 0.13282413 0.74761703 # qcd
+       #0.03957 0.3453 0.5992 # orig fracs
+       #0.039285779 0.172606428 0.659054494 # qcd
+       0.0411079  0.6729797 0.2860620  # mumu
+       # orig_fracs_mumu = c( 0.13011, 0.4354, 0.4205 )
+       0.5128364  0.2230761  0.2441074  # elmu
+       #orig_fracs_elmu = c( 0.53590, 0.1843, 0.2749 )
+       ]
+3×3 Array{Float64,2}:
+
+ 0.0436254  0.132824  0.747617
+ 0.0411079  0.67298   0.286062
+ 0.512836   0.223076  0.244107
+
+julia> 
+
+julia> smu_origs = [0.407154 0.339990 0.236488]
+1×3 Array{Float64,2}:
+ 0.407154  0.33999  0.236488
+
+julia> sel_origs = [0.397273 0.345393 0.234217]
+1×3 Array{Float64,2}:
+ 0.397273  0.345393  0.234217
+
+julia> 
+
+julia> 
+
+julia> fractions' \ smu_origs'
+3×1 Array{Float64,2}:
+ -0.034644080844373995
+  0.2546614449996934  
+  0.7764596343595012  
+
+julia> mu_data = [
+        5506.99 9427.7 7485.64
+          64.08  101.4   81.19
+        4086.90 7076.7 5705.30
+         343.78  580.2  461.09
+         263.21  450.0  357.40
+         522.34  820.0  601.37
+       ]
+6×3 Array{Float64,2}:
+ 5506.99  9427.7  7485.64
+   64.08   101.4    81.19
+ 4086.9   7076.7  5705.3 
+  343.78   580.2   461.09
+  263.21   450.0   357.4 
+  522.34   820.0   601.37
+
+julia> 
+
+julia> coefs_mu = fractions' \ smu_origs'
+3×1 Array{Float64,2}:
+ -0.034644080844373995
+  0.2546614449996934  
+  0.7764596343595012  
+
+julia> mu_data * coefs_mu
+6×1 Array{Float64,2}:
+ 8022.384395601308  
+   86.64343553610932
+ 6090.51090573772   
+  493.8624010829656 
+  382.98565505090005
+  657.6659260262714 
+
+julia> est_mu = mu_data * coefs_mu
+6×1 Array{Float64,2}:
+ 8022.384395601308  
+   86.64343553610932
+ 6090.51090573772   
+  493.8624010829656 
+  382.98565505090005
+  657.6659260262714 
+
+julia> est_mu[1] - est_mu[2] - sum(est_mu[4:end])
+6401.226977905062
+
+julia> 
+
+julia> coefs_mu = [-0.03 0.22 0.77]
+1×3 Array{Float64,2}:
+ -0.03  0.22  0.77
+
+julia> coefs_mu = [-0.03 0.22 0.77]'
+3×1 LinearAlgebra.Adjoint{Float64,Array{Float64,2}}:
+ -0.03
+  0.22
+  0.77
+
+julia> est_mu = mu_data * coefs_mu
+6×1 Array{Float64,2}:
+ 7672.8271
+   82.9019
+ 5827.348 
+  472.3699
+  366.3017
+  627.7847
+
+julia> est_mu[1] - est_mu[2] - sum(est_mu[4:end])
+6123.468900000001
+
+julia> 
+
+julia> 
+
+julia> 
+
+julia> 
+
+julia> mu_data
+6×3 Array{Float64,2}:
+ 5506.99  9427.7  7485.64
+   64.08   101.4    81.19
+ 4086.9   7076.7  5705.3 
+  343.78   580.2   461.09
+  263.21   450.0   357.4 
+  522.34   820.0   601.37
+
+julia> [5207 9128 7186] * coefs_mu
+1×1 Array{Float64,2}:
+ 7385.17
+
+julia> [5506.99  9427.7  7485.64] * coefs_mu
+1×1 Array{Float64,2}:
+ 7672.8271
+
+julia> [5307 9228 7286] * coefs_mu
+1×1 Array{Float64,2}:
+ 7481.17
+
+julia> [5407 9328 7386] * coefs_mu
+1×1 Array{Float64,2}:
+ 7577.17
+
+julia> 
+
+julia> 
+
+julia> 7385 - 5836
+1549
+
+julia> 7577.17 - 1549
+6028.17
+
+julia> 4140. / 5836
+0.7093899931459904
+
+julia> 0.709 * 6028.17
+4273.97253
+
+julia> 0.709 * 6028
+4273.852
+
+julia> [3654.20 6206.9 4886.02] ( coefs_el
+ERROR: syntax: space before "(" not allowed in "[3654.2 6206.9 4886.02] ("
+
+julia> coefs_el_calc = fractions' \ smu_origs'
+3×1 Array{Float64,2}:
+ -0.034644080844373995
+  0.2546614449996934  
+  0.7764596343595012  
+
+julia> coefs_el = [-0.04 0.23 0.75]'
+3×1 LinearAlgebra.Adjoint{Float64,Array{Float64,2}}:
+ -0.04
+  0.23
+  0.75
+
+julia> [3654.20 6206.9 4886.02] * coefs_el
+1×1 Array{Float64,2}:
+ 4945.934
+
+julia> 
+
+julia> [3354 5907 4586] * coefs_el
+1×1 Array{Float64,2}:
+ 4663.95
+
+julia> 
+
+julia> 4664 - 3726
+938
+
+julia> 2645. / 3726
+0.7098765432098766
+
+julia> 
+
+julia> 
+
+julia> [3454 6007 4686] * coefs_el
+1×1 Array{Float64,2}:
+ 4757.95
+
+julia> 4757.95 - 938
+3819.95
+
+julia> 3820 * 0.709876
+2711.7263199999998
+
+julia> 
+
+julia> coefs_mu
+3×1 LinearAlgebra.Adjoint{Float64,Array{Float64,2}}:
+ -0.03
+  0.22
+  0.77
+
+julia> 
+
+julia> [5207 9128 7186] .- 7385
+1×3 Array{Int32,2}:
+ -2178  1743  -199
+
+julia> 
+
+julia> 
+
+julia> sqrt(sum((([5207 9128 7186] .- 7385) .* coefs_mu').^2))
+418.07932273672657
+
+julia> 418 * 0.71
+296.78
+
+julia> sqrt(sum((([5407 9328 7386] .- 7577) .* coefs_mu').^2))
+417.4470544871529
+
+julia> sqrt(sum( ([5407 9328 7386] .- 7577) .^2  .* coefs_mu')) 
+749.2286633598584
+
+julia> 
+
+julia> 
+
+julia> 
+
+julia> 
+
+julia> 
+
+julia> sqrt(sum( ([5407 9328 7386] .- 7577) .^2  .* coefs_mu') / sum(coefs_mu))
+764.6783024579682
+
+julia> sqrt(sum( ([5407 9328 7386] .- 7577) .^2  .* coefs_mu') / (2*sum(coefs_mu) / 3))
+936.535829199823
+
+julia> 764.6783024579682 * 0.71
+542.9215947451574
+
+julia> 542.9215947451574 /9900
+0.05484056512577348
+
+julia> sqrt(sum( ([3454 6007 4686] .- 4758) .^2  .* coefs_el') / sum(coefs_el))
+559.8932174027625
+
+julia> 559 * 0.71
+396.89
+
+julia> 397 / 6200
+0.06403225806451612
+
+julia> 543 / 9900
+0.05484848484848485
+
+
+### script 1
 
 a la
 Documents/lip_phd/lip/ttbar-leptons-80X/test/jet_fakefactor_data.cc
@@ -359,7 +925,7 @@ make --keep-going rename_for_update up=update2
 make --keep-going rename_for_update_paper_plots up=update2
 
 
-## plots
+## re-produced AN figures
 
 mkdir plots/v37_test13_bunchDILEP1/2/
 mkdir plots/v37_test13_bunchCONTROLS1/2/
