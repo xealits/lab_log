@@ -322,7 +322,7 @@ jet_fakerate_measurements.cc
 
 following v10.7_v10.7_tauMVA/v10.7_tauMVA/solving-linear-equations
 
-julia> fractions = [
+fractions = [
        0.04362537 0.13282413 0.74761703 # qcd
        #0.03957 0.3453 0.5992 # orig fracs
        #0.039285779 0.172606428 0.659054494 # qcd
@@ -331,33 +331,30 @@ julia> fractions = [
        0.5128364  0.2230761  0.2441074  # elmu
        #orig_fracs_elmu = c( 0.53590, 0.1843, 0.2749 )
        ]
+
 3×3 Array{Float64,2}:
 
  0.0436254  0.132824  0.747617
  0.0411079  0.67298   0.286062
  0.512836   0.223076  0.244107
 
-julia> 
+smu_origs = [0.407154 0.339990 0.236488]
+sel_origs = [0.397273 0.345393 0.234217]
 
-julia> smu_origs = [0.407154 0.339990 0.236488]
 1×3 Array{Float64,2}:
  0.407154  0.33999  0.236488
 
-julia> sel_origs = [0.397273 0.345393 0.234217]
 1×3 Array{Float64,2}:
  0.397273  0.345393  0.234217
 
-julia> 
 
-julia> 
-
-julia> fractions' \ smu_origs'
+fractions' \ smu_origs'
 3×1 Array{Float64,2}:
  -0.034644080844373995
   0.2546614449996934  
   0.7764596343595012  
 
-julia> mu_data = [
+mu_data = [
         5506.99 9427.7 7485.64
           64.08  101.4   81.19
         4086.90 7076.7 5705.30
@@ -365,7 +362,7 @@ julia> mu_data = [
          263.21  450.0  357.40
          522.34  820.0  601.37
        ]
-6×3 Array{Float64,2}:
+
  5506.99  9427.7  7485.64
    64.08   101.4    81.19
  4086.9   7076.7  5705.3 
@@ -373,15 +370,14 @@ julia> mu_data = [
   263.21   450.0   357.4 
   522.34   820.0   601.37
 
-julia> 
+coefs_mu = fractions' \ smu_origs'
 
-julia> coefs_mu = fractions' \ smu_origs'
 3×1 Array{Float64,2}:
  -0.034644080844373995
   0.2546614449996934  
   0.7764596343595012  
 
-julia> mu_data * coefs_mu
+mu_data * coefs_mu
 6×1 Array{Float64,2}:
  8022.384395601308  
    86.64343553610932
@@ -390,7 +386,7 @@ julia> mu_data * coefs_mu
   382.98565505090005
   657.6659260262714 
 
-julia> est_mu = mu_data * coefs_mu
+est_mu = mu_data * coefs_mu
 6×1 Array{Float64,2}:
  8022.384395601308  
    86.64343553610932
@@ -399,22 +395,18 @@ julia> est_mu = mu_data * coefs_mu
   382.98565505090005
   657.6659260262714 
 
-julia> est_mu[1] - est_mu[2] - sum(est_mu[4:end])
+est_mu[1] - est_mu[2] - sum(est_mu[4:end])
 6401.226977905062
 
-julia> 
 
-julia> coefs_mu = [-0.03 0.22 0.77]
-1×3 Array{Float64,2}:
- -0.03  0.22  0.77
+coefs_mu = [-0.03 0.22 0.77]'
 
-julia> coefs_mu = [-0.03 0.22 0.77]'
 3×1 LinearAlgebra.Adjoint{Float64,Array{Float64,2}}:
  -0.03
   0.22
   0.77
 
-julia> est_mu = mu_data * coefs_mu
+est_mu = mu_data * coefs_mu
 6×1 Array{Float64,2}:
  7672.8271
    82.9019
@@ -423,7 +415,7 @@ julia> est_mu = mu_data * coefs_mu
   366.3017
   627.7847
 
-julia> est_mu[1] - est_mu[2] - sum(est_mu[4:end])
+est_mu[1] - est_mu[2] - sum(est_mu[4:end])
 6123.468900000001
 
 julia> 
@@ -555,15 +547,11 @@ julia> sqrt(sum((([5407 9328 7386] .- 7577) .* coefs_mu').^2))
 julia> sqrt(sum( ([5407 9328 7386] .- 7577) .^2  .* coefs_mu')) 
 749.2286633598584
 
-julia> 
 
-julia> 
 
-julia> 
 
-julia> 
 
-julia> 
+sqrt(sum( ([5507 9428 7486] .- 7672) .^2  .* coefs_mu') / sum(coefs_mu))
 
 julia> sqrt(sum( ([5407 9328 7386] .- 7577) .^2  .* coefs_mu') / sum(coefs_mu))
 764.6783024579682
@@ -588,6 +576,44 @@ julia> 397 / 6200
 
 julia> 543 / 9900
 0.05484848484848485
+
+
+data_el = [
+ 3654.20 6206.9 4886.02
+   71.48  112.4   78.45
+ 2486.25 4242.0 3353.56
+  209.94  354.3  278.34
+  144.50  248.1  196.00
+  319.56  500.2  364.70
+]
+
+fractions' \ sel_origs'
+3×1 Array{Float64,2}:
+ -0.036869
+  0.269857
+  0.756164
+
+coefs_el = [-0.04 0.23 0.75]'
+
+est_el = data_el * coefs_el
+6×1 Array{Float64,2}:
+ 5234.88
+   87.0175
+ 3588.91  
+  298.341
+  209.832
+  398.973
+
+est_el[1] - est_el[2] - sum(est_el[4:end])
+4008.1857000000005
+
+vs with true coeffs
+4240.7137984306255
+
+sqrt(sum( ([3654.20 6206.9 4886.02] .- 4946) .^2  .* coefs_el') / sum(coefs_el))
+566
+
+
 
 
 ### script 1
