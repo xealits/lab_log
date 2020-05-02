@@ -7,6 +7,383 @@ find . -name el_presel_bjet_pt.png
 ./plots/v37_test13_update2/renames/el_presel_bjet_pt.png
 
 
+## lepuni SV reconstruction figures
+
+lxplus
+~/work/public/CMSSW_10_3_3/src/UserCode/proc/
+
+'event_taus_pat_sv_sign' : 'DoubleVector',
+'event_taus_pat_sv_leng' : 'DoubleVector',
+'event_taus_sv_sign' : 'DoubleVector',
+'event_taus_sv_leng' : 'DoubleVector',
+
+'event_taus' : 'LorentzVectorS',
+
+bool NT_genproc_tt_eltau3ch()
+        {
+        return NT_gen_proc_id == 42;
+        }
+
+NT_genproc(tt_eltau1ch, 41)
+NT_genproc(tt_mutau3ch, 32)
+NT_genproc(tt_mutau1ch, 31)
+
+NT_genproc(tt_ljb        , 24)
+NT_genproc(tt_ljw        , 23)
+NT_genproc(tt_ljo        , 22)
+NT_genproc(tt_ljz        , 21)
+NT_genproc(tt_taultauh   , 12)
+NT_genproc(tt_taulj      , 11)
+NT_genproc(tt_elmu       , 3)
+NT_genproc(tt_ltaul      , 2)
+NT_genproc(tt_taueltaumu , 1)
+//NT_genproc(tt_other      , 0) // no "tt_other"! it is a catchall process, they are handled automatically
+
+event_taus_IDlev
+
+ttree_out->Draw("event_taus_pat_sv_leng[0]>>h(100,-0.1,1)", "gen_proc_id == 42 && event_taus_IDlev[0] > 0")
+
+sumup_ttree_draw.py
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_leng_pat.root --histo-name  tt_ltau_sv_leng_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 24) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljb_sv_leng_pat.root  --histo-name  tt_ljb_sv_leng_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 23) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljw_sv_leng_pat.root  --histo-name  tt_ljw_sv_leng_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 22 || gen_proc_id == 21) && event_taus_IDlev[0] > 0" --output lepuni_tt_ljo_sv_leng_pat.root  --histo-name  tt_ljo_sv_leng_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_leng_geo.root --histo-name  tt_ltau_sv_leng_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 24) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljb_sv_leng_geo.root  --histo-name  tt_ljb_sv_leng_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 23) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljw_sv_leng_geo.root  --histo-name  tt_ljw_sv_leng_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 22 || gen_proc_id == 21) && event_taus_IDlev[0] > 0" --output lepuni_tt_ljo_sv_leng_geo.root  --histo-name  tt_ljo_sv_leng_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_sign_pat.root --histo-name  tt_ltau_sv_sign_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51   --cond-com "(gen_proc_id == 24) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljb_sv_sign_pat.root  --histo-name  tt_ljb_sv_sign_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51   --cond-com "(gen_proc_id == 23) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljw_sv_sign_pat.root  --histo-name  tt_ljw_sv_sign_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51   --cond-com "(gen_proc_id == 22 || gen_proc_id == 21) && event_taus_IDlev[0] > 0" --output lepuni_tt_ljo_sv_sign_pat.root  --histo-name  tt_ljo_sv_sign_pat   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,-1,15   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_sign_geo.root --histo-name  tt_ltau_sv_sign_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,-1,15   --cond-com "(gen_proc_id == 24) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljb_sv_sign_geo.root  --histo-name  tt_ljb_sv_sign_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,-1,15   --cond-com "(gen_proc_id == 23) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljw_sv_sign_geo.root  --histo-name  tt_ljw_sv_sign_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,-1,15   --cond-com "(gen_proc_id == 22 || gen_proc_id == 21) && event_taus_IDlev[0] > 0" --output lepuni_tt_ljo_sv_sign_geo.root  --histo-name  tt_ljo_sv_sign_geo   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,0.,15   --cond-com "event_taus_sv_sign[0] > 0.05 && (gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_sign_geo_no0.root --histo-name  tt_ltau_sv_sign_geo_no0  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,0.,15   --cond-com "event_taus_sv_sign[0] > 0.05 && (gen_proc_id == 24) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljb_sv_sign_geo_no0.root  --histo-name  tt_ljb_sv_sign_geo_no0   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,0.,15   --cond-com "event_taus_sv_sign[0] > 0.05 && (gen_proc_id == 23) && event_taus_IDlev[0] > 0"                      --output lepuni_tt_ljw_sv_sign_geo_no0.root  --histo-name  tt_ljw_sv_sign_geo_no0   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]" --histo-range 100,0.,15   --cond-com "event_taus_sv_sign[0] > 0.05 && (gen_proc_id == 22 || gen_proc_id == 21) && event_taus_IDlev[0] > 0" --output lepuni_tt_ljo_sv_sign_geo_no0.root  --histo-name  tt_ljo_sv_sign_geo_no0   lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTToSemiLeptonic_v2/MC*root   &
+
+
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id != 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_other_sv_leng_pat.root --histo-name  dy_other_sv_leng_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]"     --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id != 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_other_sv_leng_geo.root --histo-name  dy_other_sv_leng_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51      --cond-com "(gen_proc_id != 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_other_sv_sign_pat.root --histo-name  dy_other_sv_sign_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]"     --histo-range 100,-1,15      --cond-com "(gen_proc_id != 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_other_sv_sign_geo.root --histo-name  dy_other_sv_sign_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]" --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_tautau_sv_leng_pat.root --histo-name  dy_tautau_sv_leng_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]"     --histo-range 100,-0.2,1.5   --cond-com "(gen_proc_id == 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_tautau_sv_leng_geo.root --histo-name  dy_tautau_sv_leng_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_sign[0]" --histo-range 100,-1,51      --cond-com "(gen_proc_id == 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_tautau_sv_sign_pat.root --histo-name  dy_tautau_sv_sign_pat  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_sign[0]"     --histo-range 100,-1,15      --cond-com "(gen_proc_id == 1) && event_taus_IDlev[0] > 0" --output lepuni_dy_tautau_sv_sign_geo.root --histo-name  dy_tautau_sv_sign_geo  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_DYJetsToLL_50toInf_madgraph_v1/MC*root   &
+
+
+
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_pat_sv_leng[0]:event_taus[0].energy()" --histo-range 30,20,100,40,0.,0.01   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_leng_pat_vs_energy.root --histo-name  tt_ltau_sv_leng_pat_vs_energy  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]:event_taus[0].energy()"     --histo-range 30,20,100,40,0.,1.0   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0" --output lepuni_tt_ltau_sv_leng_geo_vs_energy.root --histo-name  tt_ltau_sv_leng_geo_vs_energy  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]:event_taus[0].energy()"     --histo-range 30,20,100,40,0.,1.0   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0 && event_taus_sv_sign[0] > 3" --output lepuni_tt_ltau_sv_leng_geo_vs_energy_sign3.root --histo-name  tt_ltau_sv_leng_geo_vs_energy_sign3  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+python sumup_ttree_draw.py --ttree ttree_out "event_taus_sv_leng[0]:event_taus[0].energy()"     --histo-range 30,20,100,40,0.,1.0   --cond-com "(gen_proc_id == 42 || gen_proc_id == 32) && event_taus_IDlev[0] > 0 && event_taus_sv_sign[0] > 1" --output lepuni_tt_ltau_sv_leng_geo_vs_energy_sign1.root --histo-name  tt_ltau_sv_leng_geo_vs_energy_sign1  lstore_outdirs/94v5/processing2NVTX/MC2017legacy_Fall17_TTTo2L2Nu/MC2017legacy_Fall17_TTTo2L2Nu_*.root   &
+
+
+
+hadd lepuni_sv_figures.root lepuni_*.root
+
+
+root -b -l lepuni_sv_figures.root
+
+gStyle->SetOptStat(0)
+
+fonts1 = 133
+fonts1_size = 32
+font_size_axes_titles = 40
+
+title_offset_x = 0.8
+title_offset_y = 1.1
+
+y_axis_tick_len = 0.03
+left_margin = 0.15
+right_margin = 0.04
+bottom_margin = 0.12
+
+y_maximum = 1.0
+y_minimum = 0.0001
+
+
+TH1F* histo = tt_ltau_sv_leng_pat
+
+histo = tt_ltau_sv_sign_pat
+
+histo = tt_ltau_sv_leng_geo
+histo = tt_ltau_sv_sign_geo
+
+
+
+TH1F* histo_s = dy_tautau_sv_sign_pat
+TH1F* histo_b = dy_other_sv_sign_pat
+
+histo_s = dy_tautau_sv_sign_geo
+histo_b = dy_other_sv_sign_geo
+
+
+TH1F* histo_s = tt_ltau_sv_sign_pat
+TH1F* histo_b = tt_ljb_sv_sign_pat
+TH1F* histo_c = tt_ljw_sv_sign_pat
+TH1F* histo_o = tt_ljo_sv_sign_pat
+
+
+histo_s = tt_ltau_sv_sign_geo
+histo_b = tt_ljb_sv_sign_geo
+histo_c = tt_ljw_sv_sign_geo
+histo_o = tt_ljo_sv_sign_geo
+
+
+histo  -> SetLineWidth(3)
+histo  -> SetLineColor(kRed) // signal everywhere
+
+
+TH2F* histo = tt_ltau_sv_leng_pat_vs_energy
+
+histo = tt_ltau_sv_leng_geo_vs_energy_sign1
+
+histo  -> Scale(1./histo->Integral())
+
+histo->SetTitle("")
+histo->GetXaxis()->SetTitleOffset(title_offset_x)
+histo->GetYaxis()->SetLabelFont(fonts1)
+histo->GetXaxis()->SetLabelFont(fonts1)
+histo->GetYaxis()->SetLabelSize(fonts1_size)
+histo->GetXaxis()->SetLabelSize(fonts1_size)
+histo->GetYaxis()->SetTitleOffset(title_offset_y)
+histo->GetYaxis()->SetTitleFont(fonts1)
+histo->GetXaxis()->SetTitleFont(fonts1)
+histo->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+//histo  ->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
+//histo  ->GetXaxis()->SetRangeUser(0., 150.)
+
+
+histo     ->SetXTitle("SV flight length [cm]")
+histo     ->SetXTitle("SV significance [#sigma]")
+
+histo     ->SetYTitle("Probability")
+
+
+histo     ->SetXTitle("Energy [GeV]")
+histo     ->SetYTitle("SV flight length [cm]")
+
+
+
+histo_s  -> SetLineWidth(3)
+histo_s  -> SetLineColor(kRed) // signal everywhere
+histo_s  -> Scale(1./histo_s->Integral())
+
+histo_s->SetTitle("")
+histo_s->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_s->GetYaxis()->SetLabelFont(fonts1)
+histo_s->GetXaxis()->SetLabelFont(fonts1)
+histo_s->GetYaxis()->SetLabelSize(fonts1_size)
+histo_s->GetXaxis()->SetLabelSize(fonts1_size)
+histo_s->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_s->GetYaxis()->SetTitleFont(fonts1)
+histo_s->GetXaxis()->SetTitleFont(fonts1)
+histo_s->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_s->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+histo_s     ->SetXTitle("SV significance [#sigma]")
+histo_s     ->SetYTitle("Probability")
+
+
+
+histo_b  -> SetLineWidth(2)
+histo_b  -> SetLineColor(kBlack)
+histo_b  -> Scale(1./histo_b->Integral())
+
+histo_b->SetTitle("")
+histo_b->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_b->GetYaxis()->SetLabelFont(fonts1)
+histo_b->GetXaxis()->SetLabelFont(fonts1)
+histo_b->GetYaxis()->SetLabelSize(fonts1_size)
+histo_b->GetXaxis()->SetLabelSize(fonts1_size)
+histo_b->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_b->GetYaxis()->SetTitleFont(fonts1)
+histo_b->GetXaxis()->SetTitleFont(fonts1)
+histo_b->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_b->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+histo_b     ->SetXTitle("SV significance [#sigma]")
+histo_b     ->SetYTitle("Probability")
+
+
+histo_c  -> SetLineWidth(2)
+histo_c  -> SetLineColor(kBlue)
+//histo_c  -> SetLineColor(kBlack)
+//histo_c  -> SetLineStyle(2)
+histo_c  -> Scale(1./histo_c->Integral())
+
+histo_c->SetTitle("")
+histo_c->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_c->GetYaxis()->SetLabelFont(fonts1)
+histo_c->GetXaxis()->SetLabelFont(fonts1)
+histo_c->GetYaxis()->SetLabelSize(fonts1_size)
+histo_c->GetXaxis()->SetLabelSize(fonts1_size)
+histo_c->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_c->GetYaxis()->SetTitleFont(fonts1)
+histo_c->GetXaxis()->SetTitleFont(fonts1)
+histo_c->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_c->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+histo_c     ->SetXTitle("SV significance [#sigma]")
+histo_c     ->SetYTitle("Probability")
+
+
+histo_o  -> SetLineWidth(2)
+histo_o  -> SetLineColor(kBlack)
+histo_o  -> SetLineStyle(2)
+histo_o  -> Scale(1./histo_o->Integral())
+
+histo_o->SetTitle("")
+histo_o->GetXaxis()->SetTitleOffset(title_offset_x)
+histo_o->GetYaxis()->SetLabelFont(fonts1)
+histo_o->GetXaxis()->SetLabelFont(fonts1)
+histo_o->GetYaxis()->SetLabelSize(fonts1_size)
+histo_o->GetXaxis()->SetLabelSize(fonts1_size)
+histo_o->GetYaxis()->SetTitleOffset(title_offset_y)
+histo_o->GetYaxis()->SetTitleFont(fonts1)
+histo_o->GetXaxis()->SetTitleFont(fonts1)
+histo_o->GetYaxis()->SetTitleSize(font_size_axes_titles)
+histo_o->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+histo_o     ->SetXTitle("SV significance [#sigma]")
+histo_o     ->SetYTitle("Probability")
+
+
+
+
+
+//histo_taus_eta    ->SetYTitle("#epsilon_{T/L}(jet #rightarrow #tau_{h})")
+//histo_taus_r      ->SetYTitle("#epsilon_{T/L}(jet #rightarrow #tau_{h})")
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->SetLogy()
+cst->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+pad1->SetLeftMargin(left_margin)
+pad1->SetRightMargin(right_margin)
+pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+pad1->SetLogy() // comment out for fake factors
+
+pad1->SetTicks()
+pad1->cd()
+
+left_title = new TPaveText(left_margin, 0.92, 0.8, 0.97, "brNDC") // left_title = TPaveText(0.15,  0.92, 0.5, 0.97, "brNDC")
+left_title->SetTextAlign(13) // this adjust to left (+ margin inside the box and top)
+left_title->SetMargin(0)
+left_title->AddText("CMS #font[52]{Internal Simulation}")
+left_title->SetFillColor(0)
+
+right_title = new TPaveText(0.72 - right_margin, 0.92, 1. - right_margin, 0.97, "brNDC")
+right_title->SetTextAlign(33)
+right_title->SetMargin(0)
+//right_title->AddText("35.9 fb^{-1} (13 TeV)")
+right_title->AddText("(13 TeV)")
+right_title->SetTextFont(132)
+right_title->SetFillColor(0)
+
+
+leg = new TLegend(0.5,0.65, 0.89,0.89)
+leg->SetBorderSize(0)
+leg->SetTextFont(fonts1)
+leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(histo_s, "genuine #tau_{h}",     "l")
+leg->AddEntry(histo_b, "misidentified b jet",  "l")
+leg->AddEntry(histo_c, "misidentified c jet",  "l")
+leg->AddEntry(histo_o, "other jets",           "l")
+
+histo_o->Draw("hist")
+histo_c->Draw("hist same")
+histo_b->Draw("hist same")
+histo_s->Draw("hist same")
+
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+
+cst->SaveAs("tau_sv_pat_significance_tt_genuine_vs_fake_logy.pdf")
+
+cst->SaveAs("tau_sv_geom_significance_tt_genuine_vs_fake_logy.pdf")
+
+
+
+leg->AddEntry(histo_s, "#splitline{genuine #tau_{h}}{t#bar{t}#rightarrow l#nu #tau_{h}#nu b#bar{b}}",       "l")
+leg->AddEntry(histo_b, "#splitline{misidentified b jet}{t#bar{t}#rightarrow l#nu q#bar{q}' b#bar{b}}",       "l")
+
+'signal':     '#splitline{Signal}{t#bar{t}#rightarrow l#nu #tau_{h}#nu b#bar{b}}',
+'background': "#splitline{Background}{t#bar{t}#rightarrow l#nu q#bar{q}' b#bar{b}}",
+
+leg->AddEntry(histo_s, "#splitline{genuine #tau_{h}}{DY#rightarrow#tau#tau}",       "l")
+leg->AddEntry(histo_b, "#splitline{misidentified #tau_{h}}{DY#rightarrow#mu#mu}",       "l")
+
+histo_b->Draw("hist")
+histo_s->Draw("hist same")
+
+
+
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+
+cst->SaveAs("tau_sv_pat_significance_dy_genuine_vs_fake_logy.pdf")
+cst->SaveAs("tau_sv_geom_significance_dy_genuine_vs_fake_logy.pdf")
+
+
+
+
+
+cst->SaveAs("tau_sv_pat_significance_dy_genuine_vs_fake.pdf")
+cst->SaveAs("tau_sv_geom_significance_dy_genuine_vs_fake.pdf")
+
+cst->SaveAs("tau_sv_pat_significance_tt_genuine_vs_fake.pdf")
+cst->SaveAs("tau_sv_geom_significance_tt_genuine_vs_fake.pdf")
+
+
+
+histo->Draw("hist")
+
+left_title->Draw("same")
+right_title->Draw("same")
+
+cst->SaveAs("tau_sv_pat_length.pdf")
+cst->SaveAs("tau_sv_pat_significance.pdf")
+
+cst->SaveAs("tau_sv_geom_length.pdf")
+cst->SaveAs("tau_sv_geom_significance.pdf")
+
+
+histo->Draw("hist col")
+
+left_title->Draw("same")
+right_title->Draw("same")
+
+cst->SaveAs("tau_sv_pat_length_vs_energy.pdf")
+cst->SaveAs("tau_sv_geom_length_vs_energy.pdf")
+
+
+
+
+
 ## lepuni remaining fitting figures
 
 ### tt only fit
@@ -616,7 +993,7 @@ sqrt(sum( ([3654.20 6206.9 4886.02] .- 4946) .^2  .* coefs_el') / sum(coefs_el))
 
 
 
-### script 1
+### script 1 fake factor figures
 
 a la
 Documents/lip_phd/lip/ttbar-leptons-80X/test/jet_fakefactor_data.cc
@@ -741,9 +1118,6 @@ histo_taus_pt->GetXaxis()->SetTitleSize(font_size_axes_titles)
 histo_taus_pt  ->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
 histo_taus_pt  ->GetXaxis()->SetRangeUser(0., 150.)
 
-histo_taus_pt     ->SetXTitle("p_{T} [GeV]")
-histo_taus_pt     ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
-
 histo_taus_eta->SetTitle("")
 histo_taus_eta->GetXaxis()->SetTitleOffset(title_offset_x)
 histo_taus_eta->GetYaxis()->SetLabelFont(fonts1)
@@ -756,9 +1130,6 @@ histo_taus_eta->GetXaxis()->SetTitleFont(fonts1)
 histo_taus_eta->GetYaxis()->SetTitleSize(font_size_axes_titles)
 histo_taus_eta->GetXaxis()->SetTitleSize(font_size_axes_titles)
 histo_taus_eta->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
-
-histo_taus_eta    ->SetXTitle("#eta")
-histo_taus_eta    ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
 
 histo_taus_r->SetTitle("")
 histo_taus_r->GetXaxis()->SetTitleOffset(title_offset_x)
@@ -774,7 +1145,18 @@ histo_taus_r->GetXaxis()->SetTitleSize(font_size_axes_titles)
 histo_taus_r->GetYaxis()->SetRangeUser(y_minimum, y_maximum)
 histo_taus_r->GetXaxis()->SetRangeUser(0., 0.3)
 
+
+
+histo_taus_pt     ->SetXTitle("p_{T} [GeV]")
+histo_taus_eta    ->SetXTitle("#eta")
 histo_taus_r      ->SetXTitle("#font[52]{r}_{jet}")
+
+histo_taus_pt     ->SetYTitle("#epsilon_{T/L}(jet #rightarrow #tau_{h})")
+histo_taus_eta    ->SetYTitle("#epsilon_{T/L}(jet #rightarrow #tau_{h})")
+histo_taus_r      ->SetYTitle("#epsilon_{T/L}(jet #rightarrow #tau_{h})")
+
+histo_taus_pt     ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
+histo_taus_eta    ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
 histo_taus_r      ->SetYTitle("#omega(jet #rightarrow #tau_{h})")
 
 
