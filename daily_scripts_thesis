@@ -7,6 +7,194 @@ find . -name el_presel_bjet_pt.png
 ./plots/v37_test13_update2/renames/el_presel_bjet_pt.png
 
 
+
+## lepuni summary figure
+
+gStyle->SetOptStat(0)
+
+fonts1 = 133
+fonts1_size = 32
+font_size_axes_titles = 40
+
+title_offset_x = 0.9
+title_offset_y = 1.0 // the title of Y axis
+
+y_axis_tick_len = 0.03
+left_margin = 0.15
+right_margin = 0.04
+bottom_margin = 0.12
+
+
+lumi_1    = 35.9
+lumi_full = 145
+lumi_1000 = 1000
+
+title_histo = new TH1F("titlehisto", ";Luminosity [fb^{-1}];Relative uncertainty [%]", 2, 20, 3000)
+title_histo->SetTitle("")
+title_histo->GetXaxis()->SetTitleOffset(title_offset_x)
+title_histo->GetYaxis()->SetLabelFont(fonts1)
+title_histo->GetXaxis()->SetLabelFont(fonts1)
+title_histo->GetYaxis()->SetLabelSize(fonts1_size)
+title_histo->GetXaxis()->SetLabelSize(fonts1_size)
+title_histo->GetYaxis()->SetTitleOffset(title_offset_y)
+title_histo->GetYaxis()->SetTitleFont(fonts1)
+title_histo->GetXaxis()->SetTitleFont(fonts1)
+title_histo->GetYaxis()->SetTitleSize(font_size_axes_titles)
+title_histo->GetXaxis()->SetTitleSize(font_size_axes_titles)
+title_histo     ->SetXTitle("Luminosity [fb^{-1}]")
+title_histo     ->SetYTitle("Relative uncertainty [%]")
+
+y_maximum = 7.5
+title_histo  ->GetYaxis()->SetRangeUser(0, y_maximum)
+
+
+line_all_1 = new TLine(lumi_1,    4.9, lumi_full, 3.5)
+line_all_2 = new TLine(lumi_full, 3.5, lumi_1000, 2)
+line_sys_1 = new TLine(lumi_1,    4.2, lumi_full, 3.3)
+line_sys_2 = new TLine(lumi_full, 3.3, lumi_1000, 1.8)
+line_sta_1 = new TLine(lumi_1,    2.5, lumi_full, 1.1)
+line_sta_2 = new TLine(lumi_full, 1.1, lumi_1000, 0.6)
+
+line_all_1  -> SetLineWidth(3)
+line_all_1  -> SetLineColor(kRed)
+line_all_2  -> SetLineWidth(3)
+line_all_2  -> SetLineColor(kRed)
+
+line_sys_1  -> SetLineWidth(2)
+line_sys_1  -> SetLineColor(kBlack)
+line_sys_2  -> SetLineWidth(2)
+line_sys_2  -> SetLineColor(kBlack)
+
+line_sta_1  -> SetLineWidth(2)
+line_sta_1  -> SetLineColor(kBlack)
+line_sta_1  -> SetLineStyle(2)
+line_sta_2  -> SetLineWidth(2)
+line_sta_2  -> SetLineColor(kBlack)
+line_sta_2  -> SetLineStyle(2)
+
+
+
+
+
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->SetLogx()
+cst->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+pad1->SetLeftMargin(left_margin)
+pad1->SetRightMargin(right_margin)
+pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+pad1->SetLogx() // comment out for fake factors
+
+pad1->SetTicks()
+pad1->cd()
+
+
+left_title = new TPaveText(left_margin, 0.92, 0.8, 0.97, "brNDC") // left_title = TPaveText(0.15,  0.92, 0.5, 0.97, "brNDC")
+left_title->SetTextAlign(13) // this adjust to left (+ margin inside the box and top)
+left_title->SetMargin(0)
+left_title->AddText("CMS #font[52]{Internal Simulation}")
+left_title->SetFillColor(0)
+
+right_title = new TPaveText(0.72 - right_margin, 0.92, 1. - right_margin, 0.97, "brNDC")
+right_title->SetTextAlign(33)
+right_title->SetMargin(0)
+//right_title->AddText("35.9 fb^{-1} (13 TeV)")
+right_title->AddText("(13 TeV)")
+right_title->SetTextFont(132)
+right_title->SetFillColor(0)
+
+
+label_35 = new TPaveText(0.2, 0.18, 0.29, 0.23, "brNDC")
+label_35->SetTextAlign(13)
+label_35->SetMargin(0)
+label_35->AddText("35.9")
+label_35->SetFillColor(0)
+
+label_145 = new TPaveText(0.4, 0.18, 0.47, 0.23, "brNDC")
+label_145->SetTextAlign(13)
+label_145->SetMargin(0)
+label_145->AddText("145")
+label_145->SetFillColor(0)
+
+label_1000 = new TPaveText(0.80, 0.18, 0.89, 0.23, "brNDC")
+label_1000->SetTextAlign(13)
+label_1000->SetMargin(0)
+label_1000->AddText("1000")
+label_1000->SetFillColor(0)
+
+
+
+
+leg = new TLegend(0.5,0.6, 0.89,0.85)
+leg->SetBorderSize(0)
+leg->SetTextFont(fonts1)
+leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(line_all_1, "overal uncertainty", "l")
+leg->AddEntry(line_sys_1, "systematic",         "l")
+leg->AddEntry(line_sta_1, "statistical",        "l")
+
+title_histo->Draw()
+
+line_all_1->Draw("same")
+line_sys_1->Draw("same")
+line_sta_1->Draw("same")
+
+line_all_2->Draw("same")
+line_sys_2->Draw("same")
+line_sta_2->Draw("same")
+
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+
+label_35->Draw("same")
+label_145->Draw("same")
+label_1000->Draw("same")
+
+cst->SaveAs("lepuni_feasibility_summary.pdf")
+
+
+
+
+
+
+
+leg->AddEntry(line_all_1, "overal uncertainty", "l")
+leg->AddEntry(line_sys_1, "systematic",         "l")
+leg->AddEntry(line_sta_1, "statistical",        "l")
+
+title_histo->Draw()
+
+line_all_1->Draw("same")
+line_sys_1->Draw("same")
+line_sta_1->Draw("same")
+
+line_all_full->Draw("same")
+line_sys_full->Draw("same")
+line_sta_full->Draw("same")
+
+line_all_1000->Draw("same")
+line_sys_1000->Draw("same")
+line_sta_1000->Draw("same")
+
+leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
+
+cst->SaveAs("tau_sv_pat_significance_tt_genuine_vs_fake_logy.pdf")
+
+
+
+
+
+
+
+
+
 ## lepuni SV reconstruction figures
 
 lxplus
