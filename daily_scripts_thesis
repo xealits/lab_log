@@ -1,3 +1,423 @@
+# remaining png figures in chapter 2
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_el_presel.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_mu_presel.png} \\
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_el_wjets.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_mu_wjets.png} \\
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_el_presel_datadriven.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_mu_presel_datadriven.png} \\
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_el_wjets_datadriven.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mt_shapes_os_ss_mu_wjets_datadriven.png} \\
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/qcd_os_ss_factor_per_relIso_presel_el.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/qcd_os_ss_factor_per_relIso_presel_mu.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/qcd_os_ss_factor_per_relIso_presel_el_mc.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/qcd_os_ss_factor_per_relIso_presel_mu_mc.png}
+
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lj.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lj.png} 
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp.png}  \\
+\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp_obs.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp_obs.png}\\
+\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp_obs.png}
+\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_el_nuisances_lessparams.png} \\
+\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_mu_nuisances_lessparams.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_lj.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_ljout.png} \\
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_lj.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_ljout.png}
+
+
+
+where the files are:
+
+$ ack mt_shapes_os_ss daily_scripts*
+daily_scripts.1
+9799:mv plots/..,sw-dir,jobsums,mc_v27p1_..,lstore_outdirs,merge-sets,v27,p1,SingleElectron_Mt_lep_met_f_ctr_el_wjet_NOMINAL_osss-parts.png                plots/mt_shapes_os_ss_el_wjets_datadriven.png
+9800:mv plots/..,sw-dir,jobsums,mc_v27p1_..,lstore_outdirs,merge-sets,v27,p1,SingleElectron_Mt_lep_met_f_ctr_old_el_presel_alliso_NOMINAL_osss-parts.png   plots/mt_shapes_os_ss_el_presel_datadriven.png
+9801:mv plots/..,sw-dir,jobsums,mc_v27p1_..,lstore_outdirs,merge-sets,v27,p1,SingleMuon_Mt_lep_met_f_ctr_mu_wjet_NOMINAL_osss-parts.png                    plots/mt_shapes_os_ss_mu_wjets_datadriven.png
+9802:mv plots/..,sw-dir,jobsums,mc_v27p1_..,lstore_outdirs,merge-sets,v27,p1,SingleMuon_Mt_lep_met_f_ctr_old_mu_presel_alliso_NOMINAL_osss-parts.png       plots/mt_shapes_os_ss_mu_presel_datadriven.png
+21355:c1->SaveAs("mt_shapes_os_ss_mu_presel.png")
+21356:c1->SaveAs("mt_shapes_os_ss_el_presel.png")
+21358:c1->SaveAs("mt_shapes_os_ss_mu_wjets.png")
+21359:c1->SaveAs("mt_shapes_os_ss_el_wjets.png")
+
+daily_scripts.2
+11157:c1->SaveAs("v37_test5_bunch2_mc_4_amcatnlo_mt_shapes_os_ss_mu_presel.pdf")
+11158:c1->SaveAs("v37_test5_bunch2_mc_4_amcatnlo_mt_shapes_os_ss_el_presel.pdf")
+11255:c1->SaveAs("v35_pQCDtest_mt_shapes_os_ss_mu_presel.pdf")
+
+
+
+ls /lstore/cms/olek/outdirs/v35/pQCDtest/
+ls /lstore/cms/olek/outdirs/v27/p1
+
+at least these are there
+
+
+
+
+
+# advanced methods, study of D mesons misidentified as taus
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen[0]:tau_matching_gen_provenance[0]:tau_matching_gen_intermediate[0]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen[0]:tau_matching_gen_provenance[0]:tau_matching_gen_intermediate[0]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+-- I will track the precise origin of the misid taus, and it looks like indeed most of these are D mesons
+but then, what are the decays of the D mesons?
+
+
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "abs(tau_matching_gen_intermediate[0])>>h(300,300,600)", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+all 38
+0   12
+411  9
+413  4
+421 11
+431  2
+
+
+the size of 0 mode
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "abs(tau_matching_gen_intermediate[0])>0", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+sigma>1 12/38  1/3
+sigma>2  4/19  1/5
+sigma>2  2/15  1/7
+
+-- ok! D mesons dominate
+
+sigma > 2 or 3:
+411 and 421 survive
+
+
+5 particles
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]:gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3]:gen_t_gid_w_prods_intermediate[4]:gen_t_gid_w_prods_pdg[4]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]:gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3] :gen_t_gid_w_prods_intermediate[4]:gen_t_gid_w_prods_pdg[4] :gen_t_gid_w_prods_intermediate[5]:gen_t_gid_w_prods_pdg[5] :gen_t_gid_w_prods_intermediate[6]:gen_t_gid_w_prods_pdg[6] :gen_t_gid_w_prods_intermediate[7]:gen_t_gid_w_prods_pdg[7] ", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+
+not working
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[]:gen_t_gid_w_prods_pdg[]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+
+1
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]", "@gen_t_gid_w_prods_pdg.size() == 1 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+0 entries
+
+2
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]", "@gen_t_gid_w_prods_pdg.size() == 2 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+*    Row   * Instance * tau_match *  gen_t_gi * gen_t_gid * gen_t_gid * gen_t_gid *
+***********************************************************************************
+*     4610 *        0 *         0 *         0 *       310 *         0 *         2 *
+*     6938 *        0 *         0 *         0 *        22 *         0 *         2 *
+*    15837 *        0 *         0 *         0 *        -1 *         0 *         2 *
+*    16000 *        0 *       421 *       421 *      -313 *       421 *       113 *
+
+3
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]", "@gen_t_gid_w_prods_pdg.size() == 3 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+*    Row   * Instance * tau_match *  gen_t_gi * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid *
+***********************************************************************************************************
+*     4872 *        0 *         0 *         0 *        21 *         0 *        -3 *         0 *         2 *
+*    16808 *        0 *       413 *       421 *       113 *       421 *      -321 *       413 *       211 *
+
+4
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3]", "@gen_t_gid_w_prods_pdg.size() == 4 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+*    Row   * Instance * tau_match *  gen_t_gi * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid *
+***********************************************************************************************************************************
+*     7812 *        0 *       421 *       421 *       211 *       421 *       211 *       421 *      -211 *       421 *      -211 *
+*     8941 *        0 *       413 *       421 *      -321 *       421 *       111 *       421 *       211 *       413 *       211 *
+*     9337 *        0 *       411 *       411 *       -11 *       411 *      -313 *         0 *       130 *         0 *       310 *
+*    10323 *        0 *       421 *       421 *      -321 *       421 *       111 *       421 *       211 *       413 *       211 *
+*    13791 *        0 *       411 *       411 *      -321 *       411 *       211 *       411 *       211 *         0 *       310 *
+
+5
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3]:gen_t_gid_w_prods_intermediate[4]:gen_t_gid_w_prods_pdg[4]", "@gen_t_gid_w_prods_pdg.size() == 5 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+*    Row   * Instance * tau_match *  gen_t_gi * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid *
+***********************************************************************************************************************************************************
+*     3434 *        0 *       411 *         0 *       130 *         0 *       310 *         0 *       310 *       411 *       113 *       411 *       310 *
+
+6
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3] :gen_t_gid_w_prods_intermediate[4]:gen_t_gid_w_prods_pdg[4] :gen_t_gid_w_prods_intermediate[5]:gen_t_gid_w_prods_pdg[5]", "@gen_t_gid_w_prods_pdg.size() == 6 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+
+*    Row   * Instance * tau_match *  gen_t_gi * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid * gen_t_gid *
+***********************************************************************************************************************************************************************************
+*     1739 *        0 *       413 *         0 *       310 *       421 *      -321 *       421 *       211 *       421 *       211 *       421 *      -211 *       413 *       211 *
+
+7
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0]: gen_t_gid_w_prods_intermediate[0]:gen_t_gid_w_prods_pdg[0]:gen_t_gid_w_prods_intermediate[1]:gen_t_gid_w_prods_pdg[1]:gen_t_gid_w_prods_intermediate[2]:gen_t_gid_w_prods_pdg[2]:gen_t_gid_w_prods_intermediate[3]:gen_t_gid_w_prods_pdg[3] :gen_t_gid_w_prods_intermediate[4]:gen_t_gid_w_prods_pdg[4] :gen_t_gid_w_prods_intermediate[5]:gen_t_gid_w_prods_pdg[5] :gen_t_gid_w_prods_intermediate[6]:gen_t_gid_w_prods_pdg[6]", "@gen_t_gid_w_prods_pdg.size() == 7 && tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && gen_t_w_decay_id_q0 != -111")
+0 entries
+
+
+looks like these are many-prong decays
+then the iso candidates do come from the meson
+and they must correspond to the SV
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_SV_geom_flightLenSign[tau_refited_index[0]]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+h = (TH1F*) ((TTree*) ntupler->Get("reduced_ttree"))->GetHistogram()
+h->GetCumulative(kFALSE)->Draw()
+
+-- about half are over 2sigma
+
+
+
+## isocands multiplicity
+
+root -b -l check_isocands_1_dilep_semilep.root
+
+gStyle->SetOptStat(0)
+tau_n_chr_isocands_dilep  ->SetLineColor(kRed)
+tau_n_chr_isocands_semilep->SetLineColor(kBlack)
+
+tau_n_chr_isocands_dilep  ->SetLineWidth(3)
+tau_n_chr_isocands_semilep->SetLineWidth(3)
+
+leg = new TLegend(0.5,0.6, 0.89,0.85)
+leg->SetBorderSize(0)
+//leg->SetTextFont(fonts1)
+//leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(tau_n_chr_isocands_dilep, "genuine #tau", "l")
+leg->AddEntry(tau_n_chr_isocands_semilep, "misidentified",         "l")
+
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+//pad1->SetLeftMargin(left_margin)
+//pad1->SetRightMargin(right_margin)
+//pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+
+pad1->SetTicks()
+pad1->cd()
+
+
+
+tau_n_chr_isocands_dilep->Draw()
+tau_n_chr_isocands_semilep->Draw("same")
+
+leg->Draw("same")
+
+cst->SaveAs("check_isocands_1_dilep_semilep_multiplicity.pdf")
+
+
+## iso cands matching to SV
+
+tau_isoCharged_closest_to_SV_length
+tau_isoCharged_closest_to_SV
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0] :tau_isoCharged_closest_to_SV_length[0]:tau_isoCharged_closest_to_SV[0]/tau_SV_geom_flightLen[0] :tau_isoCharged_closest_to_SV_length[1]:tau_isoCharged_closest_to_SV[1]/tau_SV_geom_flightLen[1]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+looks like indeed there is 1-2 candidate close
+
+run on 1 background file and 1 signal
+
+root -l NtuplerAnalyzer_test_MC_METfiltersOFF_MC_TTJets_2017legacy_TTTo2L_Dmesons_tauID.root
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_matching_gen_intermediate[0] :tau_isoCharged_closest_to_SV_length[0]:tau_isoCharged_closest_to_SV[0]/tau_SV_geom_flightLen[0] :tau_isoCharged_closest_to_SV_length[1]:tau_isoCharged_closest_to_SV[1]/tau_SV_geom_flightLen[1]", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[]", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+-- prints them line by line!!
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_isoCharged_closest_to_SV[0]/tau_SV_geom_flightLen[0] :tau_isoCharged_closest_to_SV[1]/tau_SV_geom_flightLen[1] :tau_isoCharged_closest_to_SV[2]/tau_SV_geom_flightLen[2]", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+220 records have at lest 1 closest etc
+ 93 of them have 2
+only 11 have 3
+
+-- correct distribution for tau
+
+what if second after minimum is needed? make average? median?
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+-- this produces 0 in some cases, 276 pass instead of 220
+
+for example row 6
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "Min$(abs(tau_isoCharged_closest_to_SV[]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "abs(tau_isoCharged_closest_to_SV[])",       "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+-- starts at 17
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "@tau_isoCharged_closest_to_SV.size() : @tau_SV_geom_flightLen.size()",       "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+*    Row   * Instance * @tau_isoC *  @tau_SV_ *
+***********************************************
+*        6 *        0 *         0 *         1 *
+*       17 *        0 *         7 *         2 *
+
+and I had to divide by flightlength of 0 tau!
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[])", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+-- only 2 entries for 17??
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0])", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1.")
+
+*    Row   * Instance * abs(tau_i *
+***********************************
+*       17 *        0 * 0.0059372 *
+*       17 *        1 * 0.0678760 *
+*       17 *        2 * 0.0034825 *
+*       17 *        3 * 0.0029352 *
+*       17 *        4 * 0.0076642 *
+*       17 *        5 * 0.0314706 *
+*       17 *        6 * 0.0038715 *
+
+-- 7 iso candidates???
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Sum$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0])) / Length$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+-- practically all < 0.5
+
+for D mesons:
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Min$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+-- only 34 entries...
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Sum$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0])) / Length$(abs(tau_isoCharged_closest_to_SV[]/tau_SV_geom_flightLen[0]))", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+all < 1.
+
+
+
+test:
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_refited_index[0]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_refited_index[0]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+-- all 0 in semilep and dileps
+
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]",        "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV_length[]", "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV_length[]", "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+
+
+2d
+
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_isoCharged_closest_to_SV[]",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Scan( "tau_isoCharged_closest_to_SV[]:tau_isoCharged_closest_to_SV_length[]",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]:tau_isoCharged_closest_to_SV_length[]",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0", "col")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]:tau_isoCharged_closest_to_SV_length[]",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0", "col")
+
+
+
+ok let's compare something
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]>>h(50,0,1)",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "tau_isoCharged_closest_to_SV[]>>h(50,0,1)",        "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Min$(tau_isoCharged_closest_to_SV[])>>h(50,0,1)",        "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+((TTree*) ntupler->Get("reduced_ttree"))->Draw( "Min$(tau_isoCharged_closest_to_SV[])>>h(50,0,1)",        "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+
+root -l NtuplerAnalyzer_test_MC_METfiltersOFF_MC_TTJets_2017legacy_TTToSemileptonic_all_Dmesons_tauID.root
+
+h = (TH1F*) ((TTree*) ntupler->Get("reduced_ttree"))->GetHistogram()
+h->SetDirectory(0)
+h->SetName("semilep")
+
+out = (TFile*) TFile::Open("out_semilep.root", "RECREATE")
+
+out->Write()
+h->Write()
+out->Close()
+
+fuck, h disapears
+
+
+root -l NtuplerAnalyzer_test_MC_METfiltersOFF_MC_TTJets_2017legacy_TTToSemileptonic_all_Dmesons_tauID.root NtuplerAnalyzer_test_MC_METfiltersOFF_MC_TTJets_2017legacy_TTTo2L_Dmesons_tauID.root
+
+
+((TTree*) _file0->Get("ntupler/reduced_ttree"))->Draw( "Min$(tau_isoCharged_closest_to_SV[])>>semilep(50,0,1)",    "tau_IDlev[0]>0 && tau_matching_gen_dR[0] < 0.4 && abs(tau_matching_gen[0]) == 5 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+h_semilep = (TH1F*) ((TTree*) ntupler->Get("reduced_ttree"))->GetHistogram()
+h_semilep->SetDirectory(0)
+h_semilep->SetName("semilep")
+
+
+((TTree*) _file1->Get("ntupler/reduced_ttree"))->Draw( "Min$(tau_isoCharged_closest_to_SV[])>>signal(50,0,1)",     "tau_IDlev[0]>0 && tau_refited_index[0] > -1 && tau_SV_geom_flightLenSign[tau_refited_index[0]] > 1. && @tau_isoCharged_closest_to_SV.size()>0")
+
+h_signal = (TH1F*) ((TTree*) ntupler->Get("reduced_ttree"))->GetHistogram()
+h_signal->SetDirectory(0)
+h_signal->SetName("signal")
+
+
+gStyle->SetOptStat(0)
+h_signal  ->SetLineColor(kRed)
+semilep   ->SetLineColor(kBlack)
+
+h_signal  ->SetLineWidth(3)
+semilep   ->SetLineWidth(3)
+
+h_signal  ->Scale(1./h_signal  ->Integral())
+semilep   ->Scale(1./semilep   ->Integral())
+
+leg = new TLegend(0.5,0.6, 0.89,0.85)
+leg->SetBorderSize(0)
+//leg->SetTextFont(fonts1)
+//leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(h_signal, "genuine #tau",   "l")
+leg->AddEntry(semilep,  "misidentified",  "l")
+
+
+cst = new TCanvas("cst","stacked hists",10,10,700,700)
+cst->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+//pad1->SetLeftMargin(left_margin)
+//pad1->SetRightMargin(right_margin)
+//pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+
+pad1->SetTicks()
+pad1->cd()
+
+
+
+semilep->Draw("hist")
+h_signal->Draw("hist same")
+
+leg->Draw("same")
+
+cst->SaveAs("check_isocands_1_sv_compatibility.pdf")
+
+
+
+
+
+
 # figures
 
 one of presels
