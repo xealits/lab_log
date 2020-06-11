@@ -21308,6 +21308,41 @@ hadd distrs_v35pQCDtest_QCD_HT.root v35pQCDtest/MC2016_Summer16_QCD_HT-*
 hadd distrs_v35pQCDtest_QCD_EM.root v35pQCDtest/MC2016_Summer16_QCD_EMEnriched_Pt-*
 hadd distrs_v35pQCDtest_QCD_Mu.root v35pQCDtest/MC2016_Summer16_QCD_MuEnriched_Pt*
 
+root -l ./mc_norm/distrs_v35pQCDtest_QCD_Mu.root
+root -l ./mc_norm/distrs_v35pQCDtest_QCD_EM.root
+root -l ./mc_norm/distrs_v35pQCDtest_QCD_HT.root
+
+
+gStyle->SetOptStat(0)
+gROOT->SetBatch()
+
+fonts1 = 133
+fonts1_size = 32
+font_size_axes_titles = 40
+
+title_offset_x = 0.9
+title_offset_y = 1.2 // the title of Y axis
+
+y_axis_tick_len = 0.03
+left_margin = 0.15
+right_margin = 0.04
+bottom_margin = 0.13
+
+
+cst = new TCanvas("c1","OC to SC",10,10,700,700)
+c1->Draw("Y+")
+
+pad1 = new TPad("pad1","This is pad1", 0., 0.,  1., 1.)
+pad1->SetLeftMargin(left_margin)
+pad1->SetRightMargin(right_margin)
+pad1->SetBottomMargin(bottom_margin)
+pad1->Draw()
+
+pad1->SetTicks()
+pad1->cd()
+
+
+
 TH1D* h_mu_presel    = (TH1D*) (mu_presel->Get("qcd/NOMINAL/mu_presel_qcd_NOMINAL_Mt_lep_met_f"))
 TH1D* h_mu_presel_ss = (TH1D*) (mu_presel_ss->Get("qcd/NOMINAL/mu_presel_ss_qcd_NOMINAL_Mt_lep_met_f"))
 TH1D* h_el_presel    = (TH1D*) (el_presel->Get("qcd/NOMINAL/el_presel_qcd_NOMINAL_Mt_lep_met_f"))
@@ -21320,43 +21355,124 @@ TH1D* h_el_wjets     = (TH1D*) (el_wjets->Get("qcd/NOMINAL/el_wjets_qcd_NOMINAL_
 TH1D* h_el_wjets_ss  = (TH1D*) (el_wjets_ss->Get("qcd/NOMINAL/el_wjets_ss_qcd_NOMINAL_Mt_lep_met_f"))
 
 
+h_mu_presel->GetXaxis()->SetTitleOffset(title_offset_x)
+h_mu_presel->GetYaxis()->SetLabelFont(fonts1)
+h_mu_presel->GetXaxis()->SetLabelFont(fonts1)
+h_mu_presel->GetYaxis()->SetLabelSize(fonts1_size)
+h_mu_presel->GetXaxis()->SetLabelSize(fonts1_size)
+h_mu_presel->GetYaxis()->SetTitleOffset(title_offset_y)
+h_mu_presel->GetYaxis()->SetTitleFont(fonts1)
+h_mu_presel->GetXaxis()->SetTitleFont(fonts1)
+h_mu_presel->GetYaxis()->SetTitleSize(font_size_axes_titles)
+h_mu_presel->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+h_mu_wjets->GetXaxis()->SetTitleOffset(title_offset_x)
+h_mu_wjets->GetYaxis()->SetLabelFont(fonts1)
+h_mu_wjets->GetXaxis()->SetLabelFont(fonts1)
+h_mu_wjets->GetYaxis()->SetLabelSize(fonts1_size)
+h_mu_wjets->GetXaxis()->SetLabelSize(fonts1_size)
+h_mu_wjets->GetYaxis()->SetTitleOffset(title_offset_y)
+h_mu_wjets->GetYaxis()->SetTitleFont(fonts1)
+h_mu_wjets->GetXaxis()->SetTitleFont(fonts1)
+h_mu_wjets->GetYaxis()->SetTitleSize(font_size_axes_titles)
+h_mu_wjets->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+h_el_presel->GetXaxis()->SetTitleOffset(title_offset_x)
+h_el_presel->GetYaxis()->SetLabelFont(fonts1)
+h_el_presel->GetXaxis()->SetLabelFont(fonts1)
+h_el_presel->GetYaxis()->SetLabelSize(fonts1_size)
+h_el_presel->GetXaxis()->SetLabelSize(fonts1_size)
+h_el_presel->GetYaxis()->SetTitleOffset(title_offset_y)
+h_el_presel->GetYaxis()->SetTitleFont(fonts1)
+h_el_presel->GetXaxis()->SetTitleFont(fonts1)
+h_el_presel->GetYaxis()->SetTitleSize(font_size_axes_titles)
+h_el_presel->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+h_el_wjets->GetXaxis()->SetTitleOffset(title_offset_x)
+h_el_wjets->GetYaxis()->SetLabelFont(fonts1)
+h_el_wjets->GetXaxis()->SetLabelFont(fonts1)
+h_el_wjets->GetYaxis()->SetLabelSize(fonts1_size)
+h_el_wjets->GetXaxis()->SetLabelSize(fonts1_size)
+h_el_wjets->GetYaxis()->SetTitleOffset(title_offset_y)
+h_el_wjets->GetYaxis()->SetTitleFont(fonts1)
+h_el_wjets->GetXaxis()->SetTitleFont(fonts1)
+h_el_wjets->GetYaxis()->SetTitleSize(font_size_axes_titles)
+h_el_wjets->GetXaxis()->SetTitleSize(font_size_axes_titles)
+
+
+h_mu_presel ->Scale(1./h_mu_presel ->Integral())
+h_el_presel ->Scale(1./h_el_presel ->Integral())
+h_mu_wjets  ->Scale(1./h_mu_wjets  ->Integral())
+h_el_wjets  ->Scale(1./h_el_wjets  ->Integral())
+
+h_mu_presel_ss ->Scale(1./h_mu_presel_ss ->Integral())
+h_el_presel_ss ->Scale(1./h_el_presel_ss ->Integral())
+h_mu_wjets_ss  ->Scale(1./h_mu_wjets_ss  ->Integral())
+h_el_wjets_ss  ->Scale(1./h_el_wjets_ss  ->Integral())
+
 h_mu_presel_ss ->SetLineColor(kRed)
 h_el_presel_ss ->SetLineColor(kRed)
 h_mu_wjets_ss  ->SetLineColor(kRed)
 h_el_wjets_ss  ->SetLineColor(kRed)
 
 
-h_mu_presel   ->SetXTitle("M_{T} (#mu, E^{miss}_{T}) [GeV]")
-h_el_presel   ->SetXTitle("M_{T} (e,   E^{miss}_{T}) [GeV]")
-h_mu_wjets    ->SetXTitle("M_{T} (#mu, E^{miss}_{T}) [GeV]")
-h_el_wjets    ->SetXTitle("M_{T} (e,   E^{miss}_{T}) [GeV]")
+h_mu_presel   ->SetXTitle("#font[12]{m}_{T} (#mu, #font[12]{p}^{miss}_{T}) [GeV]")
+h_el_presel   ->SetXTitle("#font[12]{m}_{T} (e, #font[12]{p}^{miss}_{T}) [GeV]")
+h_mu_wjets    ->SetXTitle("#font[12]{m}_{T} (#mu, #font[12]{p}^{miss}_{T}) [GeV]")
+h_el_wjets    ->SetXTitle("#font[12]{m}_{T} (e, #font[12]{p}^{miss}_{T}) [GeV]")
+
+h_mu_presel   ->SetYTitle("Probability density")
+h_el_presel   ->SetYTitle("Probability density")
+h_mu_wjets    ->SetYTitle("Probability density")
+h_el_wjets    ->SetYTitle("Probability density")
+
+leg = new TLegend(0.5, 0.6, 0.85, 0.85)
+leg->SetBorderSize(0)
+leg->SetTextFont(fonts1)
+leg->SetTextSize(fonts1_size)
+
+leg->AddEntry(h_mu_presel,    "Opposite Sign", "l")
+leg->AddEntry(h_mu_presel_ss, "Same Sign",     "l")
+
+
+left_title = new TPaveText(left_margin, 0.92, 0.8, 0.97, "brNDC") // left_title = TPaveText(0.15,  0.92, 0.5, 0.97, "brNDC")
+left_title->SetTextAlign(13) // this adjust to left (+ margin inside the box and top)
+left_title->SetMargin(0)
+left_title->AddText("CMS #font[52]{Internal Simulation}")
+left_title->SetFillColor(0)
+
+
+right_title = new TPaveText(0.70 - right_margin, 0.92, 1. - right_margin, 0.97, "brNDC")
+right_title->SetTextAlign(33)
+right_title->SetMargin(0)
+//right_title->AddText("35.9 fb^{-1} (13 TeV)")
+right_title->AddText("(13 TeV)")
+right_title->SetTextFont(132)
+right_title->SetFillColor(0)
+
 
 h_mu_presel    ->Draw()
 h_mu_presel_ss ->Draw("same")
 
-h_el_presel    ->Draw()
-h_el_presel_ss ->Draw("same")
-
 h_mu_wjets     ->Draw()
 h_mu_wjets_ss  ->Draw("same")
+
+h_el_presel    ->Draw()
+h_el_presel_ss ->Draw("same")
 
 h_el_wjets     ->Draw()
 h_el_wjets_ss  ->Draw("same")
 
 
-leg = new TLegend(0.6,0.7, 0.9,0.9)
-leg->AddEntry(h_mu_presel,    "Opposite Sign", "l")
-leg->AddEntry(h_mu_presel_ss, "Same Sign",     "l")
-
-gStyle->SetOptStat(0)
-
 leg->Draw("same")
+left_title->Draw("same")
+right_title->Draw("same")
 
-c1->SaveAs("mt_shapes_os_ss_mu_presel.png")
-c1->SaveAs("mt_shapes_os_ss_el_presel.png")
+c1->SaveAs("mt_shapes_os_ss_mu_presel.pdf")
+c1->SaveAs("mt_shapes_os_ss_mu_wjets.pdf")
 
-c1->SaveAs("mt_shapes_os_ss_mu_wjets.png")
-c1->SaveAs("mt_shapes_os_ss_el_wjets.png")
+c1->SaveAs("mt_shapes_os_ss_el_presel.pdf")
+c1->SaveAs("mt_shapes_os_ss_el_wjets.pdf")
 
 
 
