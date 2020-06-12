@@ -15,24 +15,6 @@
 \includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/qcd_os_ss_factor_per_relIso_presel_mu_mc.png}
 
 
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lt.png} \hfill
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lj.png}
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lt.png} \hfill
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lj.png} 
-
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp.png}
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp.png}  \\
-\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp.png}
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp_obs.png}
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp_obs.png}\\
-\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp_obs.png}
-\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_el_nuisances_lessparams.png} \\
-\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_mu_nuisances_lessparams.png}
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_lj.png} \hfill
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_ljout.png} \\
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_lj.png} \hfill
-\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_ljout.png}
-
 
 
 where the files are:
@@ -238,6 +220,128 @@ hadd antiiso_emenriched_v35pStage2EMEnriched_3.root MC2016_Summer16_QCD_EMEnrich
 
 done: c1->SaveAs("distrs_alliso_relIso_v35pStage2MuEnriched_by_efficiency1_Pt5_2_mu_osss-factor.pdf")
 
+
+
+## mT per tau pT
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lj.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lj.png} 
+
+in
+/misc/exper-cms/cmssw/users/olek/CMSSW_8_0_26_patch1/src/UserCode/NtuplerAnalyzer/proc/./jobsums/plots/current/
+
+scripts in
+daily_scripts.2
+
+all files are in
+/lstore/cms/olek/CMSSW_8_0_26_patch1/src/UserCode/NtuplerAnalyzer/proc/studies/mt-per-tau-pt-in-new-bins/
+
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(#font[12]{l}, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "tauMore60/inclusive2: tau60/inclusive2: tau40/inclusive2: inclusive/inclusive2" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "inclusive":v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive "inclusive2":v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_inclusive "tau40":v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_tau_pt_40 "tau60":v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_tau_pt_60 "tauMore60":v37_new_bins_Mt_plots_mu_sel_all.root:tt_lj_Mt_tau_pt_more60 --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(#font[12]{l}, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "tauMore60/inclusive2: tau60/inclusive2: tau40/inclusive2: inclusive/inclusive2" -c mu_selVloose -d Mt_lep_met_c -p tt_mutau "inclusive":v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "inclusive2":v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_inclusive "tau40":v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_tau_pt_40 "tau60":v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_tau_pt_60 "tauMore60":v37_new_bins_Mt_plots_mu_sel_all.root:tt_mutau_Mt_tau_pt_more60 --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+
+-- the error bars are like presel! -- too few tau pT bins
+
+test:
+
+python sumup_ttree_draw.py event_met_lep_mt --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250 --ttree ttree_out --cond-com "( ( selection_stage == 9 || selection_stage == 7 ) && gen_proc_id > 20 && gen_proc_id < 30 && event_taus[0].pt ( ) > = 80. ) *event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_more.root --histo-name tt_lj_Mt_tau_pt_more lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/MC2016_Summer16_TTJets_powheg_1.root
+
+run:
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_inclusive.root --histo-name tt_mutau_Mt_inclusive  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_inclusive.root    --histo-name tt_lj_Mt_inclusive     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_inclusive2.root --histo-name tt_mutau_Mt_inclusive2  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_inclusive2.root    --histo-name tt_lj_Mt_inclusive2     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() < 40.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_40.root --histo-name tt_mutau_Mt_tau_pt_40  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() < 40.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_40.root    --histo-name tt_lj_Mt_tau_pt_40     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() >= 40. && event_taus[0].pt() < 55.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_55.root --histo-name tt_mutau_Mt_tau_pt_55  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 40. && event_taus[0].pt() < 55.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_55.root    --histo-name tt_lj_Mt_tau_pt_55     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() >= 55. && event_taus[0].pt() < 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_80.root --histo-name tt_mutau_Mt_tau_pt_80  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 55. && event_taus[0].pt() < 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_80.root    --histo-name tt_lj_Mt_tau_pt_80     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() >= 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_more.root --histo-name tt_mutau_Mt_tau_pt_more  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_more.root    --histo-name tt_lj_Mt_tau_pt_more     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_inclusive.root --histo-name tt_eltau_Mt_inclusive  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_inclusive.root    --histo-name tt_lj_Mt_inclusive     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_inclusive2.root --histo-name tt_eltau_Mt_inclusive2  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_inclusive2.root    --histo-name tt_lj_Mt_inclusive2     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50 && event_taus[0].pt() < 40.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_tau_pt_40.root --histo-name tt_eltau_Mt_tau_pt_40  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() < 40.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_tau_pt_40.root    --histo-name tt_lj_Mt_tau_pt_40     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50 && event_taus[0].pt() >= 40. && event_taus[0].pt() < 55.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_tau_pt_55.root --histo-name tt_eltau_Mt_tau_pt_55  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 40. && event_taus[0].pt() < 55.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_tau_pt_55.root    --histo-name tt_lj_Mt_tau_pt_55     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50 && event_taus[0].pt() >= 55. && event_taus[0].pt() < 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_tau_pt_80.root --histo-name tt_eltau_Mt_tau_pt_80  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 55. && event_taus[0].pt() < 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_tau_pt_80.root    --histo-name tt_lj_Mt_tau_pt_80     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>40 && gen_proc_id<50 && event_taus[0].pt() >= 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_eltau_Mt_tau_pt_more.root --histo-name tt_eltau_Mt_tau_pt_more  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 19 || selection_stage == 17) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 80.)*event_weight" --output v37_ThesisRedo_new_bins_Mt_plots_el_sel_tt_lj_Mt_tau_pt_more.root    --histo-name tt_lj_Mt_tau_pt_more     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+
+
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() < 60.)*event_weight" --output v37_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_60.root --histo-name tt_mutau_Mt_tau_pt_60  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() < 60.)*event_weight" --output v37_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_60.root    --histo-name tt_lj_Mt_tau_pt_60     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>30 && gen_proc_id<40 && event_taus[0].pt() >= 60.)*event_weight" --output v37_new_bins_Mt_plots_mu_sel_tt_mutau_Mt_tau_pt_more60.root --histo-name tt_mutau_Mt_tau_pt_more60  lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+python sumup_ttree_draw.py "event_met_lep_mt" --custom-range 0,16,32,44,54,64,74,81,88,95,104,116,132,160,250   --ttree ttree_out --cond-com "((selection_stage == 9 || selection_stage == 7) && gen_proc_id>20 && gen_proc_id<30 && event_taus[0].pt() >= 60.)*event_weight" --output v37_new_bins_Mt_plots_mu_sel_tt_lj_Mt_tau_pt_more60.root    --histo-name tt_lj_Mt_tau_pt_more60     lstore_outdirs/v37/test172/MC2016_Summer16_TTJets_powheg/*root     &
+
+hadd -f v37_new_bins_Mt_plots_mu_sel_all.root v37_new_bins_Mt_plots_mu_sel_tt_*.root
+
+hadd -f v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root v37_ThesisRedo_new_bins_Mt_plots_mu_sel*root
+hadd -f v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root v37_ThesisRedo_new_bins_Mt_plots_el_sel*root
+
+root -l v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root
+
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/mu_Mt_tau_pt_lj.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lt.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/el_Mt_tau_pt_lj.png} 
+
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "tauMore80/base,black,2: tau80/base: tau55/base: tau40/base: inclusive/base" -c mu_selVloose -d Mt_lep_met_c -p tt_mutau "inclusive":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_inclusive "base":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_inclusive2 "tau40":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_tau_pt_40 "tau55":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_tau_pt_55 "tau80":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_tau_pt_80 "tauMore80":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_mutau_Mt_tau_pt_more --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+mv ./compare_mu_selVloose_tt_mutau_NOMINAL_Mt_lep_met_c_tau40,tauMore80,inclusive,tau55,tau80,base_formula_nonorm.pdf mu_Mt_tau_pt_lt.pdf
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(#mu, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "jetMore80/base,black,2: jet80/base: jet55/base: jet40/base: inclusive/base" -c mu_selVloose -d Mt_lep_met_c -p tt_lj "inclusive":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_inclusive "base":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_inclusive2 "jet40":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_40 "jet55":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_55 "jet80":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_80 "jetMore80":v37_ThesisRedo_all_new_bins_Mt_plots_mu_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_more --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+mv ./compare_mu_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_jet40,inclusive,jet80,base,jet55,jetMore80_formula_nonorm.pdf mu_Mt_tau_pt_lj.pdf
+
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "tauMore80/base,black,2: tau80/base: tau55/base: tau40/base: inclusive/base" -c el_selVloose -d Mt_lep_met_c -p tt_eltau "inclusive":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_inclusive "base":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_inclusive2 "tau40":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_tau_pt_40 "tau55":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_tau_pt_55 "tau80":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_tau_pt_80 "tauMore80":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_eltau_Mt_tau_pt_more --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+mv ./compare_el_selVloose_tt_eltau_NOMINAL_Mt_lep_met_c_tau40,tauMore80,inclusive,tau55,tau80,base_formula_nonorm.pdf el_Mt_tau_pt_lt.pdf
+
+python jobsums/get_shapes.py --x-title "#font[12]{m}_{T}(e, #font[12]{p}^{miss}_{T}) [GeV]" --y-title "a.u." --formula "jetMore80/base,black,2: jet80/base: jet55/base: jet40/base: inclusive/base" -c el_selVloose -d Mt_lep_met_c -p tt_lj "inclusive":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_inclusive "base":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_inclusive2 "jet40":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_40 "jet55":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_55 "jet80":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_80 "jetMore80":v37_ThesisRedo_all_new_bins_Mt_plots_el_sel_per_tau_pt.root:tt_lj_Mt_tau_pt_more --y-range 0,2. --output-type pdf --left-title "CMS #font[52]{Internal Simulation}" --left-title-inside --no-std-path --no-norm --draw-error-bars
+mv ./compare_el_selVloose_tt_lj_NOMINAL_Mt_lep_met_c_jet40,inclusive,jet80,base,jet55,jetMore80_formula_nonorm.pdf el_Mt_tau_pt_lj.pdf
+
+
+
+
+## fit figures
+
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp.png}  \\
+\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_el_exp_obs.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/uncertainty_scans_mu_exp_obs.png}\\
+\includegraphics[width=0.6\textwidth]{Plots_c2_pdfs/uncertainty_scans_both_exp_obs.png}
+\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_el_nuisances_lessparams.png} \\
+\includegraphics[width=0.7\textheight]{Plots_c2_pdfs/postfit_mu_nuisances_lessparams.png}
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_lj.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_el_Mt_ljout.png} \\
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_lj.png} \hfill
+\includegraphics[width=0.48\textwidth]{Plots_c2_pdfs/postfit_mu_Mt_ljout.png}
 
 
 
