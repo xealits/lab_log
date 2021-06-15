@@ -269,6 +269,20 @@
 
 /WZ_TuneCP5_13TeV-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM : {LumiMask: '', dtag: MC2017_Fall17_WZTuneCP5_13TeV, isMC: true, xsec: 22.82}
 
+/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM      : {LumiMask: '', dtag: MC2017_Fall17_WJets_madgraph_v2, isMC: true, xsec: 50690}
+/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM      : {LumiMask: '', dtag: MC2017_Fall17_WJets_madgraph_v3, isMC: true, xsec: 50690}
+/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM : {LumiMask: '', dtag: MC2017_Fall17_WJets_madgraph_ext1v2, isMC: true, xsec: 50690}
+
+/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM        : {LumiMask: '', dtag: MC2017_Fall17_TTTo2L2Nu, isMC: true, xsec: 72.1}
+/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM        : {LumiMask: '', dtag: MC2017_Fall17_TTTo2L2Nu_v2, isMC: true, xsec: 72.1}
+/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM: {LumiMask: '', dtag: MC2017_Fall17_TTTo2L2Nu_new_pmx_v1, isMC: true, xsec: 72.1}
+/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM : {LumiMask: '', dtag: MC2017_Fall17_TTToHadronic_13TeV, isMC: true, xsec: 313.9}
+/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM : {LumiMask: '', dtag: MC2017_Fall17_TTToHadronic_13TeV_v2, isMC: true, xsec: 313.9}
+
+/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM         : {LumiMask: '', dtag: MC2017_Fall17_TTToSemiLeptonic_v2, isMC: true, xsec: 445.8}
+/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM : {LumiMask: '', dtag: MC2017_Fall17_TTToSemiLeptonic_new_pmx_v1, isMC: true, xsec: 445.8}
+
+
 /WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM      : {LumiMask: '', dtag: MC2017legacy_Fall17_WJets_madgraph_v2, isMC: true, xsec: 50690}
 /WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM      : {LumiMask: '', dtag: MC2017legacy_Fall17_WJets_madgraph_v3, isMC: true, xsec: 50690}
 /WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM : {LumiMask: '', dtag: MC2017legacy_Fall17_WJets_madgraph_ext1v2, isMC: true, xsec: 50690}
